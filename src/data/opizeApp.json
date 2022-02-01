@@ -1,5 +1,32 @@
 {
-    "opize": {
-        
+    "ko-KR": {
+        "dashboard": {
+            "name": "대시보드",
+            "img": "/opize.png",
+            "desc": "대시보드",
+            "to": "/dashboard",
+            "showDashboard": false
+        },
+        "calendar2notion": {
+            "name": "Calendar2notion",
+            "img": "/opize.png",
+            "desc": "구글 캘린더와 노션 양방향 동기화하기",
+            "to": "https//calendar2notion.opize.me",
+            "showDashboard": true
+        }
+    },
+    "en-US": {
+        "dashboard": {
+            "name": "Dashboard",
+            "img": "/opize.png",
+            "desc": "Dashboard",
+            "showDashboard": false
+        },
+        "calendar2notion": {
+            "name": "Calendar2notion",
+            "img": "/opize.png",
+            "desc": "구글 캘린더와 노션 양방향 동기화하기",
+            "showDashboard": true
+        }
     }
 }

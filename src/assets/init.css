@@ -19,3 +19,7 @@
 .notion-asset-wrapper-image {
     flex-direction: row !important;
 }
+
+.notion-frame .notion-page-no-cover {
+    margin-top: 160px !important;
+}

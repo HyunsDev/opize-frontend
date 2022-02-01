@@ -1,9 +1,14 @@
 /* eslint-disable no-unused-vars */
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import axios from "axios"
+import { Link, useNavigate } from "react-router-dom"
+import { useForm, Controller } from "react-hook-form";
+import { UserContext } from "../../context/user"
+import { toast } from "react-toastify"
+import { useEffect, useState, useContext } from "react"
+
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
-import { useForm, Controller } from "react-hook-form";
 
 import { ColorBtnSubmit } from "../../components/btns/btns";
 import LoginInput from '../../components/inputs/loginInput'
@@ -65,7 +70,11 @@ const Right = styled.div`
 `
 
 export default function Login (props) {
-    const { control, handleSubmit, watch, formState: { errors } } = useForm({
+    const navigate = useNavigate()
+    const { user, updateUser } = useContext(UserContext)
+    const [isLoading, setLoading] = useState(false)
+
+    const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             email: "",
             password: ""
@@ -73,8 +82,36 @@ export default function Login (props) {
     });
 
     const onSubmit = async (data) => {
-        console.log(data)
+        if (!isLoading) {
+            try {
+                setLoading(true)
+                const res = await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/reset-password-request`, {
+                    email: data.email,
+                    test: "true"
+                });
+                console.log(res.data)
+                setLoading(false)
+                navigate(`/reset-password/email?email=${data.email}`)
+            } catch (err) {
+                setLoading(false)
+                if (err.response) {
+                    if (err.response.data.code === "user_not_found") {
+                        toast.info("존재하지 않는 이메일이에요.")
+                    } else {
+                        toast.error(err.message)
+                        console.error(err)
+                    }
+                } else {
+                    toast.error(err.message)
+                    console.error(err)
+                }
+            }
+        }
     };
+
+    useEffect(() => {
+        document.title = "로그인 | Opize"
+    }, [])
 
     return (
         <>
@@ -83,30 +120,28 @@ export default function Login (props) {
                     <Logo src={OpizeLogoImg}/>
                     <LogoText src={OpizeLogoTextImg} />
                 </Logos>
-                <H1>Opize에 로그인합니다</H1>
+                <H1>비밀번호 재설정</H1>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="email"
                             control={control}
-                            rules={{required: "이메일을 입력해주세요."}}
+                            rules={{required: "이메일 주소를 입력해주세요.",
+                            pattern: {
+                                value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i,
+                                message: '올바른 이메일 형식으로 입력해주세요.'
+                            }}}
                             render={({field}) => <LoginInput {...field} name="이메일" ref={null} error={errors.email} type="text" autoComplete="email"/>}
-                        />
-                        <Controller
-                            name="password" 
-                            control={control}
-                            rules={{required:"비밀번호를 입력해주세요."}}
-                            render={({field}) => <LoginInput {...field} name="비밀번호" ref={null} error={errors.password} type="password" autoComplete="current-password" />}
                         />
                     </Inputs>
 
                     <LoginMenu>
                         <Left>
-                            <A to="/sign-up">회원가입</A> | <A to="/reset-password">비밀번호 재설정</A>
+                            <A to="/login">로그인</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit type="submit" value="로그인" />
+                            <ColorBtnSubmit text="비밀번호 재설정" isLoading={isLoading} />
                         </Right>
                     </LoginMenu>
                 </form>

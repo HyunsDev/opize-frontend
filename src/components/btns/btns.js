@@ -1,63 +1,75 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import { Spinner } from '../spinner';
 
-const BtnDiv = styled.div`
-    padding: 8px 14px;
+const ColorBtnSubmitDiv = styled.div`
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 14px;
     box-sizing: border-box;
     border-radius: 8px;
-    background-color: #F5F5F5;
+    background-color: #E3EEDD;
     font-weight: 800;
-    color: #2D2D2D;
     user-select: none;
     transition: 200ms;
-    cursor: pointer;
+    border: 0;
+    cursor: ${props => props.isLoading ? "not-allowed" : "pointer"};
 
-    &:hover {
-        background-color: #EFEFEF;
-    }
-`
-
-export function Btn (props) {
-    return (
-        <>
-            <BtnDiv onClick={props.onClick || (() => {})}>
-                {props.text || "text"}
-            </BtnDiv>
-        </>
-    )
-}
-
-const ColorBtnDiv = styled(BtnDiv)`
-    background-color: #E3EEDD;
-    color: #2D6560;
     &:hover {
         background-color: #dae7d3;
     }
 `
+
+const SpinnerDiv = styled.div`
+    display: flex;
+    background-color: inherit;
+    border-radius: 8px;
+    margin-right: ${props => props.show ? 0 : -props.size*2.3}px;
+    transition: 400ms;
+
+    &:hover {
+        background-color: #dae7d3;
+    }
+
+    div {
+        visibility: ${props => props.show ? "visible" : "hidden"}
+    }
+`
+
+const ColorBtnSubmitInput = styled.input`
+    z-index: 3;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: inherit;
+    color: #2D6560;
+    font-size: 16px;
+    background-color: inherit;
+    border: 0;
+`
+
+export function ColorBtnSubmit (props) {
+    return (
+        <>
+            <ColorBtnSubmitDiv isLoading={props.isLoading}>
+                <SpinnerDiv size={20} show={props.isLoading}>
+                    <Spinner size={20} color="#2D6560" show={props.isLoading} />
+                </SpinnerDiv>
+                <ColorBtnSubmitInput show={props.isLoading} type={'submit'} value={props.text || 'text'} />
+            </ColorBtnSubmitDiv>
+        </>
+    )
+}
+
 
 export function ColorBtn (props) {
     return (
         <>
-            <ColorBtnDiv onClick={props.onClick || (() => {})}>
-                {props.text || "text"}
-            </ColorBtnDiv>
+            <ColorBtnSubmitDiv isLoading={props.isLoading}>
+                <SpinnerDiv size={20} show={props.isLoading}>
+                    <Spinner size={20} color="#2D6560" show={props.isLoading} />
+                </SpinnerDiv>
+                <ColorBtnSubmitInput show={props.isLoading} type={'button'} value={props.text || 'text'} onClick={props.onClick || (() => {})} />
+            </ColorBtnSubmitDiv>
         </>
     )
 }
-
-export const ColorBtnSubmit = styled.input`
-    padding: 8px 14px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    background-color: #E3EEDD;
-    font-weight: 800;
-    font-size: 16px;
-    color: #2D6560;
-    user-select: none;
-    transition: 200ms;
-    border: 0;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #dae7d3;
-    }
-`

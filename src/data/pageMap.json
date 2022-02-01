@@ -1,4 +1,9 @@
 {
-    "/": "ec49af6e62e3461ba2500aefa942b28e",
-    "/blog": "0e51cfe650344fa2a7fdba0754f53282"
+    "ko-KR": {
+        "/": "ec49af6e62e3461ba2500aefa942b28e",
+        "/blog": "6cbbe00cba2d4eae83a0a42103896887"
+    },
+    "en-US": {
+        
+    }
 }

@@ -1,0 +1,8 @@
+{
+    "dashboard": "대시보드",
+    "greet": "안녕하세요 {{name}}님!",
+
+    "search_placeholder": "검색",
+
+    "dashboard_subtitle": "서비스"
+}

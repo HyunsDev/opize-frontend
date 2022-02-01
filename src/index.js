@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './router';
 import reportWebVitals from './reportWebVitals';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './assets/init.css'
+import "./lang/i18n";
 
 import 'react-notion-x/src/styles.css'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -16,7 +18,7 @@ ReactDOM.render(
     <Router />
     <ToastContainer
       position="top-right"
-      autoClose={4000}
+      autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
@@ -24,6 +26,7 @@ ReactDOM.render(
       pauseOnFocusLoss
       draggable
       pauseOnHover
+      transition={ Flip }
       />
   </React.StrictMode>,
   document.getElementById('root')
