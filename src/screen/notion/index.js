@@ -19,12 +19,15 @@ const Notion = function (props) {
     const [page, setPage] = useState()
     const location = useLocation()
     const { i18n } = useTranslation('translation')
+
     
     useEffect(() => {
         (async () => {
             try {
                 const pageId = props.id || pageMap[i18n.language][location.pathname] || location.pathname
                 const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/notion?id=${pageId}`)
+                const uuid = `${pageId.substr(0,8)}-${pageId.substr(8,4)}-${pageId.substr(12,4)}-${pageId.substr(16,4)}-${pageId.substr(20,12)}`
+                document.title = `${res.data?.block[uuid]?.value.properties.title[0][0] || ""} | Opize`
                 setPage(res.data)
             } catch (err) {
                 console.error(err)

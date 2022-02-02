@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const LoginDiv = styled.div`
-
+    width: 100%;
 `
 
 const Name = styled.div`

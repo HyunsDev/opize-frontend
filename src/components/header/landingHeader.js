@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import styled from 'styled-components'
 import { Link } from "react-router-dom";
 import { ArrowRight } from 'phosphor-react'
+import { useTranslation } from 'react-i18next';
+import services from '../../data/opizeApp.json'
 
 import DropDown from "../dropdown/dropdown";
-import opizeLogo from '../../assets/opize.png'
 
 const Divver = styled.div`
     z-index: 10;
@@ -63,6 +64,7 @@ const MenuBtn = styled(Link)`
 
 export default function LandingHeader() {
     const [isTop, setIsTop] = useState(true)
+    const { t, i18n } = useTranslation('translation')
 
     const onScroll = () => {
         setIsTop(window.scrollY === 0)
@@ -77,17 +79,14 @@ export default function LandingHeader() {
 
     return (
         <Divver isTop={isTop}>
-            <DropDown backgroundColor="rgba(0,0,0,0)" name="Opize" img={opizeLogo} menus={[
-                {name: "첫 화면", img: opizeLogo, to: "/"}
-            ]} />
+            <DropDown backgroundColor="rgba(0,0,0,0)" name="Opize" img="/opize.png" menus={Object.values(services[i18n.language])} />
             <Buttons>
-                <MenuBtn to="/blog">블로그</MenuBtn>
-                <MenuBtn to="/project">프로젝트</MenuBtn>
-                <MenuBtn to="/contact">문의</MenuBtn>
-                <MenuBtn to="/developer">개발자 소개</MenuBtn>
+                <MenuBtn to="/blog">{t('blog')}</MenuBtn>
+                <MenuBtn to="/">{t('project')}</MenuBtn>
+                <MenuBtn to="/developer">{t('developer')}</MenuBtn>
                 {localStorage.getItem('token') ?
-                    <LoginBtn to="/dashboard">대시보드<ArrowRight size={20} weight="bold" /></LoginBtn> : 
-                    <LoginBtn to="/login">로그인<ArrowRight size={20} weight="bold" /></LoginBtn>}
+                    <LoginBtn to="/dashboard">{t('dashboard')}<ArrowRight size={20} weight="bold" /></LoginBtn> : 
+                    <LoginBtn to="/login">{t('login')}<ArrowRight size={20} weight="bold" /></LoginBtn>}
             </Buttons>
         </Divver>
     )

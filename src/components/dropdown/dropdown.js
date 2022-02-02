@@ -51,12 +51,34 @@ const Selector = styled.div`
 
     transition: transform 100ms cubic-bezier(0.84,-0.88, 0.01, 2.12), opacity 150ms;
     transform: scale(${props => props.isOpen ? 1 : 0.9});
-    transform-origin: 50% top;
+    transform-origin: ${props => props.direction || "left"} top;
 
     opacity: ${props => props.isOpen ? 1 : 0};
 `
 
 const SelectorItem = styled(Link)`
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: 200ms;
+
+    img {
+        height: 24px;
+    }
+
+    div {
+        color: #2d2d2d;
+    }
+
+    &:hover {
+        background-color: rgba(0,0,0,0.08)
+    }
+`
+
+const SelectorItemA = styled.a`
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -89,12 +111,24 @@ export default function DropDown(props) {
             </NowPage>
             <Selector isOpen={isOpen} direction={props.direction}>
                 {
-                    props.menus && props.menus.map((e,i) => (
-                        <SelectorItem to={e.to} key={i}>
-                            {e.img && <img src={e.img} alt="" />}
-                            <div>{e.name || "name"}</div>
-                        </SelectorItem>   
-                    ))
+                    props.menus && props.menus.map((e,i) => {
+                        if (e.show === false) return null
+                        if (e.to.includes("http")) {
+                            return (
+                                <SelectorItemA href={e.to} key={i} target={"_blank"}>
+                                    {e.img && <img src={e.img} alt="" />}
+                                    <div>{e.name || "name"}</div>
+                                </SelectorItemA>   
+                            )
+                        } else {
+                            return (
+                                <SelectorItem to={e.to} key={i}>
+                                    {e.img && <img src={e.img} alt="" />}
+                                    <div>{e.name || "name"}</div>
+                                </SelectorItem>   
+                            )
+                        }
+                    })
                 }
             </Selector>
         </SelectorDivver>

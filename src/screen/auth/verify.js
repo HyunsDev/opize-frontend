@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import { Link, useNavigate, useSearchParams  } from "react-router-dom"
-import jwt_decode from 'jwt-decode'
 import axios from "axios"
 import { useEffect, useState, useContext } from "react"
 import { UserContext } from "../../context/user"
+import { useTranslation } from 'react-i18next';
 
 import { ColorBtn } from '../../components/btns/btns';
 import opizeImg from '../../assets/opize_logoText.png'
@@ -35,11 +35,16 @@ const Desc = styled.div`
 `
 
 export default function EmailVerify(props) {
-    const { getUser } = useContext(UserContext)
+    const { updateUser, user } = useContext(UserContext)
     const [email, setEmail] = useState('')
     const [isLoading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [ searchParams ] = useSearchParams()
+    const { t } = useTranslation('translation')
+
+    useEffect(() => {
+        document.title = `${t("auth_verify_page_title")} | Opize`
+    }, [t])
 
     const emailRetry = async () => {
         try {
@@ -51,7 +56,7 @@ export default function EmailVerify(props) {
             })
             setLoading(false)
             if (res.data.code === "email_send") {
-                toast.info('이메일을 재발송했어요.')
+                toast.info(t("auth_email_resend"))
             } else if (res.data.code === "already_verified") {
                 navigate('/')
             }
@@ -75,6 +80,10 @@ export default function EmailVerify(props) {
         }
     }
 
+    useEffect(() => {
+        setEmail(searchParams.get("email"))
+    }, [searchParams])
+
     // 토큰 인증
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -82,8 +91,11 @@ export default function EmailVerify(props) {
             navigate('/login')
             return
         }
-        getUser()
-    }, [getUser, navigate])
+        updateUser()
+        if (user.isVerified) {
+            navigate("/dashboard")
+        }
+    }, [updateUser, navigate, user])
 
     // 이메일 인증
     useEffect(() => {
@@ -100,9 +112,9 @@ export default function EmailVerify(props) {
                 } catch (err) {
                     if (err.response) {
                         if (err.response.data.code === "invalid_token") {
-                            toast.warn("토큰이 올바르지 않아요.")
+                            toast.warn(t("err_invalid_token"))
                         } else if (err.response.data.code === "user_not_found") {
-                            toast.warn("존재하지 않는 이메일이에요.")
+                            toast.warn(t("err_email_not_exist"))
                         } else {
                             toast.error(err.message)
                             console.error(err)
@@ -114,16 +126,16 @@ export default function EmailVerify(props) {
                 }
             })()
         }
-    }, [searchParams, navigate])
+    }, [searchParams, navigate, t])
 
     return (
         <Divver>
             <Link to="/">
                 <Logo src={opizeImg} />
             </Link>
-            <H1>이메일 인증을 완료하세요!</H1>
-            <Desc>{email} 으로 발송된 메일에서 인증 링크를 클릭하세요.</Desc>
-            <ColorBtn text="인증메일 재발송" isLoading={isLoading} onClick={emailRetry} />
+            <H1>{t('auth_verify_title')}</H1>
+            <Desc>{t("auth_verify_subtitle", {email})}.</Desc>
+            <ColorBtn text={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )
 }

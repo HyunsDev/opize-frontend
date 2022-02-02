@@ -22,6 +22,8 @@ const UserContextProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
+            localStorage.setItem('token', res.data.token)
+            delete res.data.token
             SetUser(res.data)
         } catch (err) {
             if (err.response) {

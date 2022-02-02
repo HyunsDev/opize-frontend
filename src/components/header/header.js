@@ -1,10 +1,11 @@
 import styled from "styled-components"
 import { useContext, useEffect } from 'react';
 import { UserContext } from "../../context/user";
+import services from '../../data/opizeApp.json'
+import { useTranslation } from 'react-i18next';
+import { Link } from "react-router-dom";
 
 import DropDown from "../dropdown/dropdown";
-
-import opizeLogo from '../../assets/opize.png'
 
 const Divver = styled.div`
     display: flex;
@@ -26,14 +27,27 @@ const Items = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
+    gap: 8px;
 `
 
-const UserDiv = styled.div`
-
+const MenuBtn = styled(Link)`
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 200ms;
+    color: #2d2d2d;
+    font-size: 14px;
+    
+    &:hover {
+        background-color: rgba(0,0,0,0.08)
+    }
 `
 
 export default function Header(props) {
     const { user, initUser } = useContext(UserContext)
+    const { t, i18n } = useTranslation('translation')
 
     useEffect(() => {
         initUser()
@@ -42,18 +56,16 @@ export default function Header(props) {
     return (
         <Divver>
             <Items>
-                <DropDown name="대시보드" img={opizeLogo} menus={[
-                    {name: "첫 화면", img: opizeLogo, to: "/"}
-                ]} />
+                <DropDown {...services[i18n.language][props.app]} menus={Object.values(services[i18n.language])} />
             </Items>
             <Items>
-                <UserDiv>
-                    <DropDown direction='right' name={user.name} img={user.profileImage || ""} menus={[
-                        {name: "내 정보", to: "/user"},
-                        {name: "공지 & 업데이트", to: "/notice"},
-                    ]} />
-                </UserDiv>
-                
+                <MenuBtn to="/blog">{t('blog')}</MenuBtn>
+                <MenuBtn to="/">{t('project')}</MenuBtn>
+                <MenuBtn to="/developer">{t('developer')}</MenuBtn>
+                <DropDown direction='right' name={user.name} img={user.profileImage || ""} menus={[
+                    {name: t('header_user'), to: "/user"},
+                    {name: t('header_notice'), to: "/notice"},
+                ]} />
             </Items>
         </Divver>
     )

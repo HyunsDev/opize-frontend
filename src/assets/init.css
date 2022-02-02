@@ -4,7 +4,8 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-.notion-page-icon-wrapper {
+/* 노션 관련 코드 */
+.notion .notion-page-icon-wrapper {
     justify-content: start !important;
 }
 
@@ -12,14 +13,19 @@
     padding: 0 !important;
 }
 
-.notion-asset-wrapper-image > div {
+.notion .notion-asset-wrapper-image > div {
     height: unset !important;
 } 
 
-.notion-asset-wrapper-image {
+.notion .notion-asset-wrapper-image {
     flex-direction: row !important;
 }
 
-.notion-frame .notion-page-no-cover {
+.notion .notion-frame .notion-page-no-cover {
     margin-top: 160px !important;
+}
+
+/* css 변수 */
+:root {
+    
 }

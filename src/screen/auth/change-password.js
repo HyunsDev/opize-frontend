@@ -5,6 +5,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify"
 import { useEffect, useState } from "react"
+import { useTranslation } from 'react-i18next';
+
 
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
@@ -73,10 +75,11 @@ export default function Login (props) {
     const [isLoading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [ searchParams ] = useSearchParams()
+    const { t } = useTranslation('translation')
 
     useEffect(() => {
-        document.title = "비밀번호 재설정 | Opize"
-    }, [])
+        document.title = `${t("auth_change_password_page_title")} | Opize`
+    }, [t])
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -95,15 +98,15 @@ export default function Login (props) {
                     password: data.password,
                 });
                 setLoading(false)
-                toast.info('비밀번호가 변경되었어요. 다시 로그인해주세요.')
+                toast.info(t('auth_change_password_toast'))
                 navigate('/login')
             } catch (err) {
                 setLoading(false)
                 if (err.response) {
                     if (err.response.data.code === "invalid_token") {
-                        toast.error('코드가 올바르지 않아요.')
+                        toast.error(t('err_invalid_token'))
                     } else if (err.response.data.code === "user_not_found") {
-                        toast.error('코드가 올바르지 않아요.')
+                        toast.error(t('err_invalid_token'))
                     } else {
                         toast.error(err.message)
                         console.error(err.response)
@@ -123,34 +126,34 @@ export default function Login (props) {
                     <Logo src={OpizeLogoImg}/>
                     <LogoText src={OpizeLogoTextImg} />
                 </Logos>
-                <H1>비밀번호 재설정</H1>
+                <H1>{t('auth_reset')}</H1>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="password" 
                             control={control}
-                            rules={{required:"비밀번호를 입력해주세요.", minLength: {
+                            rules={{required:t('auth_input_password_required'), minLength: {
                                 value: 8,
-                                message: '비밀번호는 8자 이상이어야 합니다.'
+                                message: t('auth_input_password_pattern')
                               }}}
-                            render={({field}) => <LoginInput {...field} name="변경할 비밀번호" ref={null} error={errors.password} type="password" autoComplete="new-password" />}
+                            render={({field}) => <LoginInput {...field} name={t('auth_input_new_password')} ref={null} error={errors.password} type="password" autoComplete="new-password" />}
                         />
                         <Controller
                             name="passwordRetry" 
                             control={control}
-                            rules={{required: "비밀번호를 다시 입력해주세요.", validate: (value) =>  value === watch('password') || "비밀번호가 다릅니다." }}
-                            render={({field}) => <LoginInput {...field} name="비밀번호 재입력" ref={null} error={errors.passwordRetry} type="password" autoComplete="new-password" />}
+                            rules={{required: t('auth_input_password_retry_required'), validate: (value) =>  value === watch('password') || t('auth_input_password_retry_validate') }}
+                            render={({field}) => <LoginInput {...field} name={t('auth_input_password_retry')} ref={null} error={errors.passwordRetry} type="password" autoComplete="new-password" />}
                         />
 
                     </Inputs>
 
                     <LoginMenu>
                         <Left>
-                            <A to="/login">로그인</A>
+                            <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit isLoading={isLoading} text={"비밀번호 재설정"} />
+                            <ColorBtnSubmit isLoading={isLoading} text={t('auth_reset')} />
                         </Right>
                     </LoginMenu>
                 </form>

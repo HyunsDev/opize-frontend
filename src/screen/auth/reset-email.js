@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { Link, useSearchParams  } from "react-router-dom"
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useTranslation } from 'react-i18next';
 
 import { ColorBtn } from '../../components/btns/btns';
 import opizeImg from '../../assets/opize_logoText.png'
@@ -35,6 +36,11 @@ const Desc = styled.div`
 export default function EmailVerify(props) {
     const [ searchParams ] = useSearchParams()
     const [isLoading, setLoading] = useState(false)
+    const { t } = useTranslation('translation')
+
+    useEffect(() => {
+        document.title = `${t("auth_reset_email_page_title")} | Opize`
+    }, [t])
 
     const emailRetry = async () => {
         try {
@@ -44,12 +50,12 @@ export default function EmailVerify(props) {
                 test: "true"
             });
             setLoading(false)
-            toast.info("이메일을 재발송했어요.")
+            toast.info(t('auth_email_resend'))
         } catch (err) {
             setLoading(false)
             if (err.response) {
                 if (err.response.data.code === "user_not_found") {
-                    toast.info("존재하지 않는 이메일이에요.")
+                    toast.info(t('err_email_not_exist'))
                 } else {
                     toast.error(err.message)
                     console.error(err)
@@ -66,9 +72,9 @@ export default function EmailVerify(props) {
             <Link to="/">
                 <Logo src={opizeImg} />
             </Link>
-            <H1>이메일을 확인해주세요.</H1>
-            <Desc>{searchParams.get("email")} 으로 발송된 메일에서 초기화 링크를 클릭하세요.</Desc>
-            <ColorBtn text="초기화 메일 재발송" isLoading={isLoading} onClick={emailRetry} />
+            <H1>{t('auth_reset_email_title')}</H1>
+            <Desc>{t('auth_reset_email_subtitle', {email: searchParams.get("email")})}</Desc>
+            <ColorBtn text={t('auth_reset_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )
 }

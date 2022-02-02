@@ -1,18 +1,28 @@
 {
     "ko-KR": {
+        "user": {
+            "name": "내 정보",
+            "img": "/opize.png",
+            "desc": "대시보드",
+            "to": "/user",
+            "showDashboard": false,
+            "show": false
+        },
         "dashboard": {
             "name": "대시보드",
             "img": "/opize.png",
             "desc": "대시보드",
             "to": "/dashboard",
-            "showDashboard": false
+            "showDashboard": false,
+            "show": true
         },
         "calendar2notion": {
             "name": "Calendar2notion",
             "img": "/opize.png",
             "desc": "구글 캘린더와 노션 양방향 동기화하기",
-            "to": "https//calendar2notion.opize.me",
-            "showDashboard": true
+            "to": "https://calendar2notion.opize.me",
+            "showDashboard": true,
+            "show": true
         }
     },
     "en-US": {

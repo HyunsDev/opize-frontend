@@ -3,9 +3,9 @@ import styled from "styled-components"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
-import { UserContext } from "../../context/user"
 import { toast } from "react-toastify"
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState } from "react"
+import { useTranslation } from 'react-i18next';
 
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
@@ -71,8 +71,12 @@ const Right = styled.div`
 
 export default function Login (props) {
     const navigate = useNavigate()
-    const { user, updateUser } = useContext(UserContext)
     const [isLoading, setLoading] = useState(false)
+    const { t } = useTranslation('translation')
+
+    useEffect(() => {
+        document.title = `${t("auth_reset_page_title")} | Opize`
+    }, [t])
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
@@ -96,7 +100,7 @@ export default function Login (props) {
                 setLoading(false)
                 if (err.response) {
                     if (err.response.data.code === "user_not_found") {
-                        toast.info("존재하지 않는 이메일이에요.")
+                        toast.info(t("err_email_not_exist"))
                     } else {
                         toast.error(err.message)
                         console.error(err)
@@ -109,10 +113,6 @@ export default function Login (props) {
         }
     };
 
-    useEffect(() => {
-        document.title = "로그인 | Opize"
-    }, [])
-
     return (
         <>
             <Divver>
@@ -120,28 +120,28 @@ export default function Login (props) {
                     <Logo src={OpizeLogoImg}/>
                     <LogoText src={OpizeLogoTextImg} />
                 </Logos>
-                <H1>비밀번호 재설정</H1>
+                <H1>{t('auth_reset')}</H1>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="email"
                             control={control}
-                            rules={{required: "이메일 주소를 입력해주세요.",
+                            rules={{required: t('auth_input_email_required'),
                             pattern: {
                                 value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i,
-                                message: '올바른 이메일 형식으로 입력해주세요.'
+                                message: t('auth_input_email_pattern')
                             }}}
-                            render={({field}) => <LoginInput {...field} name="이메일" ref={null} error={errors.email} type="text" autoComplete="email"/>}
+                            render={({field}) => <LoginInput {...field} name={t('auth_input_email')} ref={null} error={errors.email} type="text" autoComplete="email"/>}
                         />
                     </Inputs>
 
                     <LoginMenu>
                         <Left>
-                            <A to="/login">로그인</A>
+                            <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit text="비밀번호 재설정" isLoading={isLoading} />
+                            <ColorBtnSubmit text={t('auth_reset')} isLoading={isLoading} />
                         </Right>
                     </LoginMenu>
                 </form>

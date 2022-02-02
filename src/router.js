@@ -10,6 +10,7 @@ import PasswordReset from './screen/auth/reset';
 import PasswordResetEmail from './screen/auth/reset-email';
 import PasswordResetPassword from './screen/auth/change-password';
 import DashboardRouter from './screen/dashboard/router';
+import UserRouter from './screen/user/router'
 
 export default function Router() {
   return (
@@ -25,6 +26,7 @@ export default function Router() {
               <Route path="/reset-password/email" element={<PasswordResetEmail />} />
               <Route path="/reset-password/change" element={<PasswordResetPassword />} />
               <Route path="/dashboard/*" element={<DashboardRouter />} />
+              <Route path="/user/*" element={<UserRouter />} />
               <Route path="*" element={<Notion />} />
             </Routes>
           </UserContextProvider>

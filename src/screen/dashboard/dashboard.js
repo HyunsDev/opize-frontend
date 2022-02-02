@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { UserContext } from "../../context/user";
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,10 @@ export default function Dashboard(props) {
     const { user } = useContext(UserContext)
     const [ searchText, setSearchText ] = useState('')
     const { t, i18n } = useTranslation('translation')
+
+    useEffect(() => {
+        document.title = `${t("dashboard")} | Opize`
+    }, [t])
 
     const searchInput = (e) => {
         setSearchText(e.target.value)

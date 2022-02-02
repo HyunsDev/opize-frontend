@@ -3,8 +3,8 @@ import { initReactI18next } from 'react-i18next';
  
 import langEn from './lang.en.json';
 import langKo from './lang.ko.json';
- 
-const resource =  {
+
+const resource = {
     'en-US': {
         translation: langEn
     },
@@ -14,7 +14,7 @@ const resource =  {
 };
  
 i18n
-    .use(initReactI18next)
+.use(initReactI18next)
     .init({
         resources: resource,
         // 초기 설정 언어
