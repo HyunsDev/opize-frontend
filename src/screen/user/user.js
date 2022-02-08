@@ -97,6 +97,7 @@ const MenuName = (props) => {
     const fetchAPI = async () => {
         try {
             if (value === "") return
+            if (value === user.name) return
             setLoading(true)
             await axios.patch(`${process.env.REACT_APP_API_SERVER}/user/name`,{
                 name: value
@@ -107,6 +108,7 @@ const MenuName = (props) => {
             })
             setLoading(false)
             updateUser()
+            toast.info(t('user_user_menu_name_toast'))
             setValue(user.name)
         } catch (err) {
             setLoading(false)
