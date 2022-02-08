@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import Router from './router';
 import reportWebVitals from './reportWebVitals';
 import { ToastContainer, Flip } from 'react-toastify';
+// import GlobalStyle from './style/var';
 import 'react-toastify/dist/ReactToastify.css';
-import './assets/init.css'
+import './style/init.css'
+import './style/var.css'
 import "./lang/i18n";
 
 import 'react-notion-x/src/styles.css'
@@ -15,6 +17,7 @@ import 'katex/dist/katex.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <GlobalStyle /> */}
     <Router />
     <ToastContainer
       position="top-right"

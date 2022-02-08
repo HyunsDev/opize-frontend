@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { Spinner } from '../spinner';
 
-
-
 const BtnSubmitDiv = styled.div`
     position: relative;
     display: flex;
@@ -37,13 +35,15 @@ const SpinnerDiv = styled.div`
 
 const BtnSubmitInput = styled.input`
     z-index: 3;
+    min-height: 40px;
     padding: 8px 16px;
     border-radius: 8px;
     cursor: inherit;
     color: ${props => props.color};
-    font-size: 16px;
+    font-size: 15px;
     background-color: inherit;
     border: 0;
+    font-weight: 800;
 `
 
 const BtnDivver = styled.div`
@@ -54,11 +54,11 @@ export function ColorBtnSubmit (props) {
     return (
         <>
             <BtnDivver>
-                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor="#E3EEDD" backgroundColorHover="#dae7d3">
-                    <SpinnerDiv size={20} show={props.isLoading} backgroundColor={"#E3EEDD"}>
-                        <Spinner size={20} color="#2D6560" show={props.isLoading} />
+                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor="var(--teal5)" backgroundColorHover="var(--teal6)">
+                    <SpinnerDiv size={20} show={props.isLoading} backgroundColor={"var(--teal5)"}>
+                        <Spinner size={20} color="white" show={props.isLoading} />
                     </SpinnerDiv>
-                    <BtnSubmitInput show={props.isLoading} type={'submit'} value={props.text || 'text'} color="#2D6560" />
+                    <BtnSubmitInput show={props.isLoading} type={'submit'} value={props.text || 'text'} color="white" />
                 </BtnSubmitDiv>
             </BtnDivver>
         </>
@@ -70,11 +70,11 @@ export function ColorBtn (props) {
     return (
         <>
             <BtnDivver>
-                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor={"#E3EEDD"} backgroundColorHover="#dae7d3">
-                    <SpinnerDiv size={20} show={props.isLoading} backgroundColor={"#E3EEDD"}>
-                        <Spinner size={20} color="#2D6560" show={props.isLoading} />
+                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor={"var(--teal5)"} backgroundColorHover="var(--teal6)">
+                    <SpinnerDiv size={20} show={props.isLoading} backgroundColor={"var(--teal5)"}>
+                        <Spinner size={20} color="white" show={props.isLoading} />
                     </SpinnerDiv>
-                    <BtnSubmitInput show={props.isLoading} type={'button'} value={props.text || 'text'} onClick={props.onClick || (() => {})} color="#2D6560" />
+                    <BtnSubmitInput show={props.isLoading} type={'button'} value={props.text || 'text'} onClick={props.onClick || (() => {})} color="white" />
                 </BtnSubmitDiv>
             </BtnDivver>
             
@@ -86,11 +86,11 @@ export function BtnSubmit (props) {
     return (
         <>
             <BtnDivver>
-                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor={props.background || "#EFEFEF"} backgroundColorHover={props.backgroundHover || "#e5e5e5"}>
+                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor={props.background || "var(--grey3)"} backgroundColorHover={props.backgroundHover || "var(--grey4)"}>
                     <SpinnerDiv size={20} show={props.isLoading}>
-                        <Spinner size={20} color={props.color || "#2D2D2D"} show={props.isLoading} />
+                        <Spinner size={20} color={props.color || "var(--grey9)"} show={props.isLoading} />
                     </SpinnerDiv>
-                    <BtnSubmitInput show={props.isLoading} type={'submit'} value={props.text || 'text'} color={props.color || "#2D2D2D"} />
+                    <BtnSubmitInput show={props.isLoading} type={'submit'} value={props.text || 'text'} color={props.color || "var(--grey9)"} />
                 </BtnSubmitDiv>
             </BtnDivver>
         </>
@@ -101,11 +101,11 @@ export function Btn (props) {
     return (
         <>
             <BtnDivver>
-                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor={props.background || "#EFEFEF"} backgroundColorHover={props.backgroundHover || "#e5e5e5"}>
+                <BtnSubmitDiv isLoading={props.isLoading} backgroundColor={props.background || "var(--grey3)"} backgroundColorHover={props.backgroundHover || "var(--grey4)"}>
                     <SpinnerDiv size={20} show={props.isLoading}>
-                        <Spinner size={20} color={props.color || "#2D2D2D"} show={props.isLoading} />
+                        <Spinner size={20} color={props.color || "var(--grey9)"} show={props.isLoading} />
                     </SpinnerDiv>
-                    <BtnSubmitInput show={props.isLoading} type={'button'} value={props.text || 'text'} onClick={props.onClick || (() => {})} color={props.color || "#2D2D2D"} />
+                    <BtnSubmitInput show={props.isLoading} type={'button'} value={props.text || 'text'} onClick={props.onClick || (() => {})} color={props.color || "var(--grey9)"} />
                 </BtnSubmitDiv>
             </BtnDivver>
         </>

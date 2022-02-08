@@ -17,7 +17,7 @@ const Divver = styled.div`
     padding: 0px 8px;
     position: fixed;
     top: 0;
-    border-bottom: solid ${props => props.isTop ? "0px" : "1px"} #E7E9EE;
+    border-bottom: solid ${props => props.isTop ? "0px" : "1px"} var(--grey3);
     transition: 200ms;
     /* backdrop-filter: blur(2px); */
     background-color: ${props => props.isTop ? "transparent" : "#ffffff"};
@@ -37,11 +37,11 @@ const MenuBtn = styled(Link)`
     padding: 8px;
     border-radius: 8px;
     transition: 200ms;
-    color: #2d2d2d;
+    color: var(--grey9);
     font-size: 14px;
     
     &:hover {
-        background-color: rgba(0,0,0,0.08)
+        background-color: var(--grey2)
     }
 `
 

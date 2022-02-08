@@ -12,7 +12,7 @@ const Name = styled.div`
 
 const Input = styled.input`
     border-radius: 8px;
-    outline: solid 2px ${props => props.error ? "#e74d3d" :"#E5E5E5"};
+    outline: solid 2px ${props => props.error ? "var(--red9)" : "var(--grey2)"};
     width: 100%;
     height: 40px;
     box-sizing: border-box;
@@ -20,20 +20,20 @@ const Input = styled.input`
     padding: 0px 16px;
     font-size: 16px;
     border: 0;
-    color: #2d2d2d;
+    color: var(--grey9);
 
     &:hover {
-        outline: solid 2px ${props => props.error ? "#e74d3d" :"#B8B8B8"};
+        outline: solid 2px ${props => props.error ? "var(--red9)" : "var(--teal1)"};
     }
 
     &:focus {
-        outline: solid 2px ${props => props.error ? "#e74d3d" :"#747474"};
+        outline: solid 2px ${props => props.error ? "var(--red9)" : "var(--teal4)"};
     }
 `
 
 const Label = styled.div`
     height: 20px;
-    color: ${props => props.error ? "#e74d3d" :"#2D6560"};
+    color: ${props => props.error ? "var(--red9)" :"#2D6560"};
     font-size: 14px;
     margin-top: 4px;
 `

@@ -3,7 +3,7 @@ import { MagnifyingGlass } from 'phosphor-react';
 import { useTranslation } from 'react-i18next';
 
 const SearchDiv = styled.div`
-    background-color: #F5F5F5;
+    background-color: var(--grey1);
     width: 100%;
     box-sizing: border-box;
     padding: 8px;
@@ -15,7 +15,7 @@ const SearchDiv = styled.div`
     outline: solid 2px rgba(0,0,0,0);
 
     &:focus-within {
-        outline: solid 2px rgba(0,0,0,0.3);
+        outline: solid 2px var(--grey4);
     }
     margin-top: 8px;
 `
@@ -35,8 +35,8 @@ export default function Search(props) {
 
     return (
         <SearchDiv>
-            <Input type={'search'} value={props.value || ""} onChange={props.onChange || (() => {})} placeholder={props.placeholder || t("search_placeholder")}/>
             <MagnifyingGlass size={16} weight='bold' color='#747474' />
+            <Input type={'search'} value={props.value || ""} onChange={props.onChange || (() => {})} placeholder={props.placeholder || t("search_placeholder")}/>
         </SearchDiv>
     )
 }

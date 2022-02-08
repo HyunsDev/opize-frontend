@@ -54,11 +54,11 @@ const MenuBtn = styled(Link)`
     padding: 8px;
     border-radius: 8px;
     transition: 200ms;
-    color: #2d2d2d;
+    color: var(--grey9);
     font-size: 14px;
     
     &:hover {
-        background-color: rgba(0,0,0,0.08)
+        background-color: rgba(0,0,0,0.08);
     }
 `
 

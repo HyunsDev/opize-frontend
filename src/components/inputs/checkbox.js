@@ -21,7 +21,7 @@ const Input = styled.input`
 
 const Icon = styled.svg`
     fill: none;
-    stroke: #F5F5F5;
+    stroke: var(--grey1);
     stroke-width: 2px;
 `;
 
@@ -30,8 +30,8 @@ const FakeCheckBox = styled.div`
     min-width: 24px; 
     width: 24px;
     height: 24px;
-    border: solid 1px #E5E5E5;
-    background: ${props => props.checked ? '#2D2D2D' : '#F5F5F5'};
+    border: solid 1px var(--grey4);
+    background: ${props => props.checked ? 'var(--grey9)' : 'var(--grey1)'};
     border-radius: 8px;
     transition: 200ms;
     cursor: pointer;

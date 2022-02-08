@@ -1,20 +1,39 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
+const Info = styled.div`
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+`
+
+const Name = styled.div`
+    color: var(--grey9);
+    font-size: 24px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+`
+
+const Desc = styled.div`
+    color: #747474;
+    font-size: 14px;
+`
+
 const ServiceLink = styled(Link)`
     display: flex;
     width: 100%;
     box-sizing: border-box;
     padding: 20px;
     align-items: center;
-    background-color: #F5F5F5;
+    background-color: var(--grey1);
     border-radius: 8px;
     text-decoration: none;
     gap: 16px;
     transition: 200ms;
 
     &:hover {
-        background-color: #e5e5e5;
+        background-color: var(--grey2);
     }
 `
 
@@ -24,14 +43,26 @@ const ServiceA = styled.a`
     box-sizing: border-box;
     padding: 20px;
     align-items: center;
-    background-color: #F5F5F5;
+    background-color: var(--grey1);
     border-radius: 8px;
     text-decoration: none;
     gap: 16px;
     transition: 200ms;
 
+    ${Name}::after {
+        content: "↗";
+        margin-left: 4px;
+        color: var(--grey1);
+        font-size: 24px;
+        transition: 200ms;
+    }
+
     &:hover {
-        background-color: #e5e5e5;
+        background-color: var(--grey2);
+
+        ${Name}::after {
+            color: var(--grey8);
+        }
     }
 `
 
@@ -51,22 +82,7 @@ const IconDiv = styled.div`
     }
 `
 
-const Info = styled.div`
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-`
 
-const Name = styled.div`
-    color: #2D2D2D;
-    font-size: 24px;
-    font-weight: 800;
-`
-
-const Desc = styled.div`
-    color: #747474;
-    font-size: 14px;
-`
 
 export default function Service(props) {
     if (props.to.includes("http")) {

@@ -9,7 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import RowMenu from '../../components/row/rowMenu';
 import Input from '../../components/inputs/input';
-import { Btn, BtnSubmit } from '../../components/btns/btns';
+import { Btn, BtnSubmit, ColorBtn, ColorBtnSubmit } from '../../components/btns/btns';
 import CheckBox from '../../components/inputs/checkbox';
 import LoginInput from '../../components/inputs/loginInput'
 
@@ -78,7 +78,7 @@ const MenuProfile = (props) => {
         <RowMenu name={t('user_user_menu_profile')}>
             <ProfileImg src={user.profileImage} alt="profile Img" />
             <Input placeholder={t('user_user_menu_profile')} value={value || ""} onChange={e => setValue(e.target.value)}/>
-            <Btn isLoading={isLoading} text={t('btn_edit')} onClick={fetchAPI} />
+            <ColorBtn isLoading={isLoading} text={t('btn_edit')} onClick={fetchAPI} />
         </RowMenu>
     )
 }
@@ -132,7 +132,7 @@ const MenuName = (props) => {
     return (
         <RowMenu name={t('user_user_menu_name')}>
             <Input  placeholder={user.name} value={value || ""} onChange={e => setValue(e.target.value)}/>
-            <Btn isLoading={isLoading} text={t('btn_edit')} onClick={fetchAPI} />
+            <ColorBtn isLoading={isLoading} text={t('btn_edit')} onClick={fetchAPI} />
         </RowMenu>
     )
 }
@@ -256,7 +256,7 @@ const MenuPassword = (props) => {
                     />
                 </Inputs>
                 <Btns>
-                    <BtnSubmit isLoading={isLoading} text={t('btn_edit')} />
+                    <ColorBtnSubmit isLoading={isLoading} text={t('btn_edit')} />
                 </Btns>
             </Form>
         </RowMenu>
@@ -311,7 +311,7 @@ const MenuCoupon = (props) => {
     return (
         <RowMenu name={t('user_user_menu_coupon')}>
             <Input placeholder={t('user_user_menu_coupon')} value={value || ""} onChange={e => setValue(e.target.value)} placeholder={t('user_user_menu_coupon_placeholder')}/>
-            <Btn isLoading={isLoading} text={t('btn_use')} onClick={fetchAPI} />
+            <ColorBtn isLoading={isLoading} text={t('btn_use')} onClick={fetchAPI} />
         </RowMenu>
     )
 }
@@ -407,7 +407,7 @@ const MenuDestroy = (props) => {
 
     return (
         <RowMenu name={t('user_user_menu_destroy')}>
-            <Btn isLoading={isLoading} text={t('user_user_menu_destroy')} onClick={fetchAPI} background="#F6DDDD" backgroundHover="#F5C4C4" color="#c21f1f" />
+            <Btn isLoading={isLoading} text={t('user_user_menu_destroy')} onClick={fetchAPI} background="var(--red1)" backgroundHover="var(--red2)" color="var(--red9)" />
         </RowMenu>
     )
 }

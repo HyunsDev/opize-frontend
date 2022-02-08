@@ -39,7 +39,7 @@ const H1 = styled.h1`
     margin-top: 8px;
     font-size: 24px;
     margin-bottom: 40px;
-    color: #2d2d2d;
+    color: var(--grey9);
 `
 
 const Inputs = styled.div`

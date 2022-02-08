@@ -21,18 +21,18 @@ const NowPage = styled.div`
     position: relative;
     cursor: pointer;
     user-select: none;
-    background-color: ${props => props.isOpen ? "rgba(0,0,0,0.08)" : props.backgroundColor || "#f5f5f5"};
+    background-color: ${props => props.isOpen ? "var(--grey2)" : props.backgroundColor || "var(--grey1)"};
 
     img {
         height: 24px;
     }
 
     div {
-        color: #2d2d2d;
+        color: var(--grey9);
     }
 
     &:hover {
-        background-color: rgba(0,0,0,0.08)
+        background-color: var(--grey2)
     }
 `
 
@@ -43,8 +43,9 @@ const Selector = styled.div`
     background-color: #ffffff;
     min-width: 200px;
     padding: 8px 0px;
-    border: solid 1px #E7E9EE;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.08);
+    border: solid 1px var(--grey3);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
     overflow: hidden;
     user-select: none;
     ${props => props.direction || "left"}: 0;
@@ -70,11 +71,11 @@ const SelectorItem = styled(Link)`
     }
 
     div {
-        color: #2d2d2d;
+        color: var(--grey9);
     }
 
     &:hover {
-        background-color: rgba(0,0,0,0.08)
+        background-color: var(--grey1);
     }
 `
 
@@ -92,11 +93,11 @@ const SelectorItemA = styled.a`
     }
 
     div {
-        color: #2d2d2d;
+        color: var(--grey9);
     }
 
     &:hover {
-        background-color: rgba(0,0,0,0.08)
+        background-color: var(--grey1);
     }
 `
 

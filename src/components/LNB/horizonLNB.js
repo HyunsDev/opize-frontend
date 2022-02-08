@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 
 const Div = styled.div`
-    border-bottom: solid 1px #F5F5F5;
+    border-bottom: solid 1px var(--grey1);
     align-items: center;
     display: flex;
     position: relative;
@@ -12,7 +12,7 @@ const Div = styled.div`
 
 const ItemDivver = styled.div`
     padding-bottom: 4px;
-    /* border-bottom: solid 2px ${props => props.isSelect ? "#2D2D2D" : "transparent"}; */
+    /* border-bottom: solid 2px ${props => props.isSelect ? "var(--grey9)" : "transparent"}; */
 `
 
 const Item = styled.div`
@@ -22,7 +22,7 @@ const Item = styled.div`
     user-select: none;
 
     &:hover {
-        background-color: #F5F5F5;
+        background-color: var(--grey1);
     }
 `
 
@@ -33,7 +33,7 @@ const UnderLine = styled.div`
     left: ${props => props.left || 0}px;
     width: ${props => props.width}px;
     height: 1px;
-    border-bottom: solid 2px #2D2D2D;
+    border-bottom: solid 2px var(--grey9);
 `
 
 export default function HorizonMenu(props) {
