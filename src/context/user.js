@@ -64,6 +64,7 @@ const UserContextProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`
                 }
             })
+            delete res.data.token
             SetUser(res.data)
             console.log(res.data);
         } catch (err) {

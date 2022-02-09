@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@tosspayments/payment-sdk": "^1.0.2",
     "axios": "^0.25.0",
     "i18next": "^21.6.10",
     "js-yaml": "^4.1.0",

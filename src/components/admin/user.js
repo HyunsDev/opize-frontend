@@ -26,6 +26,8 @@ const Info = styled.div`
     padding: 8px 16px;
     cursor: pointer;
     border-radius: 8px 8px 0px 0px;
+    user-select: none;
+
     &:hover {
         background-color: var(--grey2);
     }
@@ -88,7 +90,6 @@ export function User(props) {
         if (isFold) {
             try {
                 const res = await instance.get(`/admin/user/${props.id}`)
-                console.log(res.data)
                 setUser(res.data)
                 setFold(false)
             } catch (err) {

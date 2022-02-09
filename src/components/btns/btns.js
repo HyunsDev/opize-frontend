@@ -14,6 +14,7 @@ const BtnSubmitDiv = styled.div`
     transition: 200ms;
     min-height: 40px;
     border: 0;
+    width: fit-content;
     cursor: ${props => props.isLoading ? "not-allowed" : "pointer"};
 
     &:hover {

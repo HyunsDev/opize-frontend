@@ -75,5 +75,8 @@
   "user_user_menu_destroy": "계정 삭제",
   "user_user_menu_destroy_conform": "정말로 계정을 삭제하시겠어요?",
   "user_payment_title": "결제",
+  "user_payment_card": "카드",
+  "user_payment_card_change": "카드 변경",
+  "user_payment_card_add": "카드 등록",
   "user_paymentLog_title": "결제 기록"
 }

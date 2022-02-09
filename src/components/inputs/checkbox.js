@@ -61,7 +61,7 @@ export default function CheckBox(props) {
 
     return (
         <CheckBoxDiv>
-            <Input type={'checkbox'} checked={props.value } onChange={props.onChange || (() => {})} />
+            <Input type={'checkbox'} checked={props.value || true } onChange={props.onChange || (() => {})} />
             <FakeCheckBox checked={props.value} onClick={() => props.onChange(!props.value)}>
                 <Icon viewBox="0 0 24 24">
                     <polyline points="19 7 10 17 5 12" />

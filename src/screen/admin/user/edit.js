@@ -67,7 +67,6 @@ export default function Create(props) {
                         roles: JSON.stringify(res.data.roles),
                     })
                     setOriginalData(res.data)
-                    console.log(res.data)
                 } catch (err) {
                     console.error(err)
                 }

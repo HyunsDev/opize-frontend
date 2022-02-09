@@ -86,6 +86,7 @@ const ProjectInfo = styled.div`
     transition: 200ms;
     padding: 20px;
     cursor: pointer;
+    user-select: none;
     border-radius: 8px 8px 0px 0px;
     &:hover {
         background-color: var(--grey2);

@@ -3,11 +3,12 @@ import {  Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import Header from "../../components/header/header";
 import { useTranslation } from 'react-i18next';
 
-import User from './user';
 import Page from "../../components/page/default";
 import { H1 } from "../../components/title/title";
 import HorizonLNB from '../../components/LNB/horizonLNB';
 
+import User from './user';
+import Payment from './payment'
 
 export default function Router() {
     const { t } = useTranslation('translation')
@@ -31,7 +32,7 @@ export default function Router() {
 
             <Routes>
                 <Route path="/" element={<User />} />
-                <Route path="/payment" element={<>{t('developingFunction')}</>} />
+                <Route path="/payment" element={<Payment />} />
                 <Route path="/paymentLog" element={<>{t('developingFunction')}</>} />
             </Routes>
         </Page>
