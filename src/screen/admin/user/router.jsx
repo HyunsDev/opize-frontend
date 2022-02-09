@@ -5,6 +5,7 @@ import { H1 } from "../../../components/title/title";
 import HorizonLNB from '../../../components/LNB/horizonLNB';
 
 import List from './list'
+import Edit from './edit'
 
 export default function Router() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ export default function Router() {
 
         <Routes>
             <Route path="/" element={<List />} />
+            <Route path="/edit" element={<Edit />} />
         </Routes>
     </>
   );
