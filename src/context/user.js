@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify"
@@ -8,6 +9,7 @@ export const UserContext =  createContext({
 
 const UserContextProvider = ({ children }) => {
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const [user, SetUser] = useState({});
     const updateUser = async () => {
@@ -63,6 +65,7 @@ const UserContextProvider = ({ children }) => {
                 }
             })
             SetUser(res.data)
+            console.log(res.data);
         } catch (err) {
             if (err.response) {
                 console.log(err.response.data.code)
@@ -118,8 +121,35 @@ const UserContextProvider = ({ children }) => {
         }
     }
 
+    const instanceHandling = ( err ) => {
+        if (err.response) {
+            if (err.response.data.code === "user_not_found") {
+                toast.error(t('err_user_not_found'))
+                err.processed = true
+                throw err
+            } else if (err.response.data.code === "token_expired") {
+                navigate("/login")
+                err.processed = true
+                throw err
+            } else if (err.response.data.code === "invalid_token") {
+                toast.error(t('err_invalid_token'))
+                navigate("/login")
+                err.processed = true
+                throw err
+            } else {
+                // console.error(err)
+                // toast.error(err.message)
+                throw err
+            }
+        } else {
+            // console.error(err)
+            // toast.error(err.message)
+            throw err
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ user, updateUser, getUser, initUser }}>
+        <UserContext.Provider value={{ user, updateUser, getUser, initUser, instanceHandling }}>
             {children}
         </UserContext.Provider>);
     };

@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react";
+import { UserContext } from "../../context/user";
 
 const SelectorDivver = styled.div`
     box-sizing: border-box;
@@ -49,6 +50,7 @@ const Selector = styled.div`
     overflow: hidden;
     user-select: none;
     ${props => props.direction || "left"}: 0;
+    visibility : ${props => props.isOpen ? 'visible' : 'hidden'};
 
     transition: transform 100ms cubic-bezier(0.84,-0.88, 0.01, 2.12), opacity 150ms;
     transform: scale(${props => props.isOpen ? 1 : 0.9});
@@ -103,6 +105,7 @@ const SelectorItemA = styled.a`
 
 export default function DropDown(props) {
     const [ isOpen, setOpen ] = useState(false)
+    const { user } = useContext(UserContext)
 
     return (
         <SelectorDivver className={props.className || ""} onClick={() => {setOpen(!isOpen)}}>
@@ -114,6 +117,7 @@ export default function DropDown(props) {
                 {
                     props.menus && props.menus.map((e,i) => {
                         if (e.show === false) return null
+                        if (e.onlyAdmin && !user.isAdmin) return null
                         if (e.to.includes("http")) {
                             return (
                                 <SelectorItemA href={e.to} key={i} target={"_blank"}>

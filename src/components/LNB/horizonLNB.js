@@ -39,11 +39,30 @@ const UnderLine = styled.div`
 export default function HorizonMenu(props) {
     const DivRef = useRef()
     const targets = useRef({})
+    const [ select, setSelect ] = useState('')
     const [width, setWidth] = useState(0)
 
     useEffect(() => {
-        setWidth(targets.current[props.selected]?.offsetWidth)
-    },[props.selected])
+        const res = props.menu.map(e => {
+            if (props.exact) {
+                if (e.id === props.selected) {
+                    return props.selected
+                }
+            } else {
+                if (props.selected.startsWith(e.id)) {
+                    return e.id
+                }
+            }
+            return null
+            
+        }).filter(Boolean)
+        setSelect(res[res.length - 1])
+    }, [props.selected, props.menu, props.exact])
+
+    useEffect(() => {
+        // console.log(targets.current, select)
+        setWidth(targets.current[select]?.offsetWidth)
+    },[select, props.selected])
 
     return (
         <Div ref={DivRef}>
@@ -58,7 +77,7 @@ export default function HorizonMenu(props) {
                     )
                 })
             }
-            <UnderLine width={width} left={targets.current[props.selected]?.getBoundingClientRect().left - DivRef.current?.getBoundingClientRect().left}/>
+            <UnderLine width={width} left={targets.current[select]?.getBoundingClientRect().left - DivRef.current?.getBoundingClientRect().left}/>
         </Div>
     )
 }

@@ -9,7 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import RowMenu from '../../components/row/rowMenu';
 import Input from '../../components/inputs/input';
-import { Btn, BtnSubmit, ColorBtn, ColorBtnSubmit } from '../../components/btns/btns';
+import { Btn, ColorBtn, ColorBtnSubmit } from '../../components/btns/btns';
 import CheckBox from '../../components/inputs/checkbox';
 import LoginInput from '../../components/inputs/loginInput'
 

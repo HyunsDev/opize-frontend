@@ -8,6 +8,15 @@
             "showDashboard": false,
             "show": false
         },
+        "admin": {
+            "name": "운영자",
+            "img": "/opize.png",
+            "desc": "운영자",
+            "to": "/admin",
+            "showDashboard": false,
+            "show": true,
+            "onlyAdmin": true
+        },
         "dashboard": {
             "name": "대시보드",
             "img": "/opize.png",
