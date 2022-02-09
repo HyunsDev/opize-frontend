@@ -4,6 +4,7 @@ const Div = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    margin-top: ${props => props.marginTop}px;
 `
 
 const Left = styled.div`
@@ -23,7 +24,7 @@ const Right = styled.div`
 
 export default function RowMenu(props) {
     return (
-        <Div>
+        <Div marginTop={props.marginTop || 0}>
             <Left>
                 {props.name || "name"}
             </Left>

@@ -20,6 +20,7 @@ const Item = styled.div`
     cursor: pointer;
     border-radius: 8px;
     user-select: none;
+    transition: 200ms;
 
     &:hover {
         background-color: var(--grey1);
