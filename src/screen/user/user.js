@@ -312,7 +312,7 @@ const MenuCoupon = (props) => {
 
     return (
         <RowMenu name={t('user_user_menu_coupon')}>
-            <Input placeholder={t('user_user_menu_coupon')} value={value || ""} onChange={e => setValue(e.target.value)} placeholder={t('user_user_menu_coupon_placeholder')}/>
+            <Input value={value || ""} onChange={e => setValue(e.target.value)} placeholder={t('user_user_menu_coupon_placeholder')}/>
             <ColorBtn isLoading={isLoading} text={t('btn_use')} onClick={fetchAPI} />
         </RowMenu>
     )

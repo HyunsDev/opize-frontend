@@ -26,9 +26,7 @@ ReactDOM.render(
       newestOnTop={false}
       closeOnClick
       rtl={false}
-      pauseOnFocusLoss
       draggable
-      pauseOnHover
       transition={ Flip }
       />
   </React.StrictMode>,

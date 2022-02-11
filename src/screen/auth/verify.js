@@ -91,7 +91,6 @@ export default function EmailVerify(props) {
             navigate('/login')
             return
         }
-        updateUser()
         if (user.isVerified) {
             navigate("/dashboard")
         }

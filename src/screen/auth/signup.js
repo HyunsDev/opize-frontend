@@ -97,7 +97,7 @@ export default function Login (props) {
         if (!isLoading) {
             try {
                 setLoading(true)
-                const res = await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/sign-up?test=true`, {
+                const res = await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/sign-up`, {
                     email: data.email,
                     password: data.password,
                     name: data.name,

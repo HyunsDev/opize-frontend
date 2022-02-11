@@ -63,7 +63,7 @@ export default function User(props) {
             ;(async () => {
                 try {
                     navigate('/user/payment')
-                    const res = await instance.post(`/billing`, {
+                    await instance.post(`/billing`, {
                         customerKey,
                         authKey
                     })
@@ -90,7 +90,7 @@ export default function User(props) {
             // 등록 실패
             toast.warn(searchParams.get('message'))
         }
-    }, [card, navigate, searchParams, t, user.email])
+    }, [card, navigate, searchParams, t, user.email, updateUser])
 
     // 카드 등록
     const addCard = () => {

@@ -92,7 +92,7 @@ export default function Login (props) {
         if (!isLoading) {
             try {
                 setLoading(true)
-                await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/reset-password?test=true`, {
+                await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/reset-password`, {
                     email: searchParams.get('email'),
                     code: searchParams.get('code'),
                     password: data.password,

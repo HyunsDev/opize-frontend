@@ -62,7 +62,7 @@ export function Card(props) {
     return (
         <Div onClick={props.onClick || null}>
             <Img src={Logo} alt='opize Logo' />
-            <CardNum>{props.cardCompany} {cardNumber}</CardNum>
+            <CardNum>{props.cardCompany} {cardNumber || t('user_payment_card_add')}</CardNum>
             <CardInfo>{props.cardInfo}</CardInfo>
             <Center>{props.cardCompany ? t('user_payment_card_change') : t('user_payment_card_add')}</Center>
         </Div>
