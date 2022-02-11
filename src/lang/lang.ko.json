@@ -12,6 +12,7 @@
   "err_already_account_exist": "이미 계정이 존재합니다.",
   "err_wrong_password": "올바른 비밀번호를 입력해주세요.",
   "developingFunction": "아직 개발중인 기능이에요.",
+  "err_redirect_not_found": "존재하지 않는 링크에요.",
   "search_placeholder": "검색",
   "header_user": "계정 설정",
   "header_notice": "공지 & 업데이트",

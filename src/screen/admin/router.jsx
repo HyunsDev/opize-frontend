@@ -5,7 +5,7 @@ import Header from "../../components/header/header";
 import Dashboard from './dashboard';
 import ProjectRouter from './project/router';
 import UserRouter from './user/router';
-import TestRouter from './test/router';
+import TestRouter from './other/router';
 
 import Page from "../../components/page/default";
 import { H1 } from "../../components/title/title";
@@ -29,14 +29,14 @@ export default function Router() {
                 {id: "/admin", text: '대시보드', onClick: () => navigate("/admin")},
                 {id: "/admin/project", text: '프로젝트', onClick: () => navigate("/admin/project")},
                 {id: "/admin/user", text: '사용자', onClick: () => navigate("/admin/user")},
-                {id: "/admin/test", text: '테스트', onClick: () => navigate("/admin/test")},
+                {id: "/admin/other", text: '기타', onClick: () => navigate("/admin/other")},
             ]} />
 
             <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/project/*" element={<ProjectRouter />} />
                 <Route path="/user/*" element={<UserRouter />} />
-                <Route path="/test/*" element={<TestRouter />} />
+                <Route path="/other/*" element={<TestRouter />} />
             </Routes>
         </Page>
     

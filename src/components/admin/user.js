@@ -53,7 +53,7 @@ const Email = styled.span`
     font-size: 14px;
 `
 
-const Detail = styled.div`
+const InDetail = styled.div`
     background-color: var(--grey9);
     color: var(--grey4);
     font-size: 14px;
@@ -117,12 +117,34 @@ export function User(props) {
                     <Email>{props.email}</Email>
                 </div>
             </Info>
-            <Detail isFold={isFold}>
+            <InDetail isFold={isFold}>
                 {
                     Object.keys(user).map((e, i) => (<p key={i}><span>{e}</span>: {JSON.stringify(user[e])}</p>))
                 }
+                <A key='detail' to={`/admin/user/detail?userId=${props.id}`}>자세한 정보</A>
                 <A key='edit' to={`/admin/user/edit?userId=${props.id}`}>편집</A>
-            </Detail>
+            </InDetail>
         </Div>
     )
 }
+
+export const Detail = styled.div`
+    background-color: var(--grey9);
+    color: var(--grey4);
+    font-size: 14px;
+    flex-direction: column;
+    gap: 4px;
+    display: flex;
+    border-radius: 0 0 8px 8px;
+
+    overflow-y: hidden;
+    padding: 20px;
+    transition: 200ms;
+
+    p, pre {
+        word-break: break-all;
+        span {
+            color: var(--teal5);
+        }
+    }
+`
