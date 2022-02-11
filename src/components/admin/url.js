@@ -53,10 +53,11 @@ export default function Url(props) {
         <Div>
             <Info onClick={() => props.onClick()}>
                 <div>
-                    <Name>{props.originalUrl}</Name>
+                    <Name>{props.newUrl}</Name>
+                    <Id>{props.count}</Id>
                 </div>
                 <div>
-                    <Email>{props.newUrl}</Email>
+                    <Email>{props.originalUrl}</Email>
                 </div>
             </Info>
         </Div>
