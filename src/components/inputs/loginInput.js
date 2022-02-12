@@ -43,7 +43,7 @@ export default function Login (props) {
     return (
         <LoginDiv>
             <Name>{props.name || "name"}</Name>
-            <Input type={props.type || "text"} autoComplete={props.autoComplete || "on"} error={props.error} value={props.value} onChange={props.onChange || (() => {})} />
+            <Input type={props.type || "text"} autoComplete={props.autoComplete || "on"} placeholder={props.placeholder || ""} error={props.error} value={props.value} onChange={props.onChange || (() => {})} />
             <Label error={props.error}>{props.error?.message}</Label>
         </LoginDiv>
     )

@@ -123,9 +123,7 @@ export default function Project(props) {
                     Object.keys(props).map((e, i) => (<p key={i}><span>{e}</span>: {JSON.stringify(props[e])}</p>))
                 }
                 <Options key='option'>
-                    <A to={`/admin/project/product/new?projectCode=${props.code}`}>새로운 상품</A>
-                    <A to={`/admin/project/product?projectCode=${props.code}`}>상품</A>
-                    <A to={`/admin/project/edit?projectCode=${props.code}`}>편집</A>
+                    <A to={`/admin/project/product/edit?projectCode=${props.projectCode}&productCode=${props.code}`}>편집</A>
                 </Options>
             </Desc>
         </ProjectDiv>
