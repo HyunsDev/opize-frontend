@@ -6,6 +6,7 @@ project: 프로젝트
 contact: 문의
 developer: 개발자
 login: 로그인
+logout: 로그아웃
 
 ###########[ 오류 문구 ]############
 err_invalid_token: "올바르지 않은 토큰이에요."

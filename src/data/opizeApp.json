@@ -24,14 +24,6 @@
             "to": "/dashboard",
             "showDashboard": false,
             "show": true
-        },
-        "calendar2notion": {
-            "name": "Calendar2notion",
-            "img": "/opize.png",
-            "desc": "구글 캘린더와 노션 양방향 동기화하기",
-            "to": "https://calendar2notion.opize.me",
-            "showDashboard": true,
-            "show": true
         }
     },
     "en-US": {
@@ -40,12 +32,6 @@
             "img": "/opize.png",
             "desc": "Dashboard",
             "showDashboard": false
-        },
-        "calendar2notion": {
-            "name": "Calendar2notion",
-            "img": "/opize.png",
-            "desc": "구글 캘린더와 노션 양방향 동기화하기",
-            "showDashboard": true
         }
     }
 }

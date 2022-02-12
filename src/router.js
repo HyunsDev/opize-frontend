@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import UserContextProvider from './context/user';
+import DashContextProvider from './context/dashboard';
 
 import Notion from './screen/notion/index';
 import Login from './screen/auth/login';
@@ -19,20 +20,22 @@ export default function Router() {
     <div className="App">
         <BrowserRouter>
           <UserContextProvider>
-            <Routes>
-              <Route path="/" element={<Notion />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/verify" element={<EmailVerify />} />
-              <Route path="/reset-password" element={<PasswordReset />} />
-              <Route path="/reset-password/email" element={<PasswordResetEmail />} />
-              <Route path="/reset-password/change" element={<PasswordResetPassword />} />
-              <Route path="/dashboard/*" element={<DashboardRouter />} />
-              <Route path="/user/*" element={<UserRouter />} />
-              <Route path="/admin/*" element={<AdminRouter />} />
-              <Route path="/r/*" element={<Redirect />} />
-              <Route path="*" element={<Notion />} />
-            </Routes>
+            <DashContextProvider>
+              <Routes>
+                <Route path="/" element={<Notion />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/verify" element={<EmailVerify />} />
+                <Route path="/reset-password" element={<PasswordReset />} />
+                <Route path="/reset-password/email" element={<PasswordResetEmail />} />
+                <Route path="/reset-password/change" element={<PasswordResetPassword />} />
+                <Route path="/dashboard/*" element={<DashboardRouter />} />
+                <Route path="/user/*" element={<UserRouter />} />
+                <Route path="/admin/*" element={<AdminRouter />} />
+                <Route path="/r/*" element={<Redirect />} />
+                <Route path="*" element={<Notion />} />
+              </Routes>
+            </DashContextProvider>
           </UserContextProvider>
         </BrowserRouter>
     </div>

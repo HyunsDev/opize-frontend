@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import { useState, useContext } from "react";
 import { UserContext } from "../../context/user";
 
+import Opize from '../../assets/opize.png'
+
 const SelectorDivver = styled.div`
     box-sizing: border-box;
     display: flex;
@@ -22,7 +24,7 @@ const NowPage = styled.div`
     position: relative;
     cursor: pointer;
     user-select: none;
-    background-color: ${props => props.isOpen ? "var(--grey2)" : props.backgroundColor || "var(--grey1)"};
+    background-color: ${props => props.isOpen ? "var(--greyPlaceholder)" : "transparent"};
 
     img {
         height: 24px;
@@ -33,7 +35,7 @@ const NowPage = styled.div`
     }
 
     &:hover {
-        background-color: var(--grey2)
+        background-color: var(--greyPlaceholder);
     }
 `
 
@@ -42,7 +44,7 @@ const Selector = styled.div`
     position: absolute;
     top: 40px;
     background-color: #ffffff;
-    min-width: 200px;
+    min-width: 180px;
     padding: 8px 0px;
     border: solid 1px var(--grey3);
     border-radius: 8px;
@@ -67,6 +69,7 @@ const SelectorItem = styled(Link)`
     padding: 8px 16px;
     text-decoration: none;
     transition: 200ms;
+    width: 100%;
 
     img {
         height: 24px;
@@ -74,6 +77,8 @@ const SelectorItem = styled(Link)`
 
     div {
         color: var(--grey9);
+        width: 100%;
+        white-space: nowrap;
     }
 
     &:hover {
@@ -89,6 +94,7 @@ const SelectorItemA = styled.a`
     padding: 8px 16px;
     text-decoration: none;
     transition: 200ms;
+    width: 100%;
 
     img {
         height: 24px;
@@ -96,6 +102,8 @@ const SelectorItemA = styled.a`
 
     div {
         color: var(--grey9);
+        width: 100%;
+        white-space: nowrap;
     }
 
     &:hover {
@@ -110,8 +118,8 @@ export default function DropDown(props) {
     return (
         <SelectorDivver className={props.className || ""} onClick={() => {setOpen(!isOpen)}}>
             <NowPage isOpen={isOpen} backgroundColor={props.backgroundColor}>
-                {props.img && <img src={props.img} alt="로고" />}
-                <div>{props.name || "name"}</div>
+                <img src={props.img || Opize} alt="로고" />
+                <div>{props.name || "Opize"}</div>
             </NowPage>
             <Selector isOpen={isOpen} direction={props.direction}>
                 {

@@ -1,11 +1,14 @@
 import styled from "styled-components"
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from "../../context/user";
-import services from '../../data/opizeApp.json'
+import defaultApp from '../../data/opizeApp.json'
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+import { ArrowRight } from 'phosphor-react'
 
 import DropDown from "../dropdown/dropdown";
+import { DashboardContext } from "../../context/dashboard";
+import { useMemo } from "react";
 
 const Divver = styled.div`
     display: flex;
@@ -17,9 +20,8 @@ const Divver = styled.div`
     padding: 0px 8px;
     position: fixed;
     top: 0;
-    border-bottom: solid ${props => props.isTop ? "0px" : "1px"} var(--grey3);
     transition: 200ms;
-    /* backdrop-filter: blur(2px); */
+    border-bottom: solid 1px ${props => props.isTop ? "rgba(0,0,0,0)" : "var(--grey2)"} ;
     background-color: ${props => props.isTop ? "transparent" : "#ffffff"};
 `
 
@@ -41,31 +43,83 @@ const MenuBtn = styled(Link)`
     font-size: 14px;
     
     &:hover {
-        background-color: var(--grey2)
+        background-color: var(--greyPlaceholder)
+    }
+`
+
+const LoginBtn = styled(Link)`
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 200ms;
+    color: #2D6560;
+    font-weight: 800;
+    gap: 8px;
+    font-size: 14px;
+
+    &:hover {
+        background-color: rgba(0,0,0,0.08)
     }
 `
 
 export default function Header(props) {
     const { user, initUser } = useContext(UserContext)
+    const { dashboard, initDashboard } = useContext(DashboardContext)
     const { t, i18n } = useTranslation('translation')
+    const [isTop, setIsTop] = useState(true)
+
+    const onScroll = () => {
+        setIsTop(window.scrollY === 0)
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScroll)
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+        }
+    }, [])
 
     useEffect(() => {
         initUser()
     }, [initUser])
 
+    useEffect(() => {
+        initDashboard()
+    }, [initDashboard])
+
+    const services = useMemo(() => {
+        let temp = defaultApp[i18n.language]
+        dashboard?.projects?.forEach(e => {
+            temp[e.code] = {
+                name: e.name,
+                img: e.icon,
+                desc: e.desc,
+                show: true,
+                to: e.url,
+            }
+        })
+        return temp
+    }, [i18n, dashboard])
+
     return (
-        <Divver>
+        <Divver isTop={isTop}>
             <Items>
-                <DropDown {...services[i18n.language][props.app]} menus={Object.values(services[i18n.language])} />
+                <DropDown {...services[props.app]} menus={Object.values(services)} />
             </Items>
             <Items>
                 <MenuBtn to="/blog">{t('blog')}</MenuBtn>
                 <MenuBtn to="/">{t('project')}</MenuBtn>
                 <MenuBtn to="/developer">{t('developer')}</MenuBtn>
-                <DropDown direction='right' name={user.name} img={user.profileImage || ""} menus={[
-                    {name: t('header_user'), to: "/user"},
-                    {name: t('header_notice'), to: "/notice"},
-                ]} />
+                {
+                    localStorage.getItem('token') ? <DropDown direction='right' name={user.name} img={user.profileImage || ""} menus={[
+                        {name: t('header_user'), to: "/user"},
+                        {name: t('header_notice'), to: "/notice"},
+                        {name: t('logout'), to: "/logout"},
+                        ]} /> : <LoginBtn to="/login">{t('login')}<ArrowRight size={20} weight="bold" /></LoginBtn>
+                }   
+
             </Items>
         </Divver>
     )

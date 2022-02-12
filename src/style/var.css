@@ -14,12 +14,13 @@
     --grey1: #F1F3F5; /* Background */
     --grey2: #E9ECEF;
     --grey3: #DEE2E6; /* Border */
-    --grey4: #CED4DA;
+    --grey4: #ced4da;
     --grey5: #ADB5BD; /* Placeholder */
     --grey6: #868E96;
     --grey7: #4A5157;
     --grey8: #353B41;
     --grey9: #1E2226;
+    --greyPlaceholder: rgba(173, 181, 189, 0.3);
 
     --blue0: #EEF7FF;
     --blue1: #D9EEFF;

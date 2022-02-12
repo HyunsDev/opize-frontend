@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components'
 import { useLocation } from "react-router-dom";
 
-import LandingHeader from "../../components/header/landingHeader";
+import Header from "../../components/header/header";
 
 const Div = styled.div`
     position: relative;
@@ -38,7 +38,7 @@ const Notion = function (props) {
     return (
         <>
             <Div>
-                <LandingHeader />
+                <Header />
                 <NotionRendererDiv>
                     {page && <NotionRenderer recordMap={page} fullPage darkMode={false} disableHeader/>}
                 </NotionRendererDiv>
