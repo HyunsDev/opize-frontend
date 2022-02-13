@@ -114,7 +114,7 @@ export default function Create(props) {
                     name: data.name,
                     icon: data.icon,
                     prices: {
-                        KRW: data.pricesKRW,
+                        KRW: data.priceKRW,
                     },
                     billingInterval:data.billingInterval,
                     status: data.status,

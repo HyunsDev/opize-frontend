@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.2.1",
     "@tosspayments/payment-sdk": "^1.0.2",
     "axios": "^0.25.0",
+    "dayjs": "^1.10.7",
     "i18next": "^21.6.10",
     "js-yaml": "^4.1.0",
     "js-yaml-loader": "^1.2.2",
@@ -31,7 +32,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +53,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }

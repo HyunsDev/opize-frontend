@@ -16,6 +16,10 @@ err_already_account_exist: "이미 계정이 존재합니다."
 err_wrong_password: 올바른 비밀번호를 입력해주세요.
 developingFunction: 아직 개발중인 기능이에요.
 err_redirect_not_found: 존재하지 않는 링크에요.
+err_project_not_found: 없는 프로젝트에요.
+err_product_not_found: 없는 상풍이에요.
+err_already_subscribed: 이미 구독한 상품이에요.
+err_need_payment: 결제 수단이 필요해요.
 
 ############[ 컴포넌트 ]############
 
@@ -108,9 +112,15 @@ user_payment_title: 결제
 user_payment_card: 카드
 user_payment_card_change: 카드 변경
 user_payment_card_add: 카드 등록
-
-
-
+user_payment_subscribe: 구독
+user_payment_subscribe_next_payment: 다음 결제일
+user_payment_subscribe_unsubscribe: 구독 취소
+user_payment_subscribe_unsubscribe_date: 구독 종료 예정일
+user_payment_subscribe_unsubscribe_toast: '{{date}} 에 구독이 종료될 예정이에요.'
+user_payment_subscribe_resubscribe_toast: "구독이 다시 시작되었어요."
 
 user_paymentLog_title: 결제 기록
 
+# subscribe
+subscribe_title: 플랜 구독
+subscribe_btn: 플랜 구독

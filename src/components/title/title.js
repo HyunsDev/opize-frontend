@@ -11,4 +11,5 @@ export const H2 = styled.h2`
     color: var(--grey9);
     font-weight: 800;
     margin-top: 16px;
+    margin-bottom: 8px;
 `

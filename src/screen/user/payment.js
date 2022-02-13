@@ -8,13 +8,11 @@ import axios from 'axios';
 import { useForm, Controller } from "react-hook-form";
 
 import RowMenu from '../../components/row/rowMenu';
-import Input from '../../components/inputs/input';
-import { Btn, ColorBtn, ColorBtnSubmit } from '../../components/btns/btns';
-import CheckBox from '../../components/inputs/checkbox';
-import LoginInput from '../../components/inputs/loginInput'
+import { H2 } from '../../components/title/title';
 import { Card } from '../../components/card';
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import instance from '../../src/instance';
+import Subscribe from '../../components/block/subscribe';
 
 const RowMenus = styled.div`
     display: flex;
@@ -24,15 +22,12 @@ const RowMenus = styled.div`
     flex-direction: column;
 `
 
-const Cards = styled.div`
+const Items = styled.div`
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     gap: 8px;
-`
-
-const Btns = styled.div`
-    display: flex;
-    justify-content: end;
+    width: 100%;
+    align-items: flex-end;
 `
 
 export default function User(props) {
@@ -109,10 +104,18 @@ export default function User(props) {
             <RowMenus>
                 <RowMenu name={t('user_payment_card')}>
                     <div />
-                    <Cards>
+                    <Items>
                         <Card {...card} onClick={addCard} cardInfo={user.email}/>
-                    </Cards>
+                    </Items>
                 </RowMenu>
+                <div>
+                    <H2>{t('user_payment_subscribe')}</H2>
+                    <Items>
+                        {
+                            user?.subscribes?.map((e, i) => <Subscribe projectCode={e.product.code} key={i} {...e} />)
+                        }
+                    </Items>
+                </div>
             </RowMenus>
         </>
     )

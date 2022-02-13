@@ -6,6 +6,7 @@
   "contact": "문의",
   "developer": "개발자",
   "login": "로그인",
+  "logout": "로그아웃",
   "err_invalid_token": "올바르지 않은 토큰이에요.",
   "err_email_not_exist": "존재하지 않는 이메일 주소에요.",
   "err_user_not_found": "존재하지 않는 사용자입니다.",
@@ -13,6 +14,10 @@
   "err_wrong_password": "올바른 비밀번호를 입력해주세요.",
   "developingFunction": "아직 개발중인 기능이에요.",
   "err_redirect_not_found": "존재하지 않는 링크에요.",
+  "err_project_not_found": "없는 프로젝트에요.",
+  "err_product_not_found": "없는 상풍이에요.",
+  "err_already_subscribed": "이미 구독한 상품이에요.",
+  "err_need_payment": "결제 수단이 필요해요.",
   "search_placeholder": "검색",
   "header_user": "계정 설정",
   "header_notice": "공지 & 업데이트",
@@ -79,5 +84,13 @@
   "user_payment_card": "카드",
   "user_payment_card_change": "카드 변경",
   "user_payment_card_add": "카드 등록",
-  "user_paymentLog_title": "결제 기록"
+  "user_payment_subscribe": "구독",
+  "user_payment_subscribe_next_payment": "다음 결제일",
+  "user_payment_subscribe_unsubscribe": "구독 취소",
+  "user_payment_subscribe_unsubscribe_date": "구독 종료 예정일",
+  "user_payment_subscribe_unsubscribe_toast": "{{date}}에 구독이 종료될 예정이에요.",
+  "user_payment_subscribe_resubscribe_toast": "구독이 다시 시작되었어요.",
+  "user_paymentLog_title": "결제 기록",
+  "subscribe_title": "플랜 구독",
+  "subscribe_btn": "플랜 구독"
 }

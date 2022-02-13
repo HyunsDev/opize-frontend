@@ -14,6 +14,7 @@ import DashboardRouter from './screen/dashboard/router';
 import UserRouter from './screen/user/router';
 import AdminRouter from './screen/admin/router';
 import Redirect from './screen/redirect';
+import Subscribe from './screen/subscribe/subscribe';
 
 export default function Router() {
   return (
@@ -33,6 +34,7 @@ export default function Router() {
                 <Route path="/user/*" element={<UserRouter />} />
                 <Route path="/admin/*" element={<AdminRouter />} />
                 <Route path="/r/*" element={<Redirect />} />
+                <Route path="/subscribe" element={<Subscribe />} />
                 <Route path="*" element={<Notion />} />
               </Routes>
             </DashContextProvider>

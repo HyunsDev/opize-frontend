@@ -33,6 +33,10 @@ const Notion = function (props) {
                 console.error(err)
             }
         })()
+
+        return () => {
+            setPage()
+        }
     },[location, props.id, i18n.language])
 
     return (

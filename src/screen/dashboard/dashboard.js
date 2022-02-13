@@ -34,7 +34,7 @@ export default function Dashboard(props) {
 
     const services = useMemo(() => {
         let temp = defaultApp[i18n.language]
-        dashboard?.projects?.forEach(e => {
+        Object.values(dashboard?.projects || {})?.forEach(e => {
             temp[e.code] = {
                 name: e.name,
                 img: e.icon,
