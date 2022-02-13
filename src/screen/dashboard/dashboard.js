@@ -20,7 +20,7 @@ const Services = styled.div`
 
 export default function Dashboard(props) {
     const { user } = useContext(UserContext)
-    const { dashboard, initDashboard } = useContext(DashboardContext)
+    const { dashboard } = useContext(DashboardContext)
     const [ searchText, setSearchText ] = useState('')
     const { t, i18n } = useTranslation('translation')
 

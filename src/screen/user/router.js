@@ -9,6 +9,7 @@ import HorizonLNB from '../../components/LNB/horizonLNB';
 
 import User from './user';
 import Payment from './payment'
+import PaymentLog from './paymentLog'
 
 export default function Router() {
     const { t } = useTranslation('translation')
@@ -33,7 +34,7 @@ export default function Router() {
             <Routes>
                 <Route path="/" element={<User />} />
                 <Route path="/payment" element={<Payment />} />
-                <Route path="/paymentLog" element={<>{t('developingFunction')}</>} />
+                <Route path="/paymentLog" element={<PaymentLog />} />
             </Routes>
         </Page>
     
