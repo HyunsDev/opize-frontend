@@ -120,6 +120,10 @@ user_payment_subscribe_unsubscribe_toast: '{{date}} 에 구독이 종료될 예�
 user_payment_subscribe_resubscribe_toast: "구독이 다시 시작되었어요."
 
 user_paymentLog_title: 결제 기록
+user_paymentLog_status_PENDING: 결제 대기중
+user_paymentLog_status_DONE: 결제 완료
+user_paymentLog_status_FAIL: 결제 실패
+user_paymentLog_status_REFUND: 환불됨
 
 # subscribe
 subscribe_title: 플랜 구독
