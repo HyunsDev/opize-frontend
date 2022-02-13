@@ -124,3 +124,7 @@ user_paymentLog_title: 결제 기록
 # subscribe
 subscribe_title: 플랜 구독
 subscribe_btn: 플랜 구독
+
+# payment
+payment_title: 결제
+payment_btn: 결제

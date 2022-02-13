@@ -88,9 +88,11 @@
   "user_payment_subscribe_next_payment": "다음 결제일",
   "user_payment_subscribe_unsubscribe": "구독 취소",
   "user_payment_subscribe_unsubscribe_date": "구독 종료 예정일",
-  "user_payment_subscribe_unsubscribe_toast": "{{date}}에 구독이 종료될 예정이에요.",
+  "user_payment_subscribe_unsubscribe_toast": "{{date}} 에 구독이 종료될 예정이에요.",
   "user_payment_subscribe_resubscribe_toast": "구독이 다시 시작되었어요.",
   "user_paymentLog_title": "결제 기록",
   "subscribe_title": "플랜 구독",
-  "subscribe_btn": "플랜 구독"
+  "subscribe_btn": "플랜 구독",
+  "payment_title": "결제",
+  "payment_btn": "결제"
 }

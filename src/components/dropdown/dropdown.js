@@ -128,7 +128,7 @@ export default function DropDown(props) {
                         if (e.onlyAdmin && !user.isAdmin) return null
                         if (e.to.includes("http")) {
                             return (
-                                <SelectorItemA href={e.to} key={i} target={"_blank"}>
+                                <SelectorItemA href={e.to} key={i}>
                                     {e.img && <img src={e.img} alt="" />}
                                     <div>{e.name || "name"}</div>
                                 </SelectorItemA>   

@@ -73,7 +73,7 @@ export default function Create(props) {
             <Header>paymentLog (결제 로그)</Header>
             <Blocks>
             {
-                originalData?.paymentLog?.map((e, i) => (<CodeBlock links={[{text: '환불', to: `/admin/user/refund?paymentLogId=${e._id}`}]}  title={`paymentLog`} subTitle={e.approvedAt} id={e._id} key={i}>{JSON.stringify(e, null, 2)}</CodeBlock>))
+                originalData?.paymentLog?.map((e, i) => (<CodeBlock links={[{text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${e._id}`}]}  title={`paymentLog`} subTitle={`${e.status} | ${e.approvedAt}`} id={e._id} key={i}>{JSON.stringify(e, null, 2)}</CodeBlock>))
             }
             </Blocks>
         </Divver>
