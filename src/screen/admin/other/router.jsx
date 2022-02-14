@@ -4,6 +4,8 @@ import HorizonLNB from '../../../components/LNB/horizonLNB';
 
 import Card from './card'
 import Redirect from './redirect'
+import NotionMap from './notionMap'
+import Banner from './banner'
 
 export default function Router() {
     const navigate = useNavigate()
@@ -14,11 +16,15 @@ export default function Router() {
         <HorizonLNB exact selected={location.pathname} menu={[
             {id: "/admin/other/card", text: '카드', onClick: () => navigate("/admin/other/card")},
             {id: "/admin/other/redirect", text: '리다이렉트', onClick: () => navigate("/admin/other/redirect")},
+            {id: "/admin/other/notionMap", text: '노션 맵', onClick: () => navigate("/admin/other/notionMap")},
+            {id: "/admin/other/banner", text: '배너', onClick: () => navigate("/admin/other/banner")},
         ]} />
 
         <Routes>
             <Route path="/card" element={<Card />} />
             <Route path="/redirect" element={<Redirect />} />
+            <Route path="/notionMap" element={<NotionMap />} />
+            <Route path="/banner" element={<Banner />} />
         </Routes>
     </>
   );
