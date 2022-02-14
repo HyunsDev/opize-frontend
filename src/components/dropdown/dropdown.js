@@ -6,6 +6,7 @@ import { UserContext } from "../../context/user";
 import Opize from '../../assets/opize.png'
 
 const SelectorDivver = styled.div`
+    z-index: ${props => props.isOpen ? 999 : 0};
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -111,39 +112,50 @@ const SelectorItemA = styled.a`
     }
 `
 
+const CloseBackground = styled.div`
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+`
+
 export default function DropDown(props) {
     const [ isOpen, setOpen ] = useState(false)
     const { user } = useContext(UserContext)
 
     return (
-        <SelectorDivver className={props.className || ""} onClick={() => {setOpen(!isOpen)}}>
-            <NowPage isOpen={isOpen} backgroundColor={props.backgroundColor}>
-                <img src={props.img || Opize} alt="로고" />
-                <div>{props.name || "Opize"}</div>
-            </NowPage>
-            <Selector isOpen={isOpen} direction={props.direction}>
-                {
-                    props.menus && props.menus.map((e,i) => {
-                        if (e.show === false) return null
-                        if (e.onlyAdmin && !user.isAdmin) return null
-                        if (e.to.includes("http")) {
-                            return (
-                                <SelectorItemA href={e.to} key={i}>
-                                    {e.img && <img src={e.img} alt="" />}
-                                    <div>{e.name || "name"}</div>
-                                </SelectorItemA>   
-                            )
-                        } else {
-                            return (
-                                <SelectorItem to={e.to} key={i}>
-                                    {e.img && <img src={e.img} alt="" />}
-                                    <div>{e.name || "name"}</div>
-                                </SelectorItem>   
-                            )
-                        }
-                    })
-                }
-            </Selector>
-        </SelectorDivver>
+        <>
+            <SelectorDivver isOpen={isOpen} className={props.className || ""} onClick={() => {setOpen(!isOpen)}}>
+                <NowPage isOpen={isOpen} backgroundColor={props.backgroundColor}>
+                    <img src={props.img || Opize} alt="로고" />
+                    <div>{props.name || "Opize"}</div>
+                </NowPage>
+                <Selector isOpen={isOpen} direction={props.direction}>
+                    {
+                        props.menus && props.menus.map((e,i) => {
+                            if (e.show === false) return null
+                            if (e.onlyAdmin && !user.isAdmin) return null
+                            if (e.to.includes("http")) {
+                                return (
+                                    <SelectorItemA href={e.to} key={i}>
+                                        {e.img && <img src={e.img} alt="" />}
+                                        <div>{e.name || "name"}</div>
+                                    </SelectorItemA>   
+                                )
+                            } else {
+                                return (
+                                    <SelectorItem to={e.to} key={i}>
+                                        {e.img && <img src={e.img} alt="" />}
+                                        <div>{e.name || "name"}</div>
+                                    </SelectorItem>   
+                                )
+                            }
+                        })
+                    }
+                </Selector>
+            </SelectorDivver>
+            { isOpen && <CloseBackground onClick={() => setOpen(false)} />}
+        </>
     )
 }

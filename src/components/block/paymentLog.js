@@ -12,7 +12,7 @@ const ProjectDiv = styled.div`
     display: flex;
     width: 100%;
     box-sizing: border-box;
-    background-color: ${props => props.status === "unsubscribed" ? 'var(--red1)' : 'var(--grey1)'};
+    background-color: ${props => props.status === "FAIL" ? 'var(--red1)' : 'var(--grey1)'};
     border-radius: 8px;
     text-decoration: none;
     transition: 200ms;
@@ -40,6 +40,7 @@ const Name = styled.div`
     align-items: center;
 
     span {
+        font-weight: 500;
         margin-left: 4px;
         color: var(--teal5);
         font-size: 14px;
@@ -88,7 +89,6 @@ const PlanInfo = styled.div`
 
 const PlanName = styled.div`
     color: var(--grey9);
-    font-weight: 800;
 `
 
 const NextPayment = styled.div`
@@ -113,6 +113,8 @@ const ReceiptA = styled.a`
 `
 
 export default function PaymentLog(props) {
+    const { t } = useTranslation('translation')
+
     return (
         <ProjectDiv status={props.status}>
             <ProjectInfo>
@@ -120,7 +122,7 @@ export default function PaymentLog(props) {
                     <img src={props?.project?.icon} alt={props?.project?.name} />
                 </IconDiv>
                 <Info>
-                    <Name>{props?.project?.name}</Name>
+                    <Name>{props?.project?.name}<span>{t(`user_paymentLog_status_${props.status}`)}</span></Name>
                     <InfoDesc>{props?.project?.desc}</InfoDesc>
                 </Info>
             </ProjectInfo>
