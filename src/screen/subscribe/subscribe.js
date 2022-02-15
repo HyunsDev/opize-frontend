@@ -73,13 +73,13 @@ export default function Index() {
     (async () => {
       if (projectCode && productCode) {
         try {
-          await instance.post(`/subscribe`, {
+          const res = await instance.post(`/subscribe`, {
             projectCode,
             productCode
           })
           toast.info('플랜을 구독했어요!')
           setTimeout(() => {
-            window.location.href = redirect || "/user/payment"
+            window.location.href = `${redirect}?paymentLogId=${res.data.paymentLogId}` || `/user/payment?paymentLogId=${res.data.paymentLogId}`
           }, 3000)
         } catch (err) {
           if (err.response) {

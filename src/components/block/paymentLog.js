@@ -128,7 +128,7 @@ export default function PaymentLog(props) {
             </ProjectInfo>
             <Right>
                 <PlanInfo>
-                    <PlanName>{props?.product?.name}</PlanName>
+                    <PlanName>{props?.product?.name} | {props?.totalAmount}{props?.currency}</PlanName>
                     <NextPayment>{new Date(props?.approvedAt).toLocaleString()}</NextPayment>
                 </PlanInfo>
                 <ReceiptA href={props.receiptUrl} target="_blank"><Receipt size={32} color="var(--teal5)" /></ReceiptA>

@@ -59,8 +59,6 @@ const BannerDivver = styled.div`
 const Banner = (props) => {
     const { dashboard } = useContext(DashboardContext)
 
-    console.log(dashboard.banners)
-
     return (
         <>
             <Swiper
@@ -77,7 +75,7 @@ const Banner = (props) => {
                     dashboard?.banners?.map((e, i) => {
                             if (e.to.includes('http')) {
                                 return (
-                                    <SwiperSlide>
+                                    <SwiperSlide key={i}>
                                         <a href={e.to || "/"} target={'_blank'} rel="noreferrer">
                                             <BannerImg src={e.bannerUrl} alt=""/>
                                         </a>
@@ -85,7 +83,7 @@ const Banner = (props) => {
                                 )
                             } else {
                                 return (
-                                    <SwiperSlide>
+                                    <SwiperSlide key={i}>
                                         <Link to={e.to || "/"}>
                                             <BannerImg src={e.bannerUrl} alt=""/>
                                         </Link>
