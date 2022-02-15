@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from "styled-components"
 import axios from "axios"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
 import { UserContext } from "../../context/user"
 import { toast } from "react-toastify"
@@ -74,6 +74,7 @@ const Right = styled.div`
 
 export default function Login (props) {
     const { updateUser } = useContext(UserContext)
+    const [ searchParams ] = useSearchParams()
     const [isLoading, setLoading] = useState(false)
     const navigate = useNavigate()
     const { t } = useTranslation('translation')
@@ -84,7 +85,7 @@ export default function Login (props) {
 
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
         defaultValues: {
-            email: "",
+            email: searchParams.get('email') || "",
             name: "",
             password: "",
             passwordRetry: "",

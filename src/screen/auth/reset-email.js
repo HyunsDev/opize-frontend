@@ -47,7 +47,6 @@ export default function EmailVerify(props) {
             setLoading(true)
             await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/reset-password-request`, {
                 email: searchParams.get("email"),
-                test: "true"
             });
             setLoading(false)
             toast.info(t('auth_email_resend'))

@@ -80,7 +80,7 @@ export default function Login (props) {
         document.title = `${t("auth_login_page_title")} | Opize`
     }, [t])
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, watch, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             email: "",
             password: ""
@@ -147,7 +147,7 @@ export default function Login (props) {
 
                     <LoginMenu>
                         <Left>
-                            <A to="/signup">{t('auth_signup')}</A> | <A to="/reset-password">{t('auth_reset')}</A>
+                            <A to={`/signup?email=${watch('email')}`}>{t('auth_signup')}</A> | <A to={`/reset-password?email=${watch('email')}`}>{t('auth_reset')}</A>
                         </Left>
                         <Right>
                             <ColorBtnSubmit text={t('auth_login')} isLoading={isLoading} />

@@ -7,7 +7,6 @@ import { toast } from "react-toastify"
 import { useEffect, useState } from "react"
 import { useTranslation } from 'react-i18next';
 
-
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 

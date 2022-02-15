@@ -16,6 +16,7 @@ import AdminRouter from './screen/admin/router';
 import Redirect from './screen/redirect';
 import Subscribe from './screen/subscribe/subscribe';
 import Payment from './screen/payment/payment';
+import Logout from './screen/logout';
 
 export default function Router() {
   return (
@@ -37,6 +38,7 @@ export default function Router() {
                 <Route path="/r/*" element={<Redirect />} />
                 <Route path="/subscribe" element={<Subscribe />} />
                 <Route path="/payment" element={<Payment />} />
+                <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Notion />} />
               </Routes>
             </DashContextProvider>

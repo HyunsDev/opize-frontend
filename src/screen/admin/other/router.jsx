@@ -6,6 +6,7 @@ import Card from './card'
 import Redirect from './redirect'
 import NotionMap from './notionMap'
 import Banner from './banner'
+import File from './file'
 
 export default function Router() {
     const navigate = useNavigate()
@@ -18,6 +19,7 @@ export default function Router() {
             {id: "/admin/other/redirect", text: '리다이렉트', onClick: () => navigate("/admin/other/redirect")},
             {id: "/admin/other/notionMap", text: '노션 맵', onClick: () => navigate("/admin/other/notionMap")},
             {id: "/admin/other/banner", text: '배너', onClick: () => navigate("/admin/other/banner")},
+            {id: "/admin/other/file", text: '파일', onClick: () => navigate("/admin/other/file")},
         ]} />
 
         <Routes>
@@ -25,6 +27,7 @@ export default function Router() {
             <Route path="/redirect" element={<Redirect />} />
             <Route path="/notionMap" element={<NotionMap />} />
             <Route path="/banner" element={<Banner />} />
+            <Route path="/file" element={<File />} />
         </Routes>
     </>
   );

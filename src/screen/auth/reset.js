@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from "styled-components"
 import axios from "axios"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify"
 import { useEffect, useState } from "react"
@@ -71,6 +71,7 @@ const Right = styled.div`
 
 export default function Login (props) {
     const navigate = useNavigate()
+    const [ searchParams ] = useSearchParams()
     const [isLoading, setLoading] = useState(false)
     const { t } = useTranslation('translation')
 
@@ -80,7 +81,7 @@ export default function Login (props) {
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            email: "",
+            email: searchParams.get('email') || '',
             password: ""
         }
     });
@@ -91,7 +92,6 @@ export default function Login (props) {
                 setLoading(true)
                 const res = await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/reset-password-request`, {
                     email: data.email,
-                    test: "true"
                 });
                 console.log(res.data)
                 setLoading(false)
