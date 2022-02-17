@@ -29,7 +29,6 @@ const UserContextProvider = ({ children }) => {
             SetUser(res.data)
         } catch (err) {
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     navigate("/login")
                 } else if (err.response.data.code === "token_expired") {
@@ -69,7 +68,6 @@ const UserContextProvider = ({ children }) => {
             console.log(res.data);
         } catch (err) {
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     navigate("/login")
                 } else if (err.response.data.code === "token_expired") {

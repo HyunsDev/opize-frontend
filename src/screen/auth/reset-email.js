@@ -3,10 +3,12 @@ import { Link, useSearchParams  } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useTranslation } from 'react-i18next';
-
-import { ColorBtn } from '../../components/btns/btns';
-import opizeImg from '../../assets/opize_logoText.png'
 import { toast } from "react-toastify"
+
+import opizeImg from '../../assets/opize_logoText.png'
+
+import { ColorBtn, H1 } from 'opize-components'
+
 
 const Divver = styled.div`
     width: 100%;
@@ -21,10 +23,6 @@ const Divver = styled.div`
 
 const Logo = styled.img`
     height: 20px;
-`
-
-const H1 = styled.h1`
-    font-size: 32px;
 `
 
 const Desc = styled.div`
@@ -73,7 +71,7 @@ export default function EmailVerify(props) {
             </Link>
             <H1>{t('auth_reset_email_title')}</H1>
             <Desc>{t('auth_reset_email_subtitle', {email: searchParams.get("email")})}</Desc>
-            <ColorBtn text={t('auth_reset_btn_text')} isLoading={isLoading} onClick={emailRetry} />
+            <ColorBtn label={t('auth_reset_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )
 }

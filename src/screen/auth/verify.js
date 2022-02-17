@@ -5,9 +5,10 @@ import { useEffect, useState, useContext } from "react"
 import { UserContext } from "../../context/user"
 import { useTranslation } from 'react-i18next';
 
-import { ColorBtn } from '../../components/btns/btns';
 import opizeImg from '../../assets/opize_logoText.png'
 import { toast } from "react-toastify"
+
+import { ColorBtn } from 'opize-components'
 
 const Divver = styled.div`
     width: 100%;
@@ -134,7 +135,7 @@ export default function EmailVerify(props) {
             </Link>
             <H1>{t('auth_verify_title')}</H1>
             <Desc>{t("auth_verify_subtitle", {email})}.</Desc>
-            <ColorBtn text={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
+            <ColorBtn label={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )
 }

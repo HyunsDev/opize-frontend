@@ -3,100 +3,12 @@ import { UserContext } from "../../context/user";
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { DashboardContext } from '../../context/dashboard';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from "swiper";
-import 'swiper/css';
-import 'swiper/css/pagination';
-
-import Page from "../../components/page/default";
-import { H1, H2 } from "../../components/title/title";
-import Search from '../../components/inputs/search';
-import Service from '../../components/block/service';
-
+import { Banner, Search, Service, Page, H1, H2 } from 'opize-components'
 import defaultApp from '../../data/opizeApp.json'
-import { Link } from 'react-router-dom';
-
 
 const Divver = styled.div`
     margin-top: 8px;
 `
-
-const BannerImg = styled.img`
-    width: 600px;
-    height: 90px;
-    border-radius: 8px;
-`
-
-const BannerDivver = styled.div`
-    /* display: flex;
-    max-width: 600px; */
-
-    .swiper {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-
-        /* Center slide text vertically */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        }
-
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-`
-
-const Banner = (props) => {
-    const { dashboard } = useContext(DashboardContext)
-
-    return (
-        <>
-            <Swiper
-                slidesPerView={1}
-                spaceBetween={8}
-                pagination={{
-                    clickable: true,
-                }}
-                loop={true}
-                modules={[Pagination, Autoplay]}
-                autoplay={{ delay: 5000 }}
-            >
-                {
-                    dashboard?.banners?.map((e, i) => {
-                            if (e.to.includes('http')) {
-                                return (
-                                    <SwiperSlide key={i}>
-                                        <a href={e.to || "/"} target={'_blank'} rel="noreferrer">
-                                            <BannerImg src={e.bannerUrl} alt=""/>
-                                        </a>
-                                    </SwiperSlide>
-                                )
-                            } else {
-                                return (
-                                    <SwiperSlide key={i}>
-                                        <Link to={e.to || "/"}>
-                                            <BannerImg src={e.bannerUrl} alt=""/>
-                                        </Link>
-                                    </SwiperSlide>
-                                )
-                            }
-                        }
-                    )
-                }
-            </Swiper>
-        </>
-    )
-}
 
 const ServicesDiv = styled.div`
     display: flex;
@@ -141,7 +53,7 @@ const Services = (props) => {
                         if (e.desc.toUpperCase().includes(searchText.toUpperCase())) return true
                         if (e.to.toUpperCase().includes(searchText.toUpperCase())) return true
                         return false
-                    }).map(e => <Service {...e} key={e.name} />)
+                    }).map(e => <Service {...e} icon={e.img} key={e.name} />)
                 }
             </ServicesDiv>
         </>
@@ -151,8 +63,7 @@ const Services = (props) => {
 export default function Dashboard(props) {
     const { user } = useContext(UserContext)
     const { dashboard } = useContext(DashboardContext)
-    const [ searchText, setSearchText ] = useState('')
-    const { t, i18n } = useTranslation('translation')
+    const { t } = useTranslation('translation')
 
     useEffect(() => {
         document.title = `${t("dashboard")} | Opize`
@@ -162,7 +73,7 @@ export default function Dashboard(props) {
         <Page>
             <H1>{t("greet", {name: user.name})}</H1>
             <Divver>
-                <Banner />
+                <Banner banners={dashboard.banners} />
                 <Services />
             </Divver>
         </Page>

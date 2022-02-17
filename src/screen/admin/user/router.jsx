@@ -1,6 +1,6 @@
 import {  Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 
-import HorizonLNB from '../../../components/LNB/horizonLNB';
+import { HorizonLNB } from 'opize-components';
 
 import List from './list'
 import Edit from './edit'
@@ -14,10 +14,10 @@ export default function Router() {
   return (
     <>
         <HorizonLNB exact selected={location.pathname} menu={[
-            {id: "/admin/user", text: '리스트', onClick: () => navigate("/admin/user")},
-            {id: "/admin/user/edit", text: '편집', onClick: () => navigate("/admin/user/edit")},
-            {id: "/admin/user/detail", text: '자세한 정보', onClick: () => navigate("/admin/user/detail")},
-            {id: "/admin/user/paymentCancel", text: '결제 취소', onClick: () => navigate("/admin/user/paymentCancel")},
+            {id: "/admin/user", label: '리스트', onClick: () => navigate("/admin/user")},
+            {id: "/admin/user/edit", label: '편집', onClick: () => {}},
+            {id: "/admin/user/detail", label: '자세한 정보', onClick: () => {}},
+            {id: "/admin/user/paymentCancel", label: '결제 취소', onClick: () => {}},
         ]} />
 
         <Routes>

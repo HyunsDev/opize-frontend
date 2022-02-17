@@ -2,31 +2,19 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
-
-import Search from '../../../components/inputs/search';
-import Project from '../../../components/admin/project';
-import Product from '../../../components/admin/product';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { Search, CodeBlock, VerticalLayout } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 16px;
-`
-
-const Header = styled.div`
-    margin-top: 16px;
-    margin-bottom: 8px;
-    padding-bottom: 4px;
-    font-size: 16px;
-    border-bottom: solid 1px var(--grey1);
 `
 
 const Products = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 8px;
 `
-
 
 export default function Create(props) {
     const [searchParams] = useSearchParams();
@@ -70,19 +58,42 @@ export default function Create(props) {
 
     return (
         <Divver>
-            <Project {...originalProject} />
+            <CodeBlock key={originalProject.name}
+                icon={originalProject.icon}
+                title={originalProject.name}
+                subtitle={originalProject.code}
+                desc={originalProject.desc}
+                links={[
+                    { text: '새로운 상품', to: `/admin/project/product/new?projectCode=${originalProject.code}` },
+                    { text: '상품', to: `/admin/project/product?projectCode=${originalProject.code}` },
+                    { text: '편집', to: `/admin/project/edit?projectCode=${originalProject.code}` },
+                ]}
+            >{JSON.stringify(originalProject, null, 4)}</CodeBlock>
 
-            <Header>product</Header>
-            <Search value={searchText} onChange={e => setSearchText(e.target.value)} />
-            <Products>
-                { Object.values(products).filter(e => {
+            <VerticalLayout label='product'>
+                <Search value={searchText} onChange={e => setSearchText(e.target.value)} />
+                <Products>
+                    { Object.values(products).filter(e => {
                         if (searchText === "") return true
                         if (e.name.toUpperCase().includes(searchText.toUpperCase())) return true
                         if (e.code.toUpperCase().includes(searchText.toUpperCase())) return true
                         if (e.desc.toUpperCase().includes(searchText.toUpperCase())) return true
                         return false
-                    }).map((product) => <Product projectCode={projectCode} key={product.code} {...product} />) }
-            </Products>
+                    }).map((product) => <CodeBlock key={product.code}
+                        icon={product.icon}
+                        title={product.name}
+                        subtitle={product.code}
+                        desc={product.desc}
+                        links={[
+                            {
+                                text: product.paymentKind === 'billing' ? "구독" : '결제',
+                                to: `/${product.paymentKind === 'billing' ? 'subscribe' : 'payment'}?projectCode=${originalProject.code}&productCode=${product.code}`
+                            },
+                            { text: '편집', to: `/admin/project/product/edit?projectCode=${originalProject.code}&productCode=${product.code}` }
+                        ]}
+                    >{JSON.stringify(product, null, 4)}</CodeBlock>)}
+                </Products>
+            </VerticalLayout>
         </Divver>
     )
 }

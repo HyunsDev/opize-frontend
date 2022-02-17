@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components'
 import { useLocation } from "react-router-dom";
 
-import Header from "../../components/header/header";
+import {HeaderWrapper} from "../../components/HeaderWrapper";
 
 const Div = styled.div`
     position: relative;
@@ -41,7 +41,7 @@ const Notion = function (props) {
     return (
         <>
             <Div>
-                <Header />
+                <HeaderWrapper />
                 <NotionRendererDiv>
                     {page && <NotionRenderer recordMap={page} fullPage darkMode={false} disableHeader/>}
                 </NotionRendererDiv>

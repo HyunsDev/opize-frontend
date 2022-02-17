@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import instance from '../../../src/instance';
-import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
-
-import { User } from '../../../components/admin/user';
-import CodeBlock from '../../../components/admin/codeblock'
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import PaymentLog from '../../../components/block/paymentLog';
-import { ColorBtn } from '../../../components/btns/btns';
-import Input from '../../../components/inputs/input';
+import { Receipt } from 'phosphor-react';
+
+import { MiniCodeBlock, SubscribeBlock, ColorBtn, Input } from 'opize-components'
+
 
 const Divver = styled.div`
     margin-top: 16px;
@@ -71,13 +67,29 @@ export default function PaymentCancel(props) {
 
     return (
         <Divver>
-            <PaymentLog {...originalData.paymentLog} product={originalData.product} project={originalData.project} />
-            <CodeBlock title={originalData.product?.name} id={originalData.paymentLog?._id} subTitle={`${originalData.paymentLog?.status} | ${originalData.paymentLog?.totalAmount}${originalData.paymentLog?.currency}`}>{JSON.stringify(originalData, null, 4)}</CodeBlock>
+            <SubscribeBlock {...originalData.paymentLog}
+                product={originalData.product}
+                project={originalData.project}
+                btnIcon={<Receipt size={32} color="var(--teal5)" />}
+                onClick={() => window.open(originalData.paymentLog.receiptUrl)}
+                desc1={<>{originalData.paymentLog.totalAmount}{originalData.paymentLog.currency}</>}
+                desc2={new Date(originalData.paymentLog.approvedAt).toLocaleString()}
+            />
+
+            <MiniCodeBlock
+                title={'paymentLog'}
+                subtitle={`${originalData.paymentLog?.status} | ${originalData.paymentLog?.totalAmount}${originalData.paymentLog?.currency}`}
+                info={originalData.paymentLog._id}
+                links={[
+                    {text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${originalData.paymentLog._id}`}
+                ]}
+            >{JSON.stringify(originalData, null, 4)}
+            </MiniCodeBlock>
             {originalData.paymentLog?.status === "DONE" ? <>
                 <Input value={cancelReason} onChange={e => setCancelReason(e.target.value)} placeholder="결제 취소 사유" />
                     <Btns>
                     <p>주의! 결제 취소는 결제한 금액만 취소할 뿐, 환불을 의미하지 않습니다.</p>
-                    <ColorBtn text="결제 취소" onClick={refund} />
+                    <ColorBtn label="결제 취소" onClick={refund} />
                     </Btns>
                 </> : <Btns><div /><p>결제 완료된 거래가 아닙니다. ({originalData.paymentLog?.status})</p></Btns>
             }

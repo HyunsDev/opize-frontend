@@ -7,13 +7,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useForm, Controller } from "react-hook-form";
 
-import RowMenu from '../../components/row/rowMenu';
-import Input from '../../components/inputs/input';
-import { Btn, ColorBtn, ColorBtnSubmit } from '../../components/btns/btns';
-import CheckBox from '../../components/inputs/checkbox';
-import LoginInput from '../../components/inputs/loginInput'
+import { HorizontalLayout, Input, Btn, ColorBtn, Checkbox, FormInput } from 'opize-components'
 
-const RowMenus = styled.div`
+const HorizontalLayouts = styled.div`
     display: flex;
     gap: 30px;
     margin-top: 32px;
@@ -56,7 +52,6 @@ const MenuProfile = (props) => {
         } catch (err) {
             setLoading(false)
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     toast.error(t('err_user_not_found'))
                 } else if (err.response.data.code === "token_expired") {
@@ -75,11 +70,11 @@ const MenuProfile = (props) => {
     }
 
     return (
-        <RowMenu name={t('user_user_menu_profile')}>
+        <HorizontalLayout label={t('user_user_menu_profile')}>
             <ProfileImg src={user.profileImage} alt="profile Img" />
             <Input placeholder={t('user_user_menu_profile')} value={value || ""} onChange={e => setValue(e.target.value)}/>
-            <ColorBtn isLoading={isLoading} text={t('btn_edit')} onClick={fetchAPI} />
-        </RowMenu>
+            <ColorBtn isLoading={isLoading} label={t('btn_edit')} onClick={fetchAPI} />
+        </HorizontalLayout>
     )
 }
 
@@ -113,7 +108,6 @@ const MenuName = (props) => {
         } catch (err) {
             setLoading(false)
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     toast.error(t('err_user_not_found'))
                 } else if (err.response.data.code === "token_expired") {
@@ -132,10 +126,10 @@ const MenuName = (props) => {
     }
 
     return (
-        <RowMenu name={t('user_user_menu_name')}>
-            <Input  placeholder={user.name} value={value || ""} onChange={e => setValue(e.target.value)}/>
-            <ColorBtn isLoading={isLoading} text={t('btn_edit')} onClick={fetchAPI} />
-        </RowMenu>
+        <HorizontalLayout label={t('user_user_menu_name')}>
+            <Input placeholder={user.name} value={value || ""} onChange={e => setValue(e.target.value)}/>
+            <ColorBtn isLoading={isLoading} label={t('btn_edit')} onClick={fetchAPI} />
+        </HorizontalLayout>
     )
 }
 
@@ -149,9 +143,9 @@ const MenuEmail = (props) => {
     }, [user])
 
     return (
-        <RowMenu name={t('user_user_menu_email')}>
+        <HorizontalLayout label={t('user_user_menu_email')}>
             <Input placeholder={t('user_user_menu_email')} value={value || ""} onChange={e => setValue(e.target.value)} readOnly/>
-        </RowMenu>
+        </HorizontalLayout>
     )
 }
 
@@ -208,7 +202,6 @@ const MenuPassword = (props) => {
         } catch (err) {
             setLoading(false)
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     toast.error(t('err_user_not_found'))
                 } else if (err.response.data.code === "token_expired") {
@@ -229,7 +222,7 @@ const MenuPassword = (props) => {
     }
 
     return (
-        <RowMenu name={t('user_user_menu_password')}>
+        <HorizontalLayout label={t('user_user_menu_password')}>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Inputs>
                     <Controller
@@ -239,7 +232,7 @@ const MenuPassword = (props) => {
                             value: 8,
                             message: t('auth_input_password_pattern')
                             }}}
-                        render={({field}) => <LoginInput {...field} name={t('user_user_menu_password_current_password')} ref={null} error={errors.currentPassword} type="password" autoComplete="current-password" />}
+                        render={({field}) => <FormInput {...field} label={t('user_user_menu_password_current_password')} ref={null} error={errors.currentPassword} type="password" autoComplete="current-password" />}
                     />
                     <Controller
                         name="newPassword" 
@@ -248,20 +241,20 @@ const MenuPassword = (props) => {
                             value: 8,
                             message: t('auth_input_password_pattern')
                             }}}
-                        render={({field}) => <LoginInput {...field} name={t('user_user_menu_password_new_password')} ref={null} error={errors.newPassword} type="password" autoComplete="new-password" />}
+                        render={({field}) => <FormInput {...field} label={t('user_user_menu_password_new_password')} ref={null} error={errors.newPassword} type="password" autoComplete="new-password" />}
                     />
                     <Controller
                         name="newPasswordRetry" 
                         control={control}
                         rules={{required: t('auth_input_password_retry_required'), validate: (value) =>  value === watch('newPassword') || t('auth_input_password_retry_validate') }}
-                        render={({field}) => <LoginInput {...field} name={t('user_user_menu_password_new_password_retry')} ref={null} error={errors.newPasswordRetry} type="password" autoComplete="new-password" />}
+                        render={({field}) => <FormInput {...field} label={t('user_user_menu_password_new_password_retry')} ref={null} error={errors.newPasswordRetry} type="password" autoComplete="new-password" />}
                     />
                 </Inputs>
                 <Btns>
-                    <ColorBtnSubmit isLoading={isLoading} text={t('btn_edit')} />
+                    <ColorBtn type='submit' isLoading={isLoading} text={t('btn_edit')} />
                 </Btns>
             </Form>
-        </RowMenu>
+        </HorizontalLayout>
     )
 }
 
@@ -292,7 +285,6 @@ const MenuCoupon = (props) => {
         } catch (err) {
             setLoading(false)
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     toast.error(t('err_user_not_found'))
                 } else if (err.response.data.code === "token_expired") {
@@ -311,10 +303,10 @@ const MenuCoupon = (props) => {
     }
 
     return (
-        <RowMenu name={t('user_user_menu_coupon')}>
+        <HorizontalLayout label={t('user_user_menu_coupon')}>
             <Input value={value || ""} onChange={e => setValue(e.target.value)} placeholder={t('user_user_menu_coupon_placeholder')}/>
-            <ColorBtn isLoading={isLoading} text={t('btn_use')} onClick={fetchAPI} />
-        </RowMenu>
+            <ColorBtn isLoading={isLoading} label={t('btn_use')} onClick={fetchAPI} />
+        </HorizontalLayout>
     )
 }
 
@@ -341,7 +333,6 @@ const MenuMarking = (props) => {
             updateUser()
         } catch (err) {
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     toast.error(t('err_user_not_found'))
                 } else if (err.response.data.code === "token_expired") {
@@ -361,9 +352,9 @@ const MenuMarking = (props) => {
 
 
     return (
-        <RowMenu name={t('user_user_menu_marking')}>
-            <CheckBox value={value || false} onChange={onChange} text={<>{t('user_user_menu_marking_label')} <Link to={t('auth_input_marking_link')}>{t('user_user_menu_marking_label_2')}</Link></>} />
-        </RowMenu>
+        <HorizontalLayout label={t('user_user_menu_marking')}>
+            <Checkbox value={value || false} onChange={onChange} label={<>{t('user_user_menu_marking_label')} <Link to={t('auth_input_marking_link')}>{t('user_user_menu_marking_label_2')}</Link></>} />
+        </HorizontalLayout>
     )
 }
 
@@ -389,7 +380,6 @@ const MenuDestroy = (props) => {
         } catch (err) {
             setLoading(false)
             if (err.response) {
-                console.log(err.response.data.code)
                 if (err.response.data.code === "user_not_found") {
                     toast.error(t('err_user_not_found'))
                 } else if (err.response.data.code === "token_expired") {
@@ -408,16 +398,16 @@ const MenuDestroy = (props) => {
     }
 
     return (
-        <RowMenu name={t('user_user_menu_destroy')}>
-            <Btn isLoading={isLoading} text={t('user_user_menu_destroy')} onClick={fetchAPI} background="var(--red1)" backgroundHover="var(--red2)" color="var(--red9)" />
-        </RowMenu>
+        <HorizontalLayout label={t('user_user_menu_destroy')}>
+            <Btn isLoading={isLoading} label={t('user_user_menu_destroy')} onClick={fetchAPI} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
+        </HorizontalLayout>
     )
 }
 
 export default function User(props) {
     return (
         <>
-            <RowMenus>
+            <HorizontalLayouts>
                 <MenuProfile />
                 <MenuName />
                 <MenuEmail />
@@ -425,7 +415,7 @@ export default function User(props) {
                 <MenuCoupon />
                 <MenuMarking />
                 <MenuDestroy />
-            </RowMenus>
+            </HorizontalLayouts>
         </>
     )
 }

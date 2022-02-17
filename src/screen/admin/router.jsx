@@ -1,35 +1,32 @@
 import { useEffect } from 'react'
 import {  Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import Header from "../../components/header/header";
 
 import Dashboard from './dashboard';
 import ProjectRouter from './project/router';
 import UserRouter from './user/router';
 import TestRouter from './other/router';
 
-import Page from "../../components/page/default";
-import { H1 } from "../../components/title/title";
-import HorizonLNB from '../../components/LNB/horizonLNB';
-
+import { Page, H1, HorizonLNB } from 'opize-components'
+import { HeaderWrapper } from '../../components';
 
 export default function Router() {
     const navigate = useNavigate()
     const location = useLocation()
 
     useEffect(() => {
-        document.title = `운영자 | Opize`
+        document.title = `Admin | Opize`
     }, [])
 
   return (
     <>
-        <Header app="admin" />
+        <HeaderWrapper app="admin" />
         <Page width={720}>
-            <H1>운영자</H1>
-            <HorizonLNB selected={location.pathname} menu={[
-                {id: "/admin", text: '대시보드', onClick: () => navigate("/admin")},
-                {id: "/admin/project", text: '프로젝트', onClick: () => navigate("/admin/project")},
-                {id: "/admin/user", text: '사용자', onClick: () => navigate("/admin/user")},
-                {id: "/admin/other", text: '기타', onClick: () => navigate("/admin/other")},
+            <H1>Admin</H1>
+            <HorizonLNB exact={false} selected={location.pathname} menu={[
+                {id: "/admin", label: '대시보드', onClick: () => navigate("/admin")},
+                {id: "/admin/project", label: '프로젝트', onClick: () => navigate("/admin/project")},
+                {id: "/admin/user", label: '사용자', onClick: () => navigate("/admin/user")},
+                {id: "/admin/other", label: '기타', onClick: () => navigate("/admin/other")},
             ]} />
 
             <Routes>

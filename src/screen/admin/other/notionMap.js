@@ -4,14 +4,13 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import RowMenu from '../../../components/row/rowMenu';
-import { Btn, ColorBtn } from '../../../components/btns/btns';
-import Input from '../../../components/inputs/input';
-import NotionMapItem from '../../../components/admin/notionMap';
-import Search from '../../../components/inputs/search';
+import { HorizontalLayout, Btn, ColorBtn, MiniClickableBlock, Search, Input } from 'opize-components'
 
 const Divver = styled.div`
-    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
 `
 
 const CreateLink = (props) => {
@@ -100,21 +99,14 @@ const CreateLink = (props) => {
     }
 
     return (
-        <RowMenu name={'노션 맵'} marginTop={16}>
+        <HorizontalLayout label={'노션 맵'}>
             <Input value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 링크' />
             <Input value={props.newUrl || ""} onChange={e => props.setNewUrl(e.target.value)} placeholder='새 링크' />
-            <ColorBtn isLoading={isLoading} text='추가' onClick={onSubmit} />
-            <Btn isLoading={isLoading} text='삭제' onClick={deleteRedirect} background="var(--red1)" backgroundHover="var(--red2)" color="var(--red9)" />
-        </RowMenu>
+            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
+            <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
+        </HorizontalLayout>
     )
 }
-
-const UrlsDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
-`
 
 export default function Create(props) {
     const [ notionId, setNotionId ] = useState("")
@@ -159,19 +151,22 @@ export default function Create(props) {
         <Divver>
             <CreateLink newUrl={newUrl} setNewUrl={setNewUrl} updateUrl={updateUrl} notionId={notionId} setNotionId={setNotionId} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            <UrlsDiv>
-                {
-                    urls.filter(e => {
-                        if (searchText === "") return true
-                        if (e.newUrl.toUpperCase().includes(searchText.toUpperCase())) return true
-                        if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
-                        return false
-                    }).map((e, i) => <NotionMapItem key={i} {...e} onClick={() => {
+            {
+                urls.filter(e => {
+                    if (searchText === "") return true
+                    if (e.newUrl.toUpperCase().includes(searchText.toUpperCase())) return true
+                    if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
+                    return false
+                }).map((e, i) => <MiniClickableBlock key={i}
+                    title={e.newUrl}
+                    subTitle={e.count}
+                    info={e.notionId}
+                    onClick={() => {
                         setNewUrl(e.newUrl)
                         setNotionId(e.notionId)
-                    }} />)
-                }
-            </UrlsDiv>
+                    }}
+                />)
+            }
         </Divver>
     )
 }

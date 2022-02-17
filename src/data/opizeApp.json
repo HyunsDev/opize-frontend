@@ -1,34 +1,32 @@
 {
     "ko-KR": {
         "user": {
-            "name": "내 정보",
+            "label": "내 정보",
             "img": "/opize.png",
             "desc": "대시보드",
             "to": "/user",
             "showDashboard": false,
-            "show": false
+            "hide": true
         },
         "admin": {
-            "name": "운영자",
+            "label": "운영자",
             "img": "https://media.discordapp.net/attachments/937043660770529341/941993545185755136/Settings_perspective_matte.png?width=612&height=612",
             "desc": "운영자",
             "to": "/admin",
             "showDashboard": false,
-            "show": true,
             "onlyAdmin": true
         },
         "dashboard": {
-            "name": "대시보드",
+            "label": "대시보드",
             "img": "/opize.png",
             "desc": "대시보드",
             "to": "/dashboard",
-            "showDashboard": false,
-            "show": true
+            "showDashboard": false
         }
     },
     "en-US": {
         "dashboard": {
-            "name": "Dashboard",
+            "label": "Dashboard",
             "img": "/opize.png",
             "desc": "Dashboard",
             "showDashboard": false

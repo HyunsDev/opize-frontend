@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react'
-import {  useNavigate, useSearchParams } from 'react-router-dom';
-import Header from "../../components/header/header";
+import { useEffect, useState, useContext } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { HeaderWrapper } from "../../components";
 import { useTranslation } from 'react-i18next';
 import instance from '../../src/instance';
-
-import Page from "../../components/page/default";
-import { H1 } from "../../components/title/title";
-import NewSubscribe from '../../components/block/newSubscribe';
-import { toast } from 'react-toastify';
-import { ColorBtn } from '../../components/btns/btns';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
+import { UserContext } from '../../context/user';
+import { DashboardContext } from '../../context/dashboard';
+
+import { Page, H1, SubscribeBlock, ColorBtn } from 'opize-components'
 
 const Items = styled.div`
   margin-top: 8px;
@@ -22,6 +21,8 @@ const Items = styled.div`
 export default function Index() {
   const [searchParams] = useSearchParams()
   const { t } = useTranslation('translation')
+  const { user } = useContext(UserContext)
+  const { dashboard } = useContext(DashboardContext)
   const [projectCode, setProjectCode] = useState(searchParams.get('projectCode'))
   const [productCode, setProductCode] = useState(searchParams.get('productCode'))
   const [redirect, setRedirect] = useState(searchParams.get('redirect'))
@@ -47,7 +48,6 @@ export default function Index() {
           setProduct(res.data)
         } catch (err) {
           if (err.response) {
-            console.log(err.response.data.code)
             if (err.response.data.code === "user_not_found") {
               toast.error(t('err_user_not_found'))
             } else if (err.response.data.code === "token_expired") {
@@ -83,7 +83,6 @@ export default function Index() {
           }, 3000)
         } catch (err) {
           if (err.response) {
-            console.log(err.response.data.code)
             if (err.response.data.code === "user_not_found") {
               toast.error(t('err_user_not_found'))
             } else if (err.response.data.code === "token_expired") {
@@ -97,7 +96,6 @@ export default function Index() {
             } else if (err.response.data.code === "already_subscribed") {
               toast.info(t('err_already_subscribed'))
               setTimeout(() => {
-                console.log(123)
                 window.location.href = redirect || "/user/payment"
               }, 3000)
             } else if (err.response.data.code === "need_payment") {
@@ -120,12 +118,18 @@ export default function Index() {
 
   return (
     <>
-      <Header app={projectCode} />
+      <HeaderWrapper app={projectCode} />
       <Page width={720}>
         <H1>{t('payment_title')}</H1>
         <Items>
-          <NewSubscribe projectCode={projectCode} key={product.code} {...product} />
-          <ColorBtn text={t('payment_btn')} onClick={onSubmit} />
+          <SubscribeBlock
+            icon={product.icon}
+            project={dashboard?.projects?.[projectCode]}
+            product={product}
+            user={user}
+            desc1={`${product?.prices?.[user.currency]} ${user?.currency}`}
+          />
+          <ColorBtn label={t('payment_btn')} onClick={onSubmit} />
         </Items>
       </Page>
     </>

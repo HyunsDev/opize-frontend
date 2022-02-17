@@ -3,18 +3,16 @@ import { UserContext } from "../../context/user";
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
-import { useForm, Controller } from "react-hook-form";
-
-import RowMenu from '../../components/row/rowMenu';
-import { H2 } from '../../components/title/title';
-import { Card } from '../../components/card';
+import dayjs from "dayjs";
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import instance from '../../src/instance';
-import Subscribe from '../../components/block/subscribe';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const RowMenus = styled.div`
+import { Card, HorizontalLayout, VerticalLayout, SubscribeBlock } from 'opize-components'
+import { Pause, Play } from 'phosphor-react';
+
+
+const HorizontalLayouts = styled.div`
     display: flex;
     gap: 30px;
     margin-top: 32px;
@@ -29,6 +27,78 @@ const Items = styled.div`
     width: 100%;
     align-items: flex-end;
 `
+
+function Subscribe(props) {
+    const { t } = useTranslation('translation')
+    const { user, updateUser } = useContext(UserContext)
+    const navigate = useNavigate()
+
+    const unsubscribe = async () => {
+        try {
+            await instance.post(`/subscribe/${props.subscribeId}/unsubscribe`, {})
+            toast.info(t('user_payment_subscribe_unsubscribe_toast', {date: dayjs(props.nextPaymentDate).format('YYYY.MM.DD')}))
+            updateUser()
+        } catch (err) {
+            if (err.response) {
+                if (err.response.data.code === "user_not_found") {
+                    toast.error(t('err_user_not_found'))
+                } else if (err.response.data.code === "token_expired") {
+                    navigate("/login")
+                } else if (err.response.data.code === "invalid_token") {
+                    toast.error(t('err_invalid_token'))
+                } else {
+                    console.error(err)
+                    toast.error(err.message)
+                }
+            } else {
+                console.error(err)
+                toast.error(err.message)
+            }
+        }
+    }
+
+    const resubscribe = async () => {
+        try {
+            await instance.post(`/subscribe`, {
+                projectCode: props.project.code,
+                productCode: props.product.code,
+            })
+            updateUser()
+            toast.info(t('user_payment_subscribe_resubscribe_toast'))
+        } catch (err) {
+            if (err.response) {
+                if (err.response.data.code === "user_not_found") {
+                    toast.error(t('err_user_not_found'))
+                } else if (err.response.data.code === "token_expired") {
+                    navigate("/login")
+                } else if (err.response.data.code === "invalid_token") {
+                    toast.error(t('err_invalid_token'))
+                } else {
+                    console.error(err)
+                    toast.error(err.message)
+                }
+            } else {
+                console.error(err)
+                toast.error(err.message)
+            }
+        }
+    }
+
+    return (
+        <SubscribeBlock {...props}
+            onClick={props.status !== "unsubscribed" ? unsubscribe : resubscribe} 
+            btnIcon={props.status !== "unsubscribed" ? <Pause size={32} color="var(--teal5)" /> : <Play size={32} color="var(--red5)" />}
+            desc1={props.status !== "unsubscribed"
+                ? <>{props.product.prices[user.currency]}{user.currency}</>
+                : <></>
+            }
+            desc2={props.status !== "unsubscribed"
+                ? <>{t('user_payment_subscribe_next_payment')} {dayjs(props.nextPaymentDate).format('YYYY.MM.DD')}</>
+                : <>{t('user_payment_subscribe_unsubscribe_date')} {dayjs(props.nextPaymentDate).format('YYYY.MM.DD')}</>
+            }
+        />
+    )
+}
 
 export default function User(props) {
     const { t } = useTranslation('translation')
@@ -101,22 +171,21 @@ export default function User(props) {
 
     return (
         <>
-            <RowMenus>
-                <RowMenu name={t('user_payment_card')}>
+            <HorizontalLayouts>
+                <HorizontalLayout label={t('user_payment_card')}>
                     <div />
                     <Items>
                         <Card {...card} onClick={addCard} cardInfo={user.email}/>
                     </Items>
-                </RowMenu>
-                <div>
-                    <H2>{t('user_payment_subscribe')}</H2>
+                </HorizontalLayout>
+                <VerticalLayout label={t('user_payment_subscribe')}>
                     <Items>
                         {
                             user?.subscribes?.map((e, i) => <Subscribe projectCode={e.product.code} key={i} {...e} />)
                         }
                     </Items>
-                </div>
-            </RowMenus>
+                </VerticalLayout>
+            </HorizontalLayouts>
         </>
     )
 }

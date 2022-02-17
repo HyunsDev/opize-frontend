@@ -1,6 +1,6 @@
 import React from 'react'
 import {  Route, Routes } from 'react-router-dom';
-import Header from "../../components/header/header";
+import { HeaderWrapper } from '../../components';
 
 import Dashboard from './dashboard';
 
@@ -8,7 +8,7 @@ import Dashboard from './dashboard';
 export default function Router() {
   return (
     <>
-      <Header app="dashboard" />
+      <HeaderWrapper app="dashboard" />
       <Routes>
           <Route path="/" element={<Dashboard />} />
       </Routes>

@@ -11,8 +11,8 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtnSubmit } from "../../components/btns/btns";
-import LoginInput from '../../components/inputs/loginInput'
+import { ColorBtn, FormInput, H1 } from 'opize-components'
+
 
 const Divver = styled.div`
     padding: 8px;
@@ -34,13 +34,6 @@ const Logo = styled.img`
 const LogoText = styled.img`
     height: 24px;
     margin-top: 4px;
-`
-
-const H1 = styled.h1`
-    margin-top: 8px;
-    font-size: 24px;
-    margin-bottom: 40px;
-    color: var(--grey9);
 `
 
 const Inputs = styled.div`
@@ -96,9 +89,7 @@ export default function Login (props) {
                     password: data.password,
                 });
                 setLogin(false)
-                console.log(data.email)
                 localStorage.setItem("token", res.data.token)
-                console.log(res.data.token)
                 navigate("/dashboard")
                 updateUser()
             } catch (err) {
@@ -135,13 +126,13 @@ export default function Login (props) {
                                 value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i,
                                 message: t('auth_input_email_pattern')
                             }}}
-                            render={({field}) => <LoginInput {...field} name="이메일" ref={null} error={errors.email} type="text" autoComplete="email"/>}
+                            render={({field}) => <FormInput {...field} label="이메일" ref={null} error={errors.email} type="text" autoComplete="email"/>}
                         />
                         <Controller
                             name="password" 
                             control={control}
                             rules={{required: t('auth_input_password_required')}}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_password')} ref={null} error={errors.password} type="password" autoComplete="current-password" />}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_password')} ref={null} error={errors.password} type="password" autoComplete="current-password" />}
                         />
                     </Inputs>
 
@@ -150,7 +141,7 @@ export default function Login (props) {
                             <A to={`/signup?email=${watch('email')}`}>{t('auth_signup')}</A> | <A to={`/reset-password?email=${watch('email')}`}>{t('auth_reset')}</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit text={t('auth_login')} isLoading={isLoading} />
+                            <ColorBtn label={t('auth_login')} isLoading={isLoading} type="submit" />
                         </Right>
                     </LoginMenu>
                 </form>

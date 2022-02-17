@@ -4,14 +4,13 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import RowMenu from '../../../components/row/rowMenu';
-import { Btn, ColorBtn } from '../../../components/btns/btns';
-import Input from '../../../components/inputs/input';
-import BannerItem from '../../../components/admin/banner';
-import Search from '../../../components/inputs/search';
+import { HorizontalLayout, Btn, ColorBtn, Input, MiniClickableBlock, Search } from 'opize-components'
 
 const Divver = styled.div`
-    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
 `
 
 const CreateLink = (props) => {
@@ -91,21 +90,21 @@ const CreateLink = (props) => {
     };
 
     return (
-        <RowMenu name={'배너'} marginTop={16}>
+        <HorizontalLayout label={'배너'} marginTop={16}>
             <Input value={props.code || ""} onChange={e => props.setCode(e.target.value)} placeholder='코드' />
             <Input value={props.to || ""} onChange={e => props.setTo(e.target.value)} placeholder='이동할 링크' />
             <Input value={props.bannerUrl || ""} onChange={e => props.setBannerUrl(e.target.value)} placeholder='이미지 주소' />
-            <ColorBtn isLoading={isLoading} text='추가' onClick={onSubmit} />
-            <Btn isLoading={isLoading} text='삭제' onClick={deleteRedirect} background="var(--red1)" backgroundHover="var(--red2)" color="var(--red9)" />
-        </RowMenu>
+            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
+            <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
+        </HorizontalLayout>
     )
 }
 
-const UrlsDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+const BannerWrapper = styled.div`
+    img {
+        border: solid 1px var(--grey5);
+        border-radius: 8px;
+    }
 `
 
 export default function Create(props) {
@@ -152,20 +151,22 @@ export default function Create(props) {
         <Divver>
             <CreateLink code={code} setCode={setCode} bannerUrl={bannerUrl} setBannerUrl={setBannerUrl} updateUrl={updateUrl} to={to} setTo={setTo} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            <UrlsDiv>
-                {
-                    urls.filter(e => {
-                        if (searchText === "") return true
-                        if (e.bannerUrl.toUpperCase().includes(searchText.toUpperCase())) return true
-                        if (e.to.toUpperCase().includes(searchText.toUpperCase())) return true
-                        return false
-                    }).map((e, i) => <BannerItem key={i} {...e} onClick={() => {
+            {
+                urls.filter(e => {
+                    if (searchText === "") return true
+                    if (e.bannerUrl.toUpperCase().includes(searchText.toUpperCase())) return true
+                    if (e.to.toUpperCase().includes(searchText.toUpperCase())) return true
+                    return false
+                }).map((e, i) => <MiniClickableBlock key={i}
+                    title={e.code}
+                    subtitle={e.to}
+                    onClick={() => {
                         setCode(e.code)
                         setBannerUrl(e.bannerUrl)
                         setTo(e.to)
-                    }} />)
-                }
-            </UrlsDiv>
+                    }}
+                    ><BannerWrapper><a href={e.to}><img src={e.bannerUrl} alt="" /></a></BannerWrapper></MiniClickableBlock>)
+            }
         </Divver>
     )
 }

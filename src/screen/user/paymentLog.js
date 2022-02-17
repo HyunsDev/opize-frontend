@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Receipt } from 'phosphor-react';
 
 import instance from '../../src/instance';
 
-import Search from '../../components/inputs/search';
-import PaymentLog from '../../components/block/paymentLog';
+import { SubscribeBlock } from 'opize-components'
 
 const Menus = styled.div`
     display: flex;
@@ -19,7 +19,6 @@ const Menus = styled.div`
 
 export default function User() {
     const { t } = useTranslation('translation')
-    const [ searchText, setSearchText ] = useState('')
     const [ paymentLogs, setPaymentLogs ] = useState([])
     const [ products, setProducts ] = useState({})
     const [ projects, setProjects ] = useState({})
@@ -55,15 +54,16 @@ export default function User() {
     return (
         <>
             <Menus>
-                <Search value={searchText} onChange={e => setSearchText(e.target.value)} />
                 {
-                    paymentLogs.filter(e => {
-                        if (searchText === "") return true
-                        if (e.name.toUpperCase().includes(searchText.toUpperCase())) return true
-                        if (e.desc.toUpperCase().includes(searchText.toUpperCase())) return true
-                        if (e.to.toUpperCase().includes(searchText.toUpperCase())) return true
-                        return false
-                    }).map(e => <PaymentLog {...e} key={e.id} product={products[e.productId]} project={projects[e.projectId]} />)
+                    paymentLogs.map(e => <SubscribeBlock {...e}
+                        key={e.id}
+                        product={products[e.productId]}
+                        project={projects[e.projectId]}
+                        btnIcon={<Receipt size={32} color="var(--teal5)" />}
+                        onClick={() => window.open(e.receiptUrl)}
+                        desc1={<>{e.totalAmount}{e.currency}</>}
+                        desc2={new Date(e.approvedAt).toLocaleString()}
+                    />)
                 }
             </Menus>
         </>

@@ -10,8 +10,7 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtnSubmit } from "../../components/btns/btns";
-import LoginInput from '../../components/inputs/loginInput'
+import { ColorBtn, FormInput } from 'opize-components'
 
 const Divver = styled.div`
     padding: 8px;
@@ -93,7 +92,6 @@ export default function Login (props) {
                 const res = await axios.post(`${process.env.REACT_APP_API_SERVER}/auth/reset-password-request`, {
                     email: data.email,
                 });
-                console.log(res.data)
                 setLoading(false)
                 navigate(`/reset-password/email?email=${data.email}`)
             } catch (err) {
@@ -132,7 +130,7 @@ export default function Login (props) {
                                 value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i,
                                 message: t('auth_input_email_pattern')
                             }}}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_email')} ref={null} error={errors.email} type="text" autoComplete="email"/>}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_email')} ref={null} error={errors.email} type="text" autoComplete="email"/>}
                         />
                     </Inputs>
 
@@ -141,7 +139,7 @@ export default function Login (props) {
                             <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit text={t('auth_reset')} isLoading={isLoading} />
+                            <ColorBtn type="submit" text={t('auth_reset')} isLoading={isLoading} />
                         </Right>
                     </LoginMenu>
                 </form>

@@ -11,9 +11,7 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtnSubmit } from "../../components/btns/btns";
-import LoginInput from '../../components/inputs/loginInput'
-import CheckBox from "../../components/inputs/checkbox"
+import { ColorBtn, Checkbox, FormInput, H1 } from 'opize-components'
 
 
 const Divver = styled.div`
@@ -36,13 +34,6 @@ const Logo = styled.img`
 const LogoText = styled.img`
     height: 24px;
     margin-top: 4px;
-`
-
-const H1 = styled.h1`
-    margin-top: 8px;
-    font-size: 24px;
-    margin-bottom: 40px;
-    color: var(--grey9);
 `
 
 const Inputs = styled.div`
@@ -135,7 +126,7 @@ export default function Login (props) {
                             name="name" 
                             control={control}
                             rules={{required: t('auth_input_text_required')}}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_text')} ref={null} error={errors.name} type="text" autoComplete="name" />}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_text')} ref={null} error={errors.name} type="text" autoComplete="name" />}
                         />
                         <Controller
                             name="email"
@@ -147,7 +138,7 @@ export default function Login (props) {
                                     message: t('auth_input_email_pattern')
                                 }
                             }}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_email')} ref={null} error={errors.email} type="text" autoComplete="email"/>}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_email')} ref={null} error={errors.email} type="text" autoComplete="email"/>}
                         />
                         <Controller
                             name="password" 
@@ -156,24 +147,24 @@ export default function Login (props) {
                                 value: 8,
                                 message: t('auth_input_password_pattern')
                               }}}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_password')} ref={null} error={errors.password} type="password" autoComplete="new-password" />}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_password')} ref={null} error={errors.password} type="password" autoComplete="new-password" />}
                         />
                         <Controller
                             name="passwordRetry" 
                             control={control}
                             rules={{required: t('auth_input_password_retry_required'), validate: (value) =>  value === watch('password') || t('auth_input_password_retry_validate') }}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_password_retry')} ref={null} error={errors.passwordRetry} type="password" autoComplete="new-password" />}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_password_retry')} ref={null} error={errors.passwordRetry} type="password" autoComplete="new-password" />}
                         />
                         <Controller
                             name="privacy" 
                             control={control}
                             rules={{required: t('auth_input_privacy_required')}}
-                            render={({field}) => <CheckBox {...field} text={<><Link to={t('auth_input_privacy_link')}>{t("auth_input_privacy")}</Link></>} ref={null} error={errors.privacy}/>}
+                            render={({field}) => <Checkbox {...field} label={<><Link to={t('auth_input_privacy_link')}>{t("auth_input_privacy")}</Link></>} ref={null} error={errors.privacy}/>}
                         />
                         <Controller
                             name="marking" 
                             control={control}
-                            render={({field}) => <CheckBox {...field} text={<>{t('auth_input_marking')} <Link to={t('auth_input_marking_link')}>{t('auth_input_marking_2')}</Link></>} ref={null} error={errors.marking}/>}
+                            render={({field}) => <Checkbox {...field} label={<>{t('auth_input_marking')} <Link to={t('auth_input_marking_link')}>{t('auth_input_marking_2')}</Link></>} ref={null} error={errors.marking}/>}
                         />
 
                     </Inputs>
@@ -183,7 +174,7 @@ export default function Login (props) {
                             <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit isLoading={isLoading} text={t("auth_signup")} />
+                            <ColorBtn type="submit" isLoading={isLoading} text={t("auth_signup")} />
                         </Right>
                     </LoginMenu>
                 </form>

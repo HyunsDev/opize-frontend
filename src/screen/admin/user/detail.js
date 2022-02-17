@@ -1,23 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import instance from '../../../src/instance';
-import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
-
-import { User } from '../../../components/admin/user';
-import CodeBlock from '../../../components/admin/codeblock'
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import OpizeLogo from '../../../assets/opize.png'
+
+import { CodeBlock, MiniCodeBlock, VerticalLayout } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 16px;
-`
-
-const Header = styled.div`
-    margin-top: 16px;
-    padding-bottom: 4px;
-    font-size: 16px;
-    border-bottom: solid 1px var(--grey1);
 `
 
 const Blocks = styled.div`
@@ -42,7 +33,6 @@ export default function Create(props) {
                 try {
                     const res = await instance.get(`/admin/user/${userId}/detail`)
                     setOriginalData(res.data)
-                    console.log(res.data)
                 } catch (err) {
                     console.error(err)
                 }
@@ -55,27 +45,46 @@ export default function Create(props) {
 
     return (
         <Divver>
-            <User id={userId} {...originalData.user} />
-            <Header>user (유저)</Header>
-            <CodeBlock title={`User`} id={originalData?.user?._id}>{JSON.stringify(originalData?.user, null, 2)}</CodeBlock>
-            <Header>Payment (결제 수단)</Header>
-            <Blocks>
-            {
-                originalData?.payment?.map((e, i) => (<CodeBlock title={'payment'} subTitle={e.cardNumber} id={e._id} key={i}>{JSON.stringify(e, null, 2)}</CodeBlock>))
-            }
-            </Blocks>
-            <Header>subscribe (구독)</Header>
-            <Blocks>
-            {
-                originalData?.subscribe?.map((e, i) => (<CodeBlock title={`subscribe`} subTitle={e.productId} id={e._id} key={i}>{JSON.stringify(e, null, 2)}</CodeBlock>))
-            }
-            </Blocks>
-            <Header>paymentLog (결제 로그)</Header>
-            <Blocks>
-            {
-                originalData?.paymentLog?.map((e, i) => (<CodeBlock links={[{text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${e._id}`}]}  title={`paymentLog`} subTitle={`${e.status} | ${e.approvedAt}`} id={e._id} key={i}>{JSON.stringify(e, null, 2)}</CodeBlock>))
-            }
-            </Blocks>
+            <CodeBlock
+                title={originalData?.user?.name}
+                icon={originalData?.user?.profileImage || OpizeLogo}
+                subtitle={originalData?.user?.email}
+                desc={originalData?.user?._id}
+                links={[
+                    { text: '자세한 정보', to: `/admin/user/detail?userId=${originalData?.user?._id}` },
+                    { text: '편집', to: `/admin/user/edit?userId=${originalData?.user?._id}` },
+                ]}>
+                {JSON.stringify(originalData?.user, null, 4)}
+            </CodeBlock>
+
+            <VerticalLayout label="Payment (결제 수단)">
+                <Blocks>
+                    { originalData?.payment?.map((e, i) => (<MiniCodeBlock title={'payment'} subtitle={e.cardNumber} info={e._id} key={i}>{JSON.stringify(e, null, 4)}</MiniCodeBlock>)) }
+                </Blocks>
+            </VerticalLayout>
+
+            <VerticalLayout label="subscribe (구독)">
+                <Blocks>
+                    { originalData?.subscribe?.map((e, i) => (<MiniCodeBlock title={'subscribe'} subtitle={e.productId} info={e._id} key={i}>{JSON.stringify(e, null, 4)}</MiniCodeBlock>)) }
+                </Blocks>
+            </VerticalLayout>
+
+            <VerticalLayout label="paymentLog (결제 로그)">
+                <Blocks>
+                    { 
+                        originalData?.paymentLog?.map((e, i) => (<MiniCodeBlock
+                            title={'paymentLog'}
+                            subtitle={`${e.status} | ${e.approvedAt}`}
+                            info={e._id}
+                            key={i}
+                            links={[
+                                {text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${e._id}`}
+                            ]}
+                            >
+                        {JSON.stringify(e, null, 4)}</MiniCodeBlock>))
+                    }
+                </Blocks>
+            </VerticalLayout>
         </Divver>
     )
 }

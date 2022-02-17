@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
-import {  Route, Routes, useNavigate, useLocation } from 'react-router-dom';
-import Header from "../../components/header/header";
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import Page from "../../components/page/default";
-import { H1 } from "../../components/title/title";
-import HorizonLNB from '../../components/LNB/horizonLNB';
+import { HorizonLNB, Page, H1 } from 'opize-components'
+import { HeaderWrapper } from '../../components';
 
 import User from './user';
 import Payment from './payment'
@@ -22,13 +20,13 @@ export default function Router() {
 
   return (
     <>
-        <Header app="user" />
+        <HeaderWrapper app="user" />
         <Page width={720}>
             <H1>{t('user_title')}</H1>
             <HorizonLNB selected={location.pathname} menu={[
-                {id: "/user", text: t('user_user_title'), onClick: () => navigate("/user")},
-                {id: "/user/payment", text: t('user_payment_title'), onClick: () => navigate("/user/payment")},
-                {id: "/user/paymentLog", text: t('user_paymentLog_title'), onClick: () => navigate("/user/paymentLog")},
+                {id: "/user", label: t('user_user_title'), onClick: () => navigate("/user")},
+                {id: "/user/payment", label: t('user_payment_title'), onClick: () => navigate("/user/payment")},
+                {id: "/user/paymentLog", label: t('user_paymentLog_title'), onClick: () => navigate("/user/paymentLog")},
             ]} />
 
             <Routes>

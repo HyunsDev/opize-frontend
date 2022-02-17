@@ -1,13 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
 
-import RowMenu from '../../../components/row/rowMenu';
-import { ColorBtnSubmit } from '../../../components/btns/btns';
-import LoginInput from '../../../components/inputs/loginInput'
+import { HorizontalLayout, ColorBtn, FormInput } from 'opize-components'
 
 const Form = styled.form`
     width: 100%;
@@ -29,7 +27,7 @@ const Btns = styled.div`
 export default function Create(props) {
     const { t } = useTranslation('translation')
     const [isLoading, setLoading] = useState(false);
-    const { control, handleSubmit, watch, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             name: "",
             code: "",
@@ -81,50 +79,50 @@ export default function Create(props) {
     };
 
     return (
-        <RowMenu name={'프로젝트 추가'} marginTop={16}>
+        <HorizontalLayout label={'프로젝트 추가'} marginTop={16}>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Inputs>
                     <Controller
                         name="name" 
                         control={control}
                         rules={{required: 'name을 입력해주세요.'}}
-                        render={({field}) => <LoginInput {...field} name={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
+                        render={({field}) => <FormInput {...field} label={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
                     />
                     <Controller
                         name="code" 
                         control={control}
                         rules={{required: 'code를 입력해주세요.'}}
-                        render={({field}) => <LoginInput {...field} name={'code'} ref={null} error={errors.code} type="text" autoComplete="off" />}
+                        render={({field}) => <FormInput {...field} label={'code'} ref={null} error={errors.code} type="text" autoComplete="off" />}
                     />
                     <Controller
                         name="url" 
                         control={control}
                         rules={{required: 'url을 입력해주세요.'}}
-                        render={({field}) => <LoginInput {...field} name={'url'} ref={null} error={errors.url} type="text" autoComplete="off" />}
+                        render={({field}) => <FormInput {...field} label={'url'} ref={null} error={errors.url} type="text" autoComplete="off" />}
                     />
                     <Controller
                         name="icon" 
                         control={control}
                         rules={{required: 'icon을 입력해주세요.'}}
-                        render={({field}) => <LoginInput {...field} name={'icon'} ref={null} error={errors.icon} type="text" autoComplete="off" />}
+                        render={({field}) => <FormInput {...field} label={'icon'} ref={null} error={errors.icon} type="text" autoComplete="off" />}
                     />
                     <Controller
                         name="desc" 
                         control={control}
                         rules={{required: 'desc을 입력해주세요.'}}
-                        render={({field}) => <LoginInput {...field} name={'desc'} ref={null} error={errors.desc} type="text" autoComplete="off" />}
+                        render={({field}) => <FormInput {...field} label={'desc'} ref={null} error={errors.desc} type="text" autoComplete="off" />}
                     />
                     <Controller
                         name="ruleUrl" 
                         control={control}
                         rules={{required: 'ruleUrl을 입력해주세요.'}}
-                        render={({field}) => <LoginInput {...field} name={'ruleUrl'} ref={null} error={errors.ruleUrl} type="text" autoComplete="off" />}
+                        render={({field}) => <FormInput {...field} label={'ruleUrl'} ref={null} error={errors.ruleUrl} type="text" autoComplete="off" />}
                     />
                 </Inputs>
                 <Btns>
-                    <ColorBtnSubmit isLoading={isLoading} text={'프로젝트 추가'} />
+                    <ColorBtn type="submit" isLoading={isLoading} label={'프로젝트 추가'} />
                 </Btns>
             </Form>
-        </RowMenu>
+        </HorizontalLayout>
     )
 }

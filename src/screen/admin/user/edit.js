@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
-
-import { User } from '../../../components/admin/user';
-import RowMenu from '../../../components/row/rowMenu';
-import CheckBox from "../../../components/inputs/checkbox"
-import { ColorBtnSubmit } from '../../../components/btns/btns';
-import LoginInput from '../../../components/inputs/loginInput'
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import OpizeLogo from '../../../assets/opize.png'
+
+import { CodeBlock, HorizontalLayout, Checkbox, ColorBtn, FormInput } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 16px;
@@ -117,44 +115,54 @@ export default function Create(props) {
 
     return (
         <Divver>
-            <User id={userId} {...originalData} />
-            <RowMenu name={'유저 편집'} marginTop={16}>
+            <CodeBlock
+                title={originalData.name}
+                icon={originalData.icon || OpizeLogo}
+                subtitle={originalData.email}
+                desc={originalData._id}
+                links={[
+                    { text: '자세한 정보', to: `/admin/user/detail?userId=${originalData._id}` },
+                    { text: '편집', to: `/admin/user/edit?userId=${originalData._id}` },
+                ]}>
+                {JSON.stringify(originalData, null, 4)}
+            </CodeBlock>
+            <HorizontalLayout label={'유저 편집'} marginTop={16}>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="name" 
                             control={control}
                             rules={{required: 'name을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
+                            render={({field}) => <FormInput {...field} label={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
                         />
                         <Controller
                             name="profileImage" 
                             control={control}
                             rules={{required: 'profileImage를 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'profileImage'} ref={null} error={errors.profileImage} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'profileImage'} ref={null} error={errors.profileImage} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="roles" 
                             control={control}
                             rules={{required: 'roles을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'roles'} ref={null} error={errors.roles} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'roles'} ref={null} error={errors.roles} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="isVerified"
                             control={control}
-                            render={({field}) => <CheckBox {...field} text={<>isVerified</>} ref={null} error={errors.isVerified}/>}
+                            render={({field}) => <Checkbox {...field} label={'isVerified'} ref={null} error={errors.isVerified}/>}
                         />
                         <Controller
                             name="isMarketingAccept" 
                             control={control}
-                            render={({field}) => <CheckBox {...field} text={<>isMarketingAccept</>} ref={null} error={errors.isMarketingAccept}/>}
+                            render={({field}) => <Checkbox {...field} label={'isMarketingAccept'} ref={null} error={errors.isMarketingAccept}/>}
                         />
                     </Inputs>
                     <Btns>
-                        <ColorBtnSubmit isLoading={isLoading} text={'유저 편집'} />
+                        <ColorBtn type="submit" isLoading={isLoading} text={'유저 편집'} />
                     </Btns>
                 </Form>
-            </RowMenu>
+            </HorizontalLayout>
         </Divver>
     )
 }

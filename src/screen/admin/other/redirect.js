@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import RowMenu from '../../../components/row/rowMenu';
-import { Btn, ColorBtn } from '../../../components/btns/btns';
-import Input from '../../../components/inputs/input';
-import Url from '../../../components/admin/url';
-import Search from '../../../components/inputs/search';
+import { HorizontalLayout, Btn, ColorBtn, Input, MiniClickableBlock, Search } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
 `
 
 const CreateLink = (props) => {
@@ -88,21 +88,14 @@ const CreateLink = (props) => {
     };
 
     return (
-        <RowMenu name={'리다이렉트'} marginTop={16}>
+        <HorizontalLayout label={'리다이렉트'}>
             <Input value={props.originalUrl || ""} onChange={e => props.setOriginalUrl(e.target.value)} placeholder='원본 링크' />
             <Input value={props.newUrl || ""} onChange={e => props.setNewUrl(e.target.value)} placeholder='단축 링크' />
-            <ColorBtn isLoading={isLoading} text='추가' onClick={onSubmit} />
-            <Btn isLoading={isLoading} text='삭제' onClick={deleteRedirect} background="var(--red1)" backgroundHover="var(--red2)" color="var(--red9)" />
-        </RowMenu>
+            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
+            <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
+        </HorizontalLayout>
     )
 }
-
-const UrlsDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
-`
 
 
 export default function Create(props) {
@@ -148,19 +141,22 @@ export default function Create(props) {
         <Divver>
             <CreateLink newUrl={newUrl} setNewUrl={setNewUrl} updateUrl={updateUrl} originalUrl={originalUrl} setOriginalUrl={setOriginalUrl} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            <UrlsDiv>
-                {
-                    urls.filter(e => {
-                        if (searchText === "") return true
-                        if (e.newUrl.toUpperCase().includes(searchText.toUpperCase())) return true
-                        if (e.originalUrl.toUpperCase().includes(searchText.toUpperCase())) return true
-                        return false
-                    }).map((e, i) => <Url key={i} {...e} onClick={() => {
+            {
+                urls.filter(e => {
+                    if (searchText === "") return true
+                    if (e.newUrl.toUpperCase().includes(searchText.toUpperCase())) return true
+                    if (e.originalUrl.toUpperCase().includes(searchText.toUpperCase())) return true
+                    return false
+                }).map((e, i) => <MiniClickableBlock key={i}
+                    title={e.newUrl}
+                    subtitle={e.count}
+                    info={e.originalUrl}
+                    onClick={() => {
                         setNewUrl(e.newUrl)
                         setOriginalUrl(e.originalUrl)
-                    }} />)
-                }
-            </UrlsDiv>
+                    }} 
+                />)
+            }
         </Divver>
     )
 }

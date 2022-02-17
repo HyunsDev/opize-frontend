@@ -1,10 +1,12 @@
-import { useContext, useState, useEffect } from 'react';
-import { UserContext } from "../../../context/user";
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import instance from '../../../src/instance';
 
-import { User } from '../../../components/admin/user';
-import Search from '../../../components/inputs/search';
+import { MiniCodeBlock, Search } from 'opize-components'
+
+const Divver = styled.div`
+    margin-top: 8px;
+`
 
 const Services = styled.div`
     display: flex;
@@ -33,7 +35,7 @@ export default function List(props) {
     }
 
     return (
-        <>
+        <Divver>
             <Search value={searchText} onChange={searchInput} />
             <Services>
                 {
@@ -44,11 +46,19 @@ export default function List(props) {
                         if (e.email.toUpperCase().includes(searchText.toUpperCase())) return true
                         return false
                     }).map(e => (
-                        <User {...e} key={e.id} />
+                        <MiniCodeBlock key={e.id}
+                            title={e.name}
+                            subtitle={e.id}
+                            info={e.email}
+                            links={[
+                                { text: '자세한 정보', to: `/admin/user/detail?userId=${e.id}` },
+                                { text: '편집', to: `/admin/user/edit?userId=${e.id}` },
+                            ]}
+                        >{JSON.stringify(e, null, 4)}</MiniCodeBlock>
                     ))
                 }
             </Services>
-        </>
+        </Divver>
     )
 }
 

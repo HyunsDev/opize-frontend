@@ -10,9 +10,7 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtnSubmit } from "../../components/btns/btns";
-import LoginInput from '../../components/inputs/loginInput'
-
+import { ColorBtn, FormInput } from 'opize-components'
 
 const Divver = styled.div`
     padding: 8px;
@@ -136,13 +134,13 @@ export default function Login (props) {
                                 value: 8,
                                 message: t('auth_input_password_pattern')
                               }}}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_new_password')} ref={null} error={errors.password} type="password" autoComplete="new-password" />}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_new_password')} ref={null} error={errors.password} type="password" autoComplete="new-password" />}
                         />
                         <Controller
                             name="passwordRetry" 
                             control={control}
                             rules={{required: t('auth_input_password_retry_required'), validate: (value) =>  value === watch('password') || t('auth_input_password_retry_validate') }}
-                            render={({field}) => <LoginInput {...field} name={t('auth_input_password_retry')} ref={null} error={errors.passwordRetry} type="password" autoComplete="new-password" />}
+                            render={({field}) => <FormInput {...field} label={t('auth_input_password_retry')} ref={null} error={errors.passwordRetry} type="password" autoComplete="new-password" />}
                         />
 
                     </Inputs>
@@ -152,7 +150,7 @@ export default function Login (props) {
                             <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtnSubmit isLoading={isLoading} text={t('auth_reset')} />
+                            <ColorBtn type="submit" isLoading={isLoading} label={t('auth_reset')} />
                         </Right>
                     </LoginMenu>
                 </form>

@@ -4,12 +4,10 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
-
-import Project from '../../../components/admin/project';
-import RowMenu from '../../../components/row/rowMenu';
-import { ColorBtnSubmit } from '../../../components/btns/btns';
-import LoginInput from '../../../components/inputs/loginInput'
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { CodeBlock, HorizontalLayout, ColorBtn, FormInput } from 'opize-components'
+
 
 const Divver = styled.div`
     margin-top: 16px;
@@ -57,7 +55,6 @@ export default function Create(props) {
 
     useEffect(() => {
         (async () => {
-            console.log(projectCode)
             if (projectCode) {
                 try {
                     const res = await instance.get(`/project/${projectCode}`)
@@ -70,7 +67,6 @@ export default function Create(props) {
                         leaderDeveloperId: res.data.leaderDeveloperId
                     })
                     setOriginalProject(res.data)
-                    console.log(res.data)
                 } catch (err) {
                     console.error(err)
                 }
@@ -124,52 +120,62 @@ export default function Create(props) {
 
     return (
         <Divver>
-            <Project {...originalProject} />
-            <RowMenu name={'프로젝트 편집'} marginTop={16}>
+            <CodeBlock key={originalProject.name}
+                icon={originalProject.icon}
+                title={originalProject.name}
+                subtitle={originalProject.code}
+                desc={originalProject.desc}
+                links={[
+                    { text: '새로운 상품', to: `/admin/project/product/new?projectCode=${originalProject.code}` },
+                    { text: '상품', to: `/admin/project/product?projectCode=${originalProject.code}` },
+                    { text: '편집', to: `/admin/project/edit?projectCode=${originalProject.code}` },
+                ]}
+            >{JSON.stringify(originalProject, null, 4)}</CodeBlock>
+            <HorizontalLayout label={'프로젝트 편집'} marginTop={16}>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="name" 
                             control={control}
                             rules={{required: 'name을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
+                            render={({field}) => <FormInput {...field} label={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
                         />
                         <Controller
                             name="url" 
                             control={control}
                             rules={{required: 'url을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'url'} ref={null} error={errors.url} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'url'} ref={null} error={errors.url} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="icon" 
                             control={control}
                             rules={{required: 'icon을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'icon'} ref={null} error={errors.icon} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'icon'} ref={null} error={errors.icon} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="desc" 
                             control={control}
                             rules={{required: 'desc을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'desc'} ref={null} error={errors.desc} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'desc'} ref={null} error={errors.desc} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="ruleUrl" 
                             control={control}
                             rules={{required: 'ruleUrl을 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'ruleUrl'} ref={null} error={errors.ruleUrl} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'ruleUrl'} ref={null} error={errors.ruleUrl} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="leaderDeveloperId" 
                             control={control}
                             rules={{required: 'leaderDeveloperId를 입력해주세요.'}}
-                            render={({field}) => <LoginInput {...field} name={'leaderDeveloperId'} ref={null} error={errors.leaderDeveloperId} type="text" autoComplete="off" />}
+                            render={({field}) => <FormInput {...field} label={'leaderDeveloperId'} ref={null} error={errors.leaderDeveloperId} type="text" autoComplete="off" />}
                         />
                     </Inputs>
                     <Btns>
-                        <ColorBtnSubmit isLoading={isLoading} text={'프로젝트 편집'} />
+                        <ColorBtn type='submit' isLoading={isLoading} label={'프로젝트 편집'} />
                     </Btns>
                 </Form>
-            </RowMenu>
+            </HorizontalLayout>
         </Divver>
     )
 }

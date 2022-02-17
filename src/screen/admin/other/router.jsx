@@ -1,6 +1,6 @@
 import {  Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 
-import HorizonLNB from '../../../components/LNB/horizonLNB';
+import { HorizonLNB } from 'opize-components'
 
 import Card from './card'
 import Redirect from './redirect'
@@ -15,11 +15,11 @@ export default function Router() {
   return (
     <>
         <HorizonLNB exact selected={location.pathname} menu={[
-            {id: "/admin/other/card", text: '카드', onClick: () => navigate("/admin/other/card")},
-            {id: "/admin/other/redirect", text: '리다이렉트', onClick: () => navigate("/admin/other/redirect")},
-            {id: "/admin/other/notionMap", text: '노션 맵', onClick: () => navigate("/admin/other/notionMap")},
-            {id: "/admin/other/banner", text: '배너', onClick: () => navigate("/admin/other/banner")},
-            {id: "/admin/other/file", text: '파일', onClick: () => navigate("/admin/other/file")},
+            {id: "/admin/other/card", label: '카드', onClick: () => navigate("/admin/other/card")},
+            {id: "/admin/other/redirect", label: '리다이렉트', onClick: () => navigate("/admin/other/redirect")},
+            {id: "/admin/other/notionMap", label: '노션 맵', onClick: () => navigate("/admin/other/notionMap")},
+            {id: "/admin/other/banner", label: '배너', onClick: () => navigate("/admin/other/banner")},
+            {id: "/admin/other/file", label: '파일', onClick: () => navigate("/admin/other/file")},
         ]} />
 
         <Routes>
