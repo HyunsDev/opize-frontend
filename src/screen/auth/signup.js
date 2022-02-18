@@ -11,8 +11,13 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtn, Checkbox, FormInput, H1 } from 'opize-components'
+import { ColorBtn, Checkbox, FormInput } from 'opize-components'
 
+const H1 = styled.h1`
+    font-size: 24px;
+    font-weight: 800;
+    margin: 12px 0px;;
+`
 
 const Divver = styled.div`
     padding: 8px;
@@ -174,7 +179,7 @@ export default function Login (props) {
                             <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtn type="submit" isLoading={isLoading} text={t("auth_signup")} />
+                            <ColorBtn type="submit" isLoading={isLoading} label={t("auth_signup")} />
                         </Right>
                     </LoginMenu>
                 </form>

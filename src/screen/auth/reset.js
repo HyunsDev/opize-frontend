@@ -35,10 +35,9 @@ const LogoText = styled.img`
 `
 
 const H1 = styled.h1`
-    margin-top: 8px;
     font-size: 24px;
-    margin-bottom: 40px;
-    color: var(--grey9);
+    font-weight: 800;
+    margin: 12px 0px;;
 `
 
 const Inputs = styled.div`
@@ -139,7 +138,7 @@ export default function Login (props) {
                             <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtn type="submit" text={t('auth_reset')} isLoading={isLoading} />
+                            <ColorBtn type="submit" label={t('auth_reset')} isLoading={isLoading} />
                         </Right>
                     </LoginMenu>
                 </form>
