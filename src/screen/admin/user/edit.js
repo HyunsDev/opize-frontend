@@ -117,7 +117,7 @@ export default function Create(props) {
         <Divver>
             <CodeBlock
                 title={originalData.name}
-                icon={originalData.icon || OpizeLogo}
+                icon={originalData.icon |- OpizeLogo}
                 subtitle={originalData.email}
                 desc={originalData._id}
                 links={[

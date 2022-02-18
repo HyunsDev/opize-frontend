@@ -37,7 +37,7 @@ export default function Index() {
   }, [searchParams, setProjectCode])
 
   useEffect(() => {
-    document.title = `${t("payment_title")} | Opize`
+    document.title = `${t("payment_title")} - Opize`
   }, [t])
 
   useEffect(() => {

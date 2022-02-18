@@ -3,8 +3,8 @@ import { UserContext } from "../../context/user";
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import instance from '../../src/instance';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import { useForm, Controller } from "react-hook-form";
 
 import { HorizontalLayout, Input, Btn, ColorBtn, Checkbox, FormInput } from 'opize-components'
@@ -39,12 +39,8 @@ const MenuProfile = (props) => {
         try {
             if (value === "") return
             setLoading(true)
-            await axios.patch(`${process.env.REACT_APP_API_SERVER}/user/image`,{
+            await instance.patch(`/user/image`,{
                 image: value
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
             })
             setLoading(false)
             updateUser()
@@ -94,12 +90,8 @@ const MenuName = (props) => {
             if (value === "") return
             if (value === user.name) return
             setLoading(true)
-            await axios.patch(`${process.env.REACT_APP_API_SERVER}/user/name`,{
+            await instance.patch(`/user/name`,{
                 name: value
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
             })
             setLoading(false)
             updateUser()
@@ -183,13 +175,9 @@ const MenuPassword = (props) => {
     const onSubmit = async (data) => {
         try {
             setLoading(true)
-            await axios.patch(`${process.env.REACT_APP_API_SERVER}/user/password`,{
+            await instance.patch(`/user/password`,{
                 currentPassword: data.currentPassword,
                 newPassword: data.newPassword
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
             })
             toast.info(t('user_user_menu_password_toast'))
             reset({
@@ -323,12 +311,8 @@ const MenuMarking = (props) => {
     const onChange = async () => {
         try {
             setValue(!value)
-            await axios.patch(`${process.env.REACT_APP_API_SERVER}/user/marketing-accept`,{
+            await instance.patch(`/user/marketing-accept`,{
                 accept: !value
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
             })
             updateUser()
         } catch (err) {
@@ -368,15 +352,10 @@ const MenuDestroy = (props) => {
         try {
             const check = global.confirm(t('user_user_menu_destroy_conform'))
             if (!check) return
-            toast.info(t('developingFunction'))
-            return
-            // setLoading(true)
-            // await axios.delete(`${process.env.REACT_APP_API_SERVER}/user`,{}, {
-            //     headers: {
-            //         Authorization: `Bearer ${localStorage.getItem('token')}`
-            //     }
-            // })
-            // setLoading(false)
+            setLoading(true)
+            await instance.delete(`${process.env.REACT_APP_API_SERVER}/user`)
+            localStorage.removeItem('token')
+            navigate('/')
         } catch (err) {
             setLoading(false)
             if (err.response) {
@@ -386,6 +365,8 @@ const MenuDestroy = (props) => {
                     navigate("/login")
                 } else if (err.response.data.code === "invalid_token") {
                     toast.error(t('err_invalid_token'))
+                } else if (err.response.data.code === 'roles_user_cant_withdrawn') {
+                    toast.error('권한을 가진 유저는 탈퇴할 수 없습니다. 관리자에게 문의하세요.')
                 } else {
                     console.error(err)
                     toast.error(err.message)
@@ -404,7 +385,20 @@ const MenuDestroy = (props) => {
     )
 }
 
+function Roles(props) {
+    const { user } = useContext(UserContext)
+    const { t } = useTranslation('translation')
+
+    return (
+        <HorizontalLayout label={t('user_user_menu_roles')}>
+            <Input value={user.roles} readOnly/>
+        </HorizontalLayout>
+    )
+}
+
 export default function User(props) {
+    const { user } = useContext(UserContext)
+
     return (
         <>
             <HorizontalLayouts>
@@ -413,6 +407,7 @@ export default function User(props) {
                 <MenuEmail />
                 <MenuPassword />
                 <MenuCoupon />
+                {user?.roles?.length !== 0 && <Roles />}
                 <MenuMarking />
                 <MenuDestroy />
             </HorizontalLayouts>

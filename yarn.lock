@@ -4505,10 +4505,15 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.5.tgz#76c8584f4fc843db64702a6bd04ab7a8bd666da3"
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
-follow-redirects@^1.0.0, follow-redirects@^1.14.7, follow-redirects@^1.14.8:
+follow-redirects@^1.0.0, follow-redirects@^1.14.7:
   version "1.14.8"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.8.tgz#016996fb9a11a100566398b1c6839337d7bfa8fc"
   integrity sha512-1x0S9UVJHsQprFcEC/qnNzBLcIxsjAV905f/UkQxbclCsoTWlacCNOpQa/anodLl2uaEKFhfWOvM2Qg77+15zA==
+
+follow-redirects@^1.14.8:
+  version "1.14.9"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
+  integrity sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==
 
 fork-ts-checker-webpack-plugin@^6.5.0:
   version "6.5.0"
@@ -6679,9 +6684,9 @@ open@^8.0.9, open@^8.4.0:
     is-wsl "^2.2.0"
 
 opize-components@^0.1.9:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/opize-components/-/opize-components-0.1.13.tgz#1329b5bf04145138dfc813dd5103deba6e4fe4ee"
-  integrity sha512-7XyslqcA9666ZuPam3TYgXPx/16/t+GNe1g7WsUEVPyTshzIVLYU0VRAOKruwfr7ML+Lo1EnA1CmwBzMbb3s8w==
+  version "0.1.14"
+  resolved "https://registry.yarnpkg.com/opize-components/-/opize-components-0.1.14.tgz#9f4c28ad2f632310263e21c3439f0ce490e143f6"
+  integrity sha512-Gvyt/+XVUL/lUzr9lU/x2JfZm5IP59ArAGUDwI1seQ+s9YJQsiRLVT27ZpoXSHi8oFR8hO0lGlzH/e5t0VQJyQ==
   dependencies:
     "@testing-library/jest-dom" "^5.16.2"
     "@testing-library/react" "^12.1.2"
