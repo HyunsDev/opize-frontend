@@ -159,7 +159,7 @@ export default function Create(props) {
                         />
                     </Inputs>
                     <Btns>
-                        <ColorBtn type="submit" isLoading={isLoading} text={'유저 편집'} />
+                        <ColorBtn type="submit" isLoading={isLoading} label={'유저 편집'} />
                     </Btns>
                 </Form>
             </HorizontalLayout>

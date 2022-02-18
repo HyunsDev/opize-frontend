@@ -68,20 +68,20 @@ export default function PaymentCancel(props) {
     return (
         <Divver>
             <SubscribeBlock {...originalData.paymentLog}
-                product={originalData.product}
-                project={originalData.project}
+                product={originalData?.product || {icon: 'https://static.opize.me/opize.png', name: '존재하지 않는 상품입니다.'}}
+                project={originalData?.project || {icon: 'https://static.opize.me/opize.png', name: '존재하지 않는 프로젝트입니다.'}}
                 btnIcon={<Receipt size={32} color="var(--teal5)" />}
-                onClick={() => window.open(originalData.paymentLog.receiptUrl)}
-                desc1={<>{originalData.paymentLog.totalAmount}{originalData.paymentLog.currency}</>}
-                desc2={new Date(originalData.paymentLog.approvedAt).toLocaleString()}
+                onClick={() => window.open(originalData.paymentLog?.receiptUrl)}
+                desc1={<>{originalData.paymentLog?.totalAmount}{originalData.paymentLog?.currency}</>}
+                desc2={new Date(originalData.paymentLog?.approvedAt).toLocaleString()}
             />
 
             <MiniCodeBlock
                 title={'paymentLog'}
                 subtitle={`${originalData.paymentLog?.status} | ${originalData.paymentLog?.totalAmount}${originalData.paymentLog?.currency}`}
-                info={originalData.paymentLog._id}
+                info={originalData?.paymentLog?._id}
                 links={[
-                    {text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${originalData.paymentLog._id}`}
+                    {text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${originalData?.paymentLog?._id}`}
                 ]}
             >{JSON.stringify(originalData, null, 4)}
             </MiniCodeBlock>
