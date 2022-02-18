@@ -33,15 +33,22 @@ const Notion = function (props) {
                     // 캐시된 버전 사용
                     const responsePageId = cacheResponse.cache.pageId
                     const uuid = `${responsePageId.substr(0,8)}-${responsePageId.substr(8,4)}-${responsePageId.substr(12,4)}-${responsePageId.substr(16,4)}-${responsePageId.substr(20,12)}`
-                    document.title = `${cacheResponse.cache?.block[uuid]?.value.properties.title[0][0] || ""} | Opize`
+                    document.title = `${cacheResponse.cache?.block[uuid]?.value.properties.title[0][0] || ""} - Opize`
                     setPage(cacheResponse.cache)
                 } else {
                     // 새로 캐시
                     const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/notion?id=${pageId}`)
                     const responsePageId = res.data.pageId
                     const uuid = `${responsePageId.substr(0,8)}-${responsePageId.substr(8,4)}-${responsePageId.substr(12,4)}-${responsePageId.substr(16,4)}-${responsePageId.substr(20,12)}`
-                    document.title = `${res.data?.block[uuid]?.value.properties.title[0][0] || ""} | Opize`
+                    document.title = `${res.data?.block[uuid]?.value.properties.title[0][0] || ""} - Opize`
                     setPage(res.data)
+
+                    // 기존 캐시가 10MB를 넘으면, 캐시 초기화
+                    if ((await navigator.storage.estimate()).usageDetails.indexedDB > 30*1000*1000) {
+                        console.log('캐시 한도 초과')
+                        localforage.clear()
+                    }
+
                     localforage.setItem(pageId, {
                         cachedAt: new Date().toISOString(),
                         cache: res.data

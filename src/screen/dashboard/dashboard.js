@@ -66,7 +66,7 @@ export default function Dashboard(props) {
     const { t } = useTranslation('translation')
 
     useEffect(() => {
-        document.title = `${t("dashboard")} | Opize`
+        document.title = `${t("dashboard")} - Opize`
     }, [t])
 
     return (

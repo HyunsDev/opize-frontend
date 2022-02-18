@@ -15,7 +15,7 @@ export default function Router() {
     const location = useLocation()
 
     useEffect(() => {
-        document.title = `${t("user_title")} | Opize`
+        document.title = `${t("user_title")} - Opize`
     }, [t])
 
   return (

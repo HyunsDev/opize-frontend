@@ -44,7 +44,7 @@ export default function EmailVerify(props) {
     const { t } = useTranslation('translation')
 
     useEffect(() => {
-        document.title = `${t("auth_verify_page_title")} | Opize`
+        document.title = `${t("auth_verify_page_title")} - Opize`
     }, [t])
 
     const emailRetry = async () => {

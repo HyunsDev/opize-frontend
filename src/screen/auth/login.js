@@ -75,7 +75,7 @@ export default function Login (props) {
     const { t } = useTranslation('translation')
 
     useEffect(() => {
-        document.title = `${t("auth_login_page_title")} | Opize`
+        document.title = `${t("auth_login_page_title")} - Opize`
     }, [t])
 
     const { control, watch, handleSubmit, formState: { errors } } = useForm({
