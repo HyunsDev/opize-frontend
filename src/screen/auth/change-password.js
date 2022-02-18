@@ -35,10 +35,9 @@ const LogoText = styled.img`
 `
 
 const H1 = styled.h1`
-    margin-top: 8px;
     font-size: 24px;
-    margin-bottom: 40px;
-    color: var(--grey9);
+    font-weight: 800;
+    margin: 12px 0px;;
 `
 
 const Inputs = styled.div`

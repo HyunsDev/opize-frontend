@@ -11,8 +11,13 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtn, FormInput, H1 } from 'opize-components'
+import { ColorBtn, FormInput } from 'opize-components'
 
+const H1 = styled.h1`
+    font-size: 24px;
+    font-weight: 800;
+    margin: 12px 0px;;
+`
 
 const Divver = styled.div`
     padding: 8px;
@@ -114,6 +119,7 @@ export default function Login (props) {
                     <Logo src={OpizeLogoImg}/>
                     <LogoText src={OpizeLogoTextImg} />
                 </Logos>
+
                 <H1>{t('auth_login_title')}</H1>
 
                 <form onSubmit={handleSubmit(onSubmit)}>

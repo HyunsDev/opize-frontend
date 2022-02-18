@@ -6660,9 +6660,9 @@ open@^8.0.9, open@^8.4.0:
     is-wsl "^2.2.0"
 
 opize-components@^0.1.9:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/opize-components/-/opize-components-0.1.12.tgz#2cd10f31f283fcaff4d53c4c96322173be279a74"
-  integrity sha512-q6sPIxeQ5Xri1sFohYgWzP6OhN7XRPHGVgif4D2U5ei+/5EyIex7f1o3/tq5FrljM53OH8Mi/8OeUOeVGrMy2Q==
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/opize-components/-/opize-components-0.1.13.tgz#1329b5bf04145138dfc813dd5103deba6e4fe4ee"
+  integrity sha512-7XyslqcA9666ZuPam3TYgXPx/16/t+GNe1g7WsUEVPyTshzIVLYU0VRAOKruwfr7ML+Lo1EnA1CmwBzMbb3s8w==
   dependencies:
     "@testing-library/jest-dom" "^5.16.2"
     "@testing-library/react" "^12.1.2"
