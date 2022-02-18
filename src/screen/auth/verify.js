@@ -9,6 +9,7 @@ import opizeImg from '../../assets/opize_logoText.png'
 import { toast } from "react-toastify"
 
 import { ColorBtn } from 'opize-components'
+import instance from "../../src/instance"
 
 const Divver = styled.div`
     width: 100%;
@@ -97,6 +98,16 @@ export default function EmailVerify(props) {
         }
     }, [updateUser, navigate, user])
 
+    // 새로고침 인증
+    useEffect(() => {
+        (async () => {
+            try {
+                await instance.get('/user');
+                navigate('/dashboard')
+            } catch (err) { }
+        })()
+    }, [navigate])
+
     // 이메일 인증
     useEffect(() => {
         const email = searchParams.get("email")
@@ -134,7 +145,7 @@ export default function EmailVerify(props) {
                 <Logo src={opizeImg} />
             </Link>
             <H1>{t('auth_verify_title')}</H1>
-            <Desc>{t("auth_verify_subtitle", {email})}.</Desc>
+            <Desc>{t("auth_verify_subtitle", {email: email || '이메일'})}.</Desc>
             <ColorBtn label={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )

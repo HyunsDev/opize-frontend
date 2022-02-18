@@ -83,6 +83,7 @@
   "user_user_menu_marking_label_2": "(광고,마케팅 수신 동의)",
   "user_user_menu_destroy": "계정 삭제",
   "user_user_menu_destroy_conform": "정말로 계정을 삭제하시겠어요?",
+  "user_user_menu_roles": "권한",
   "user_payment_title": "결제",
   "user_payment_card": "카드",
   "user_payment_card_change": "카드 변경",

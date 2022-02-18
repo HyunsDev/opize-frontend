@@ -98,12 +98,12 @@ export default function Login (props) {
                     email: data.email,
                     password: data.password,
                     name: data.name,
-                    isMarketingAccept: data.marking
+                    isMarketingAccept: String(data.marking)
                 });
                 setLoading(false)
                 localStorage.setItem('token', res.data.token)
                 updateUser()
-                navigate('/dashboard')
+                navigate('/verify')
             } catch (err) {
                 setLoading(false)
                 console.error(err)
