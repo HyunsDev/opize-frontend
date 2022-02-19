@@ -1,6 +1,7 @@
 {
     "ko-KR": {
         "user": {
+            "code": "opize-user",
             "label": "내 정보",
             "img": "/opize.png",
             "desc": "대시보드",
@@ -9,6 +10,7 @@
             "hide": true
         },
         "admin": {
+            "code": "opize-admin",
             "label": "운영자",
             "img": "https://media.discordapp.net/attachments/937043660770529341/941993545185755136/Settings_perspective_matte.png?width=612&height=612",
             "desc": "운영자",
@@ -17,6 +19,7 @@
             "onlyAdmin": true
         },
         "dashboard": {
+            "code": "opize-dashboard",
             "label": "대시보드",
             "img": "/opize.png",
             "desc": "대시보드",
@@ -26,6 +29,7 @@
     },
     "en-US": {
         "dashboard": {
+            "code": "opize-dashboard",
             "label": "Dashboard",
             "img": "/opize.png",
             "desc": "Dashboard",

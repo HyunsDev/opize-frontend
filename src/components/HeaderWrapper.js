@@ -21,18 +21,38 @@ export function HeaderWrapper(props){
     }, [initDashboard])
 
     const services = useMemo(() => {
-        let temp = defaultApp[i18n.language]
+        let temp = {}
+        Object.values(defaultApp[i18n.language]).forEach(e => {
+            if (e.onlyAdmin === true) {
+                if (user?.roles?.includes('admin')) {
+                    temp[e.code] = {
+                        label: e.label,
+                        img: e.img,
+                        desc: e.desc,
+                        to: e.to,
+                        hide: e.hide === true
+                    }
+                }
+            } else if (e.code) {
+                temp[e.code] = {
+                    label: e.label,
+                    img: e.img,
+                    desc: e.desc,
+                    to: e.to,
+                    hide: e.hide === true
+                }
+            }
+        })
         Object.values(dashboard?.projects || {})?.forEach(e => {
             temp[e.code] = {
                 label: e.name,
                 img: e.icon,
                 desc: e.desc,
-                show: true,
                 to: e.url,
             }
         })
         return temp
-    }, [i18n, dashboard])
+    }, [i18n, dashboard, user])
 
     return (
         <Header 
