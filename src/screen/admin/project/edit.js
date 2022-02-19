@@ -44,7 +44,8 @@ export default function Create(props) {
             icon: "",
             desc: "",
             ruleUrl: "",
-            leaderDeveloperId: ""
+            leaderDeveloperId: "",
+            apiKey: "",
         }
     });
     const navigate = useNavigate()
@@ -64,7 +65,8 @@ export default function Create(props) {
                         icon: res.data.icon,
                         desc: res.data.desc,
                         ruleUrl: res.data.ruleUrl,
-                        leaderDeveloperId: res.data.leaderDeveloperId
+                        leaderDeveloperId: res.data.leaderDeveloperId,
+                        apiKey: res.data.apiKey,
                     })
                     setOriginalProject(res.data)
                 } catch (err) {
@@ -87,7 +89,8 @@ export default function Create(props) {
                     icon: data.icon,
                     desc: data.desc,
                     ruleUrl: data.ruleUrl,
-                    leaderDeveloperId: data.leaderDeveloperId
+                    leaderDeveloperId: data.leaderDeveloperId,
+                    apiKey: data.apiKey,
                 });
                 setLoading(false)
                 toast.info('프로젝트를 수정했습니다.')
@@ -169,6 +172,12 @@ export default function Create(props) {
                             control={control}
                             rules={{required: 'leaderDeveloperId를 입력해주세요.'}}
                             render={({field}) => <FormInput {...field} label={'leaderDeveloperId'} ref={null} error={errors.leaderDeveloperId} type="text" autoComplete="off" />}
+                        />
+                        <Controller
+                            name="apiKey" 
+                            control={control}
+                            rules={{required: 'apiKey를 입력해주세요.'}}
+                            render={({field}) => <FormInput {...field} label={'apiKey'} ref={null} error={errors.apiKey} type="text" autoComplete="off" />}
                         />
                     </Inputs>
                     <Btns>
