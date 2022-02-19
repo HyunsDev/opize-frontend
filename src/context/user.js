@@ -55,7 +55,6 @@ const UserContextProvider = ({ children }) => {
         const token = localStorage.getItem('token')
         try {
             if (!token) {
-                navigate('/login')
                 return
             }
             const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/user`, {
@@ -148,7 +147,7 @@ const UserContextProvider = ({ children }) => {
     }
 
     return (
-        <UserContext.Provider value={{ user, updateUser, getUser, initUser, instanceHandling }}>
+        <UserContext.Provider value={{ user, SetUser, updateUser, getUser, initUser, instanceHandling }}>
             {children}
         </UserContext.Provider>);
     };
