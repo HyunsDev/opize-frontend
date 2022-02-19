@@ -1,9 +1,11 @@
+/* eslint-disable no-eval */
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { NotionRenderer } from 'react-notion-x'
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Collection, CollectionRow, NotionRenderer, Code } from 'react-notion-x'
+import { getPageTitle } from 'notion-utils'
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components'
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import {HeaderWrapper} from "../../components/HeaderWrapper";
@@ -12,15 +14,70 @@ import dayjs from "dayjs";
 
 const Div = styled.div`
     position: relative;
+
+    .notion .notion-header {
+        position: fixed;
+        top: 4px;
+        left: 100px;
+        transition: 200ms;
+        width: fit-content;
+        background: transparent;
+
+        .breadcrumb:hover {
+            background: var(--greyPlaceholder)
+        }
+    }
+
+    .notion .nav-header {
+        position: relative;
+        width: fit-content;
+    }
 `
 
 const NotionRendererDiv = styled.div`
 `
 
+const CodeX = function(props) {
+    switch (props.language) {
+        case 'HTML':
+            if (props.code.startsWith('<!-- opize -->')) {
+                return <div dangerouslySetInnerHTML={{__html: props.code.replaceAll('\\x3', '<')}}></div>
+            } else {
+                return <Code {...props} />
+            }
+        case 'JavaScript':
+            if (props.code.startsWith('// opize')) {
+                const code = props.code.replaceAll('\\n', '\n');
+                eval(code)
+                return <></>
+            } else {
+                return <Code {...props} />
+            }
+        default:
+            return <Code {...props} />
+    }
+}
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`
+
 const Notion = function (props) {
     const [page, setPage] = useState()
     const location = useLocation()
-    const { t, i18n } = useTranslation('translation')
+    const { i18n } = useTranslation('translation')
+    const [isTop, setIsTop] = useState(true)
+
+    const onScroll = () => {
+        setIsTop(window.scrollY === 0)
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScroll)
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+        }
+    }, [])
 
     useEffect(() => {
         (async () => {
@@ -31,16 +88,10 @@ const Notion = function (props) {
                 const cacheResponse = await localforage.getItem(pageId)
                 if (cacheResponse && dayjs(cacheResponse?.cachedAt) > dayjs().add(-1, 'minute')) {
                     // 캐시된 버전 사용
-                    const responsePageId = cacheResponse.cache.pageId
-                    const uuid = `${responsePageId.substr(0,8)}-${responsePageId.substr(8,4)}-${responsePageId.substr(12,4)}-${responsePageId.substr(16,4)}-${responsePageId.substr(20,12)}`
-                    document.title = `${cacheResponse.cache?.block[uuid]?.value.properties.title[0][0] || ""} - Opize`
                     setPage(cacheResponse.cache)
                 } else {
                     // 새로 캐시
                     const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/notion?id=${pageId}`)
-                    const responsePageId = res.data.pageId
-                    const uuid = `${responsePageId.substr(0,8)}-${responsePageId.substr(8,4)}-${responsePageId.substr(12,4)}-${responsePageId.substr(16,4)}-${responsePageId.substr(20,12)}`
-                    document.title = `${res.data?.block[uuid]?.value.properties.title[0][0] || ""} - Opize`
                     setPage(res.data)
 
                     // 기존 캐시가 10MB를 넘으면, 캐시 초기화
@@ -64,18 +115,42 @@ const Notion = function (props) {
                 }
             }
         })()
+    },[location, props.id, i18n.language, setPage])
 
-        return () => {
-            setPage()
-        }
-    },[location, props.id, i18n.language])
+    useEffect(() => {
+        document.title = `${page ? `${getPageTitle(page)} - Opize` : 'Opize'}`
+    }, [page])
 
     return (
         <>
-            <Div>
+            <Div isTop={isTop}>
                 <HeaderWrapper />
                 <NotionRendererDiv>
-                    {page && <NotionRenderer recordMap={page} fullPage darkMode={false} disableHeader/>}
+                    {page && <NotionRenderer
+                        recordMap={page}
+                        fullPage
+                        darkMode={false}
+                        // header={HeaderX}
+                        // disableHeader
+                        components={{
+                            collection: Collection,
+                            collectionRow: CollectionRow,
+                            code: CodeX,
+                            pageLink: ({
+                                href,
+                                as,
+                                passHref,
+                                prefetch,
+                                replace,
+                                scroll,
+                                shallow,
+                                locale,
+                                ...props
+                              }) => (
+                                <StyledLink to={href} {...props} />
+                              ),
+                        }}
+                    />}
                 </NotionRendererDiv>
             </Div>
         </>
