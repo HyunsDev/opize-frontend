@@ -6697,9 +6697,9 @@ open@^8.0.9, open@^8.4.0:
     is-wsl "^2.2.0"
 
 opize-components@^0.1.9:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/opize-components/-/opize-components-0.1.14.tgz#9f4c28ad2f632310263e21c3439f0ce490e143f6"
-  integrity sha512-Gvyt/+XVUL/lUzr9lU/x2JfZm5IP59ArAGUDwI1seQ+s9YJQsiRLVT27ZpoXSHi8oFR8hO0lGlzH/e5t0VQJyQ==
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/opize-components/-/opize-components-0.1.16.tgz#5e8051dc1a0501e5d817207d67b9100dd5561640"
+  integrity sha512-RIUonaCXySQF9nR7MdSEvHGjZEf8L94H8cKgCiRkOtduG7cy1C8h4FzyzP3cij3qb+jko2uWCc+Tu2B/vtduOg==
   dependencies:
     "@testing-library/jest-dom" "^5.16.2"
     "@testing-library/react" "^12.1.2"
