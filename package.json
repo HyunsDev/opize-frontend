@@ -15,6 +15,7 @@
     "jwt-decode": "^3.1.2",
     "localforage": "^1.10.0",
     "notion-client": "^4.14.1",
+    "notion-utils": "^4.16.0",
     "opize-components": "^0.1.9",
     "phosphor-react": "^1.4.0",
     "react": "^17.0.2",

@@ -391,7 +391,7 @@ function Roles(props) {
 
     return (
         <HorizontalLayout label={t('user_user_menu_roles')}>
-            <Input value={user.roles} readOnly/>
+            <Input value={user.roles || ''} readOnly/>
         </HorizontalLayout>
     )
 }

@@ -6527,12 +6527,25 @@ notion-types@^4.15.0:
   resolved "https://registry.yarnpkg.com/notion-types/-/notion-types-4.15.0.tgz#958c02fa7788dd796c85c2edf42d88f0284072f7"
   integrity sha512-Ssig+eOldXcjH84Fa1VJTcgigxzN1YaLFk8L4e+8XQ4D+uN2aJdOAcXqjcBvTmyeOzfzMlw8EjELogb1sQPflw==
 
+notion-types@^4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/notion-types/-/notion-types-4.16.0.tgz#617df1996b47678d02917d968fea2a2fc3208add"
+  integrity sha512-guqtW8JdoIBnTyIO79gmqQzAe3SDeHX2hxf/kYMYlSpuzu7km2HUDMUVWmPmQRsAAMVF2atueZdH5INuG59kAg==
+
 notion-utils@^4.15.0:
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/notion-utils/-/notion-utils-4.15.0.tgz#648dcad0d23981246f4abcd0f5c3b8bc2ef5ff54"
   integrity sha512-nYty1Zs+p5/kenUgsHxR9/90cu+sc5zcUOJPIh3XAon+tPUe+7XYAk/v07VMgqW1PGH2cZ5/0KWm8NPRXAfNgg==
   dependencies:
     notion-types "^4.15.0"
+    p-queue "6"
+
+notion-utils@^4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/notion-utils/-/notion-utils-4.16.0.tgz#3f022ebc9f3235edd106b51b6f45a53886d6f6fe"
+  integrity sha512-+jhUEIQjnTfKjXvY9CZAEotea5+pjo3V/yIi2PrqQuXiQfL28Dn09VnVNQ5fWTEtyoQEENkyNmMoBI0Nzn4Xiw==
+  dependencies:
+    notion-types "^4.16.0"
     p-queue "6"
 
 npm-run-path@^4.0.1:
