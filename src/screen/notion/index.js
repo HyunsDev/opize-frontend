@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components'
 import { useLocation, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { Spinner } from 'opize-components'
 
 import {HeaderWrapper} from "../../components/HeaderWrapper";
 import localforage from "localforage";
@@ -62,9 +63,30 @@ const StyledLink = styled(Link)`
     text-decoration: none;
 `
 
+const LoadingDiv = styled.div`
+    display: flex;
+    position: fixed;
+    opacity: ${props => props.isLoading ? 1 : 0};
+    transition: 200ms;
+    left: 30px;
+    top: 76px;
+    z-index: 999;
+    width: 30px;
+    height: 30px;
+`
+
+const LoadingBox = (props) => {
+    return (
+        <LoadingDiv isLoading={props.isLoading}>
+            <Spinner color={'var(--grey9)'} size={32}/>
+        </LoadingDiv>
+    )
+}
+
 const Notion = function (props) {
     const [page, setPage] = useState()
     const location = useLocation()
+    const [ isLoading, setLoading ] = useState(false)
     const { i18n } = useTranslation('translation')
     const [isTop, setIsTop] = useState(true)
 
@@ -89,10 +111,13 @@ const Notion = function (props) {
                 if (cacheResponse && dayjs(cacheResponse?.cachedAt) > dayjs().add(-1, 'minute')) {
                     // 캐시된 버전 사용
                     setPage(cacheResponse.cache)
+                    setLoading(false)
                 } else {
                     // 새로 캐시
+                    setLoading(true)
                     const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/notion?id=${pageId}`)
                     setPage(res.data)
+                    setLoading(false)
 
                     // 기존 캐시가 10MB를 넘으면, 캐시 초기화
                     if ((await navigator.storage.estimate()).usageDetails.indexedDB > 30*1000*1000) {
@@ -106,6 +131,7 @@ const Notion = function (props) {
                     })
                 }
             } catch (err) {
+                setLoading(false)
                 if (err.response) {
                     console.error(err.response)
                     toast.error(err.message)
@@ -125,6 +151,7 @@ const Notion = function (props) {
         <>
             <Div isTop={isTop}>
                 <HeaderWrapper />
+                <LoadingBox isLoading={isLoading} />
                 <NotionRendererDiv>
                     {page && <NotionRenderer
                         recordMap={page}
