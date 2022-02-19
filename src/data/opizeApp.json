@@ -17,14 +17,6 @@
             "to": "/admin",
             "showDashboard": false,
             "onlyAdmin": true
-        },
-        "dashboard": {
-            "code": "opize-dashboard",
-            "label": "대시보드",
-            "img": "/opize.png",
-            "desc": "대시보드",
-            "to": "/dashboard",
-            "showDashboard": false
         }
     },
     "en-US": {

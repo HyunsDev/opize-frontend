@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { DashboardContext } from '../../context/dashboard';
 import { Banner, Search, Service, Page, H1, H2 } from 'opize-components'
 import defaultApp from '../../data/opizeApp.json'
+import { useSearchParams } from 'react-router-dom';
 
 const Divver = styled.div`
     margin-top: 8px;
@@ -63,11 +64,22 @@ const Services = (props) => {
 export default function Dashboard(props) {
     const { user } = useContext(UserContext)
     const { dashboard } = useContext(DashboardContext)
+    const [ searchParams ] = useSearchParams()
     const { t } = useTranslation('translation')
 
     useEffect(() => {
         document.title = `${t("dashboard")} - Opize`
     }, [t])
+
+    // 서브 도메인 인증
+    useEffect(() => {
+        if (searchParams.get('projectGet') && user.isVerified) {
+            const project = dashboard.projects[searchParams.get('projectGet')]
+            if (project) {
+                window.location.href=`${project.url}/verify?token=${localStorage.getItem('token')}`
+            }   
+        }
+    }, [user, searchParams])
 
     return (
         <Page>
