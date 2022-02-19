@@ -108,7 +108,7 @@ const Notion = function (props) {
         
                 // localforage 이용
                 const cacheResponse = await localforage.getItem(pageId)
-                if (cacheResponse && dayjs(cacheResponse?.cachedAt) > dayjs().add(-1, 'minute')) {
+                if (cacheResponse && dayjs(cacheResponse?.cachedAt) > dayjs().add(-10, 'minute')) {
                     // 캐시된 버전 사용
                     setPage(cacheResponse.cache)
                     setLoading(false)
