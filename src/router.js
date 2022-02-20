@@ -17,6 +17,7 @@ import Redirect from './screen/redirect';
 import Subscribe from './screen/subscribe/subscribe';
 import Payment from './screen/payment/payment';
 import Logout from './screen/logout';
+import VerifyProject from './screen/verifyProject';
 
 export default function Router() {
   return (
@@ -39,6 +40,7 @@ export default function Router() {
                 <Route path="/subscribe" element={<Subscribe />} />
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/logout" element={<Logout />} />
+                <Route path="/verify-project" element={<VerifyProject />} />
                 <Route path="*" element={<Notion />} />
               </Routes>
             </DashContextProvider>

@@ -60,9 +60,9 @@ export function HeaderWrapper(props){
             app={props.app}
             projects={services}
             menus={[
-                { label: t('blog'), to: '/blog' },
-                { label: t('project'), to: '/' },
                 { label: t('developer'), to: '/developer' },
+                { label: t('project'), to: '/' },
+                { label: t('dashboard'), to: '/dashboard' },
             ]}
             user={user}
             userMenus={[

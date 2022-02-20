@@ -79,7 +79,7 @@ export default function Dashboard(props) {
                 window.location.href=`${project.url}/verify?token=${localStorage.getItem('token')}`
             }   
         }
-    }, [user, searchParams])
+    }, [user, searchParams, dashboard.projects])
 
     return (
         <Page>
