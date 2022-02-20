@@ -46,6 +46,7 @@ export default function Create(props) {
             ruleUrl: "",
             leaderDeveloperId: "",
             apiKey: "",
+            jwtKey: "",
         }
     });
     const navigate = useNavigate()
@@ -67,6 +68,7 @@ export default function Create(props) {
                         ruleUrl: res.data.ruleUrl,
                         leaderDeveloperId: res.data.leaderDeveloperId,
                         apiKey: res.data.apiKey,
+                        jwtKey: res.data.jwtKey,
                     })
                     setOriginalProject(res.data)
                 } catch (err) {
@@ -91,6 +93,7 @@ export default function Create(props) {
                     ruleUrl: data.ruleUrl,
                     leaderDeveloperId: data.leaderDeveloperId,
                     apiKey: data.apiKey,
+                    jwtKey: data.jwtKey,
                 });
                 setLoading(false)
                 toast.info('프로젝트를 수정했습니다.')
@@ -178,6 +181,12 @@ export default function Create(props) {
                             control={control}
                             rules={{required: 'apiKey를 입력해주세요.'}}
                             render={({field}) => <FormInput {...field} label={'apiKey'} ref={null} error={errors.apiKey} type="text" autoComplete="off" />}
+                        />
+                        <Controller
+                            name="jwtKey" 
+                            control={control}
+                            rules={{required: 'jwtKey를 입력해주세요.'}}
+                            render={({field}) => <FormInput {...field} label={'jwtKey'} ref={null} error={errors.jwtKey} type="text" autoComplete="off" />}
                         />
                     </Inputs>
                     <Btns>

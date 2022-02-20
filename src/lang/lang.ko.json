@@ -102,5 +102,7 @@
   "subscribe_title": "플랜 구독",
   "subscribe_btn": "플랜 구독",
   "payment_title": "결제",
-  "payment_btn": "결제"
+  "payment_btn": "결제",
+  "verifyProject_title": "{{name}}에 로그인합니다",
+  "verifyProject_text1": "잠시만 기다려주세요"
 }
