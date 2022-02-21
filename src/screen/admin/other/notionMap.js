@@ -24,6 +24,7 @@ const CreateLink = (props) => {
                 await instance.post(`/notion/info`, {
                     newUrl: props.newUrl,
                     notionId: props.notionId,
+                    projectCode: props.projectCode,
                 });
                 setLoading(false)
                 props.setNotionId('')
@@ -57,7 +58,7 @@ const CreateLink = (props) => {
         if (!isLoading) {
             try {
                 setLoading(true)
-                await instance.delete(`/notion/info/${props.newUrl}`);
+                await instance.delete(`/notion/info?newUrl=${props.newUrl}&projectCode=${props.projectCode}`);
                 setLoading(false)
                 props.setNotionId('')
                 props.setNewUrl('')
@@ -102,6 +103,7 @@ const CreateLink = (props) => {
         <HorizontalLayout label={'노션 맵'}>
             <Input value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 링크' />
             <Input value={props.newUrl || ""} onChange={e => props.setNewUrl(e.target.value)} placeholder='새 링크' />
+            <Input value={props.projectCode || ""} onChange={e => props.setProjectCode(e.target.value)} placeholder='프로젝트 코드' />
             <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
             <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
         </HorizontalLayout>
@@ -111,6 +113,7 @@ const CreateLink = (props) => {
 export default function Create(props) {
     const [ notionId, setNotionId ] = useState("")
     const [ newUrl, setNewUrl ] = useState("")
+    const [ projectCode, setProjectCode ] = useState("")
     const [ urls, setUrls ] = useState([])
     const [ searchText, setSearchText ] = useState('')
 
@@ -149,21 +152,23 @@ export default function Create(props) {
 
     return (
         <Divver>
-            <CreateLink newUrl={newUrl} setNewUrl={setNewUrl} updateUrl={updateUrl} notionId={notionId} setNotionId={setNotionId} />
+            <CreateLink setProjectCode={setProjectCode} projectCode={projectCode} newUrl={newUrl} setNewUrl={setNewUrl} updateUrl={updateUrl} notionId={notionId} setNotionId={setNotionId} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
             {
                 urls.filter(e => {
                     if (searchText === "") return true
                     if (e.newUrl.toUpperCase().includes(searchText.toUpperCase())) return true
                     if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
+                    if (e.projectCode.toUpperCase().includes(searchText.toUpperCase())) return true
                     return false
                 }).map((e, i) => <MiniClickableBlock key={i}
                     title={e.newUrl}
                     subTitle={e.count}
-                    info={e.notionId}
+                    info={`${e.projectCode} | ${e.notionId}`}
                     onClick={() => {
                         setNewUrl(e.newUrl)
                         setNotionId(e.notionId)
+                        setProjectCode(e.projectCode)
                     }}
                 />)
             }

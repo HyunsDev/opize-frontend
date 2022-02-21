@@ -116,7 +116,7 @@ const Notion = function (props) {
                 } else {
                     // 새로 캐시
                     setLoading(true)
-                    const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/notion?id=${pageId}`)
+                    const res = await axios.get(`${process.env.REACT_APP_API_SERVER}/notion?id=${pageId}&project=opize`)
                     setPage(res.data)
                     setLoading(false)
 
