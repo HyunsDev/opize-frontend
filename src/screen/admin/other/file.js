@@ -117,7 +117,7 @@ export default function Create(props) {
     const { t } = useTranslation('translation')
 
     const copyLink = (text) => {
-        toast.info('복사했습니다.')
+        toast.info('링크를 복사했습니다.')
         navigator.clipboard.writeText(`${process.env.REACT_APP_STATIC_SERVER}/${text}`);
     }
 
