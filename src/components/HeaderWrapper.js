@@ -2,16 +2,21 @@ import { Header } from 'opize-components'
 
 import defaultApp from '../data/opizeApp.json'
 import { useTranslation } from 'react-i18next';
-import { useMemo, useContext, useEffect } from "react";
+import { useMemo, useContext, useEffect, useState } from "react";
 
 import { UserContext } from "../context/user";
 import { DashboardContext } from "../context/dashboard";
 
 export function HeaderWrapper(props){
+    const { t } = useTranslation('translation')
     const { user, initUser } = useContext(UserContext)
     const { dashboard, initDashboard } = useContext(DashboardContext)
-    const { t, i18n } = useTranslation('translation')
-
+    const [ menus, setMenus ] = useState([
+        { label: t('developer'), to: '/developer' },
+        { label: t('project'), to: '/' },
+        { label: t('dashboard'), to: '/dashboard' },
+    ])
+    
     useEffect(() => {
         initUser()
     }, [initUser])
@@ -20,29 +25,19 @@ export function HeaderWrapper(props){
         initDashboard()
     }, [initDashboard])
 
+    useEffect(() => {
+        if (user?.roles?.includes('admin')) {
+            setMenus([
+                { label: t('admin'), to: '/admin' },
+                { label: t('developer'), to: '/developer' },
+                { label: t('project'), to: '/' },
+                { label: t('dashboard'), to: '/dashboard' },
+            ])
+        };
+    }, [t, user?.roles]);
+
     const services = useMemo(() => {
         let temp = {}
-        Object.values(defaultApp[i18n.language]).forEach(e => {
-            if (e.onlyAdmin === true) {
-                if (user?.roles?.includes('admin')) {
-                    temp[e.code] = {
-                        label: e.label,
-                        img: e.img,
-                        desc: e.desc,
-                        to: e.to,
-                        hide: e.hide === true
-                    }
-                }
-            } else if (e.code) {
-                temp[e.code] = {
-                    label: e.label,
-                    img: e.img,
-                    desc: e.desc,
-                    to: e.to,
-                    hide: e.hide === true
-                }
-            }
-        })
         Object.values(dashboard?.projects || {})?.forEach(e => {
             temp[e.code] = {
                 label: e.name,
@@ -52,18 +47,14 @@ export function HeaderWrapper(props){
             }
         })
         return temp
-    }, [i18n, dashboard, user])
+    }, [dashboard])
 
     return (
         <Header 
             isLogin={localStorage.getItem('token')}
-            app={props.app}
+            app={'opize'}
             projects={services}
-            menus={[
-                { label: t('developer'), to: '/developer' },
-                { label: t('project'), to: '/' },
-                { label: t('dashboard'), to: '/dashboard' },
-            ]}
+            menus={menus}
             user={user}
             userMenus={[
                 { label: t('header_user'), to: "/user" },
