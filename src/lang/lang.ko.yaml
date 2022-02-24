@@ -2,7 +2,7 @@
 dashboard: "대시보드"
 greet: "안녕하세요 {{name}}님!"
 blog: 블로그
-project: 프로젝트
+info: 소개
 contact: 문의
 developer: 개발자
 login: 로그인

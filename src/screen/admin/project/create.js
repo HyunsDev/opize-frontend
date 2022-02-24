@@ -34,7 +34,8 @@ export default function Create(props) {
             url: "",
             icon: "",
             desc: "",
-            ruleUrl: ""
+            ruleUrl: "",
+            apiServer: ""
         }
     });
 
@@ -49,6 +50,7 @@ export default function Create(props) {
                     icon: data.icon,
                     desc: data.desc,
                     ruleUrl: data.ruleUrl,
+                    apiServer: data.apiServer,
                 });
                 setLoading(false)
                 toast.info('프로젝트를 생성했습니다.')
@@ -92,7 +94,7 @@ export default function Create(props) {
                         name="code" 
                         control={control}
                         rules={{required: 'code를 입력해주세요.'}}
-                        render={({field}) => <FormInput {...field} label={'code'} ref={null} error={errors.code} type="text" autoComplete="off" />}
+                        render={({field}) => <FormInput placeholder="code는 이후에 변경할 수 없습니다." {...field} label={'code'} ref={null} error={errors.code} type="text" autoComplete="off" />}
                     />
                     <Controller
                         name="url" 
@@ -117,6 +119,12 @@ export default function Create(props) {
                         control={control}
                         rules={{required: 'ruleUrl을 입력해주세요.'}}
                         render={({field}) => <FormInput {...field} label={'ruleUrl'} ref={null} error={errors.ruleUrl} type="text" autoComplete="off" />}
+                    />
+                    <Controller
+                        name="apiServer" 
+                        control={control}
+                        rules={{required: 'apiServer을 입력해주세요.'}}
+                        render={({field}) => <FormInput {...field} label={'apiServer'} ref={null} error={errors.apiServer} type="text" autoComplete="off" />}
                     />
                 </Inputs>
                 <Btns>

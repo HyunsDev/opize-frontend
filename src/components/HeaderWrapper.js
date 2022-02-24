@@ -26,15 +26,28 @@ export function HeaderWrapper(props){
     }, [initDashboard])
 
     useEffect(() => {
-        if (user?.roles?.includes('admin')) {
+        if (!user.isVerified) {
             setMenus([
-                { label: t('admin'), to: '/admin' },
                 { label: t('developer'), to: '/developer' },
-                { label: t('project'), to: '/' },
-                { label: t('dashboard'), to: '/dashboard' },
+                { label: t('info'), to: '/' },
             ])
-        };
-    }, [t, user?.roles]);
+        } else {
+            if (user?.roles?.includes('admin')) {
+                setMenus([
+                    { label: '개발자', to: '/admin' },
+                    { label: t('developer'), to: '/developer' },
+                    { label: t('info'), to: '/' },
+                    { label: t('dashboard'), to: '/dashboard' },
+                ])
+            } else {
+                setMenus([
+                    { label: t('developer'), to: '/developer' },
+                    { label: t('info'), to: '/' },
+                    { label: t('dashboard'), to: '/dashboard' },
+                ])
+            }
+        }
+    }, [t, user.isVerified, user?.roles]);
 
     const services = useMemo(() => {
         let temp = {}
