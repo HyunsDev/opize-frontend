@@ -15,6 +15,8 @@ import dayjs from "dayjs";
 
 const Div = styled.div`
     position: relative;
+    width: 100%;
+    overflow-x: hidden;
 
     .notion .notion-header {
         position: fixed;
