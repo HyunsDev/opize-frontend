@@ -54,7 +54,8 @@ export default function Dashboard(props) {
 
     // 서브 도메인 인증
     useEffect(() => {
-        if (user.name && dashboard.projects) {
+        if (user.isVerified) {
+            if (!dashboard.projects) return
             if (searchParams.get('projectGet')) {
                 if (user.isVerified) {
                     const project = dashboard.projects[searchParams.get('projectGet')]
@@ -97,6 +98,8 @@ export default function Dashboard(props) {
             } else {
                 navigate('/')
             }
+        } else if (user.name) {
+            navigate('/verify')
         }
     }, [user, searchParams, dashboard.projects, navigate, t])
 
