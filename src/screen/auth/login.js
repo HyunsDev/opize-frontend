@@ -95,8 +95,7 @@ export default function Login (props) {
                 });
                 setLogin(false)
                 localStorage.setItem("token", res.data.token)
-                navigate("/dashboard")
-                updateUser()
+                window.location.href='/dashboard'
             } catch (err) {
                 setLogin(false)
                 if (err.response) {
