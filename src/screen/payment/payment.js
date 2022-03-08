@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { UserContext } from '../../context/user';
 import { DashboardContext } from '../../context/dashboard';
 
-import { Page, H1, SubscribeBlock, ColorBtn } from 'opize-components'
+import { Page, H1, SubscribeBlock, Button } from 'opize-components'
 
 const Items = styled.div`
   margin-top: 8px;
@@ -129,7 +129,7 @@ export default function Index() {
             user={user}
             desc1={`${product?.prices?.[user.currency]} ${user?.currency}`}
           />
-          <ColorBtn label={t('payment_btn')} onClick={onSubmit} />
+          <Button color='teal' label={t('payment_btn')} onClick={onSubmit} />
         </Items>
       </Page>
     </>

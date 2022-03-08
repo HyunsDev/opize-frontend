@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import instance from '../../../src/instance';
 
-import { MiniCodeBlock, Search } from 'opize-components'
+import { CodeBlock, Search } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 8px;
@@ -46,15 +46,18 @@ export default function List(props) {
                         if (e.email.toUpperCase().includes(searchText.toUpperCase())) return true
                         return false
                     }).map(e => (
-                        <MiniCodeBlock key={e.id}
+                        <CodeBlock
+                            size='mini'
+                            icon={e.profileImage}
+                            key={e.id}
                             title={e.name}
                             subtitle={e.id}
-                            info={e.email}
+                            desc={e.email}
                             links={[
                                 { text: '자세한 정보', to: `/admin/user/detail?userId=${e.id}` },
                                 { text: '편집', to: `/admin/user/edit?userId=${e.id}` },
                             ]}
-                        >{JSON.stringify(e, null, 4)}</MiniCodeBlock>
+                        >{JSON.stringify(e, null, 4)}</CodeBlock>
                     ))
                 }
             </Services>

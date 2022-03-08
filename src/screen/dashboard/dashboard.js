@@ -3,7 +3,7 @@ import { UserContext } from "../../context/user";
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { DashboardContext } from '../../context/dashboard';
-import { Banner, Search, Service, Page, H1, H2 } from 'opize-components'
+import { Banner, Search, Page, H1, H2 } from 'opize-components'
 import defaultApp from '../../data/opizeApp.json'
 import { useSearchParams } from 'react-router-dom';
 
@@ -46,7 +46,8 @@ const Services = (props) => {
             <H2>{t("dashboard_subtitle")}</H2>
             <ServicesDiv>
                 <Search key="search" value={searchText} onChange={searchInput} />
-                {
+                service 블록 제작 필요
+                {/* {
                     Object.values(services).filter(e => {
                         if (!e.showDashboard) return false
                         if (searchText === "") return true
@@ -55,7 +56,7 @@ const Services = (props) => {
                         if (e.to.toUpperCase().includes(searchText.toUpperCase())) return true
                         return false
                     }).map(e => <Service {...e} icon={e.img} key={e.name} />)
-                }
+                } */}
             </ServicesDiv>
         </>
     )
@@ -85,7 +86,10 @@ export default function Dashboard(props) {
         <Page>
             <H1>{t("greet", {name: user.name})}</H1>
             <Divver>
-                <Banner banners={dashboard.banners} />
+                { dashboard?.banners && <Banner banners={dashboard?.banners.map(e => ({
+                    to: e.to,
+                    img: e.bannerUrl,
+                }))} />}
                 <Services />
             </Divver>
         </Page>

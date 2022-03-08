@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Receipt } from 'phosphor-react';
 
-import { MiniCodeBlock, SubscribeBlock, ColorBtn, Input } from 'opize-components'
+import { CodeBlock, SubscribeBlock, Button, TextField } from 'opize-components'
 
 
 const Divver = styled.div`
@@ -76,20 +76,22 @@ export default function PaymentCancel(props) {
                 desc2={new Date(originalData.paymentLog?.approvedAt).toLocaleString()}
             />
 
-            <MiniCodeBlock
+            <CodeBlock
+                size='mini'
                 title={'paymentLog'}
                 subtitle={`${originalData.paymentLog?.status} | ${originalData.paymentLog?.totalAmount}${originalData.paymentLog?.currency}`}
-                info={originalData?.paymentLog?._id}
+                desc={originalData?.paymentLog?._id}
                 links={[
                     {text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${originalData?.paymentLog?._id}`}
                 ]}
-            >{JSON.stringify(originalData, null, 4)}
-            </MiniCodeBlock>
+            >
+                {JSON.stringify(originalData, null, 4)}
+            </CodeBlock>
             {originalData.paymentLog?.status === "DONE" ? <>
-                <Input value={cancelReason} onChange={e => setCancelReason(e.target.value)} placeholder="결제 취소 사유" />
+                <TextField value={cancelReason} onChange={e => setCancelReason(e.target.value)} placeholder="결제 취소 사유" />
                     <Btns>
                     <p>주의! 결제 취소는 결제한 금액만 취소할 뿐, 환불을 의미하지 않습니다.</p>
-                    <ColorBtn label="결제 취소" onClick={refund} />
+                    <Button color='teal' label="결제 취소" onClick={refund} />
                     </Btns>
                 </> : <Btns><div /><p>결제 완료된 거래가 아닙니다. ({originalData.paymentLog?.status})</p></Btns>
             }

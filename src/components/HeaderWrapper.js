@@ -37,13 +37,11 @@ export function HeaderWrapper(props){
                     { label: '개발자', to: '/admin' },
                     { label: t('developer'), to: '/developer' },
                     { label: t('info'), to: '/' },
-                    { label: t('dashboard'), to: '/dashboard' },
                 ])
             } else {
                 setMenus([
                     { label: t('developer'), to: '/developer' },
                     { label: t('info'), to: '/' },
-                    { label: t('dashboard'), to: '/dashboard' },
                 ])
             }
         }
@@ -62,19 +60,55 @@ export function HeaderWrapper(props){
         return temp
     }, [dashboard])
 
-    return (
-        <Header 
-            isLogin={localStorage.getItem('token')}
-            app={'opize'}
-            projects={services}
-            menus={menus}
-            user={user}
-            userMenus={[
-                { label: t('header_user'), to: "/user" },
-                { label: t('header_notice'), to: "/notice" },
-                { label: t('logout'), to: "/logout" },
-            ]}
-            loginTo="/login"
-        />
-    )
+    if (localStorage.getItem('token')) {
+        return (
+            <Header 
+                app={'opize'}
+                projects={services}
+                menus={menus}
+                cta={{
+                    label: "대시보드",
+                    to: "/dashboard"
+                }}
+                user={{
+                    name: user.name,
+                    img: user.profileImage,
+                    isLogin: true,
+                    menus: [
+                        { label: t('header_user'), to: "/user" },
+                        { label: t('header_notice'), to: "/notice" },
+                        { label: t('logout'), to: "/logout" },
+                    ],
+                    login: {
+                        to: "/login",
+                        label: t('login')
+                    }
+                }}
+                
+            />
+        )
+    } else {
+        return (
+            <Header 
+                app={'opize'}
+                projects={services}
+                menus={menus}
+                user={{
+                    name: user.name,
+                    img: user.profileImage,
+                    isLogin: false,
+                    menus: [
+                        { label: t('header_user'), to: "/user" },
+                        { label: t('header_notice'), to: "/notice" },
+                        { label: t('logout'), to: "/logout" },
+                    ],
+                    login: {
+                        to: "/login",
+                        label: t('login')
+                    }
+                }}
+                
+            />
+        )
+    }
 }

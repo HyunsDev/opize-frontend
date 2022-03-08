@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 
 import opizeImg from '../../assets/opize_logoText.png'
 
-import { ColorBtn, H1 } from 'opize-components'
+import { Button, H1 } from 'opize-components'
 
 
 const Divver = styled.div`
@@ -71,7 +71,7 @@ export default function EmailVerify(props) {
             </Link>
             <H1>{t('auth_reset_email_title')}</H1>
             <Desc>{t('auth_reset_email_subtitle', {email: searchParams.get("email")})}</Desc>
-            <ColorBtn label={t('auth_reset_btn_text')} isLoading={isLoading} onClick={emailRetry} />
+            <Button color='teal' label={t('auth_reset_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )
 }

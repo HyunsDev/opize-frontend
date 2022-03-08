@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { UserContext } from '../../context/user';
 import { DashboardContext } from '../../context/dashboard';
 
-import { Page, H1, SubscribeBlock, ColorBtn } from 'opize-components'
+import { Page, H1, SubscribeBlock, Button } from 'opize-components'
 
 const Items = styled.div`
   margin-top: 8px;
@@ -129,7 +129,7 @@ export default function Index() {
             user={user}
             desc={`${product?.prices?.[user.currency]} ${user?.currency} / ${product?.billingInterval?.replace('y', t('year')).replace('M', t('month')).replace('d', t('day'))} `}
           />
-          <ColorBtn label={t('subscribe_btn')} onClick={onSubmit} />
+          <Button color='teal' label={t('subscribe_btn')} onClick={onSubmit} />
         </Items>
       </Page>
     </>

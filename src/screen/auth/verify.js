@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import opizeImg from '../../assets/opize_logoText.png'
 import { toast } from "react-toastify"
 
-import { ColorBtn } from 'opize-components'
+import { Button } from 'opize-components'
 import instance from "../../src/instance"
 
 const Divver = styled.div`
@@ -146,7 +146,7 @@ export default function EmailVerify(props) {
             </Link>
             <H1>{t('auth_verify_title')}</H1>
             <Desc>{t("auth_verify_subtitle", {email: email || '이메일'})}.</Desc>
-            <ColorBtn label={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
+            <Button color='teal' label={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
         </Divver>
     )
 }

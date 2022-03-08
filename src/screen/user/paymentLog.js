@@ -3,11 +3,10 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { Receipt } from 'phosphor-react';
 
 import instance from '../../src/instance';
 
-import { SubscribeBlock } from 'opize-components'
+import { Table } from 'opize-components'
 
 const Menus = styled.div`
     display: flex;
@@ -53,19 +52,37 @@ export default function User() {
 
     return (
         <>
+            <Table 
+                column={['project', 'product', 'amount', 'date', 'receipt']}
+                items={paymentLogs.map(e => ({
+                    project: {
+                        type: 'profile',
+                        label: projects[e.projectId].name,
+                        img: projects[e.projectId].icon,
+                    },
+                    product: products[e.productId].name,
+                    receipt: {
+                        type: 'button',
+                        label: '영수증',
+                        onClick: () => { window.open(e.receiptUrl) },
+                    },
+                    amount: `${e.totalAmount}${e.currency}`,
+                    date: new Date(e.approvedAt).toLocaleDateString()
+                }))}
+            />
             <Menus>
                 {
-                    paymentLogs.map(e => <SubscribeBlock {...e}
-                        key={e.id}
-                        product={products[e.productId]}
-                        project={projects[e.projectId]}
-                        btnIcon={<Receipt size={32} color="var(--teal5)" />}
-                        onClick={() => window.open(e.receiptUrl)}
-                        desc1={<>{e.totalAmount}{e.currency}</>}
-                        desc2={new Date(e.approvedAt).toLocaleString()}
-                    />)
+                    
                 }
             </Menus>
         </>
     )
 }
+
+// key={e.id}
+// product={products[e.productId]}
+// project={projects[e.projectId]}
+// btnIcon={<Receipt size={32} color="var(--teal5)" />}
+// onClick={() => window.open(e.receiptUrl)}
+// desc1={<>{e.totalAmount}{e.currency}</>}
+// desc2={new Date(e.approvedAt).toLocaleString()}

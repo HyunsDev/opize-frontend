@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import { HorizontalLayout, ColorBtn, Input } from 'opize-components'
+import { HorizonLayout, Button, TextField } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 16px;
@@ -50,10 +50,10 @@ const TestCard = (props) => {
     };
 
     return (
-        <HorizontalLayout label={'테스트 카드'} marginTop={16}>
-            <Input value={value || ""} onChange={e => setValue(e.target.value)} placeholder='유저 아이디' />
-            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
-        </HorizontalLayout>
+        <HorizonLayout label={'테스트 카드'} marginTop={16}>
+            <TextField value={value || ""} onChange={e => setValue(e.target.value)} placeholder='유저 아이디' />
+            <Button color='teal' isLoading={isLoading} label='추가' onClick={onSubmit} />
+        </HorizonLayout>
     )
 }
 
