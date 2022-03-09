@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import OpizeLogoImg from '../../assets/opize.png'
 import OpizeLogoTextImg from '../../assets/opize_text_1.png'
 
-import { ColorBtn, FormInput } from 'opize-components'
+import { Button, TextField } from 'opize-components'
 
 const Divver = styled.div`
     padding: 8px;
@@ -129,7 +129,7 @@ export default function Login (props) {
                                 value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i,
                                 message: t('auth_input_email_pattern')
                             }}}
-                            render={({field}) => <FormInput {...field} label={t('auth_input_email')} ref={null} error={errors.email} type="text" autoComplete="email"/>}
+                            render={({field}) => <TextField {...field} label={t('auth_input_email')} ref={null} message={errors.email} error={errors.email} type="text" autoComplete="email"/>}
                         />
                     </Inputs>
 
@@ -138,7 +138,7 @@ export default function Login (props) {
                             <A to="/login">{t('auth_login')}</A>
                         </Left>
                         <Right>
-                            <ColorBtn type="submit" label={t('auth_reset')} isLoading={isLoading} />
+                            <Button color='teal' type="submit" label={t('auth_reset')} isLoading={isLoading} />
                         </Right>
                     </LoginMenu>
                 </form>

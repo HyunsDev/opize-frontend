@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import { HorizontalLayout, ColorBtn, MiniClickableBlock, Search, Input } from 'opize-components'
+import { HorizonLayout, Button, Table, Search, TextField } from 'opize-components'
 
 const Divver = styled.div`
     display: flex;
@@ -62,10 +62,10 @@ const CreateLink = (props) => {
     }
 
     return (
-        <HorizontalLayout label={'노션 캐시'}>
-            <Input value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 ID' />
-            <ColorBtn isLoading={isLoading} label='캐시 삭제' onClick={deleteRedirect} />
-        </HorizontalLayout>
+        <HorizonLayout label={'노션 캐시'}>
+            <TextField value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 ID' />
+            <Button color='teal' isLoading={isLoading} label='캐시 삭제' onClick={deleteRedirect} />
+        </HorizonLayout>
     )
 }
 
@@ -111,19 +111,32 @@ export default function Create(props) {
         <Divver>
             <CreateLink updateUrl={updateUrl} notionId={notionId} setNotionId={setNotionId} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            {
-                urls.filter(e => {
+            <Table 
+                column={['notionId', 'cachedAt', 'select']}
+                items={urls.filter(e => {
                     if (searchText === "") return true
                     if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
                     return false
-                }).map((e, i) => <MiniClickableBlock key={i}
-                    title={e.notionId}
-                    info={new Date(e.cachedAt).toLocaleString()}
-                    onClick={() => {
-                        setNotionId(e.notionId)
-                    }}
-                />)
-            }
+                }).map((e, i) => ({
+                    notionId: e.notionId,
+                    cachedAt: new Date(e.cachedAt).toLocaleString(),
+                    select: {
+                        type: 'button',
+                        label: '선택',
+                        onClick: () => setNotionId(e.notionId)
+                    }
+                }))}
+            />
+
         </Divver>
     )
 }
+
+// <MiniClickableBlock 
+//     key={i}
+//     title={e.notionId}
+//     info={new Date(e.cachedAt).toLocaleString()}
+//     onClick={() => {
+//         setNotionId(e.notionId)
+//     }}
+// />

@@ -7,9 +7,9 @@ import instance from '../../src/instance';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 
-import { HorizontalLayout, Input, Btn, ColorBtn, Checkbox, FormInput } from 'opize-components'
+import { HorizonLayout, TextField, Button, Checkbox } from 'opize-components'
 
-const HorizontalLayouts = styled.div`
+const HorizonLayouts = styled.div`
     display: flex;
     gap: 30px;
     margin-top: 32px;
@@ -66,11 +66,11 @@ const MenuProfile = (props) => {
     }
 
     return (
-        <HorizontalLayout label={t('user_user_menu_profile')}>
+        <HorizonLayout label={t('user_user_menu_profile')}>
             <ProfileImg src={user.profileImage} alt="profile Img" />
-            <Input placeholder={t('user_user_menu_profile')} value={value || ""} onChange={e => setValue(e.target.value)}/>
-            <ColorBtn isLoading={isLoading} label={t('btn_edit')} onClick={fetchAPI} />
-        </HorizontalLayout>
+            <TextField placeholder={t('user_user_menu_profile')} value={value || ""} onChange={e => setValue(e.target.value)}/>
+            <Button color='teal' isLoading={isLoading} label={t('btn_edit')} onClick={fetchAPI} />
+        </HorizonLayout>
     )
 }
 
@@ -118,10 +118,10 @@ const MenuName = (props) => {
     }
 
     return (
-        <HorizontalLayout label={t('user_user_menu_name')}>
-            <Input placeholder={user.name} value={value || ""} onChange={e => setValue(e.target.value)}/>
-            <ColorBtn isLoading={isLoading} label={t('btn_edit')} onClick={fetchAPI} />
-        </HorizontalLayout>
+        <HorizonLayout label={t('user_user_menu_name')}>
+            <TextField placeholder={user.name} value={value || ""} onChange={e => setValue(e.target.value)}/>
+            <Button color="teal" isLoading={isLoading} label={t('btn_edit')} onClick={fetchAPI} />
+        </HorizonLayout>
     )
 }
 
@@ -135,9 +135,9 @@ const MenuEmail = (props) => {
     }, [user])
 
     return (
-        <HorizontalLayout label={t('user_user_menu_email')}>
-            <Input placeholder={t('user_user_menu_email')} value={value || ""} onChange={e => setValue(e.target.value)} readOnly/>
-        </HorizontalLayout>
+        <HorizonLayout label={t('user_user_menu_email')}>
+            <TextField placeholder={t('user_user_menu_email')} value={value || ""} onChange={e => setValue(e.target.value)} readOnly/>
+        </HorizonLayout>
     )
 }
 
@@ -210,7 +210,7 @@ const MenuPassword = (props) => {
     }
 
     return (
-        <HorizontalLayout label={t('user_user_menu_password')}>
+        <HorizonLayout label={t('user_user_menu_password')}>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Inputs>
                     <Controller
@@ -220,7 +220,7 @@ const MenuPassword = (props) => {
                             value: 8,
                             message: t('auth_input_password_pattern')
                             }}}
-                        render={({field}) => <FormInput {...field} label={t('user_user_menu_password_current_password')} ref={null} error={errors.currentPassword} type="password" autoComplete="current-password" />}
+                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_current_password')} ref={null} error={errors.currentPassword} message={errors.currentPassword} type="password" autoComplete="current-password" />}
                     />
                     <Controller
                         name="newPassword" 
@@ -229,20 +229,20 @@ const MenuPassword = (props) => {
                             value: 8,
                             message: t('auth_input_password_pattern')
                             }}}
-                        render={({field}) => <FormInput {...field} label={t('user_user_menu_password_new_password')} ref={null} error={errors.newPassword} type="password" autoComplete="new-password" />}
+                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_new_password')} ref={null} error={errors.newPassword} message={errors.newPassword} type="password" autoComplete="new-password" />}
                     />
                     <Controller
                         name="newPasswordRetry" 
                         control={control}
                         rules={{required: t('auth_input_password_retry_required'), validate: (value) =>  value === watch('newPassword') || t('auth_input_password_retry_validate') }}
-                        render={({field}) => <FormInput {...field} label={t('user_user_menu_password_new_password_retry')} ref={null} error={errors.newPasswordRetry} type="password" autoComplete="new-password" />}
+                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_new_password_retry')} ref={null} error={errors.newPasswordRetry} message={errors.newPasswordRetry} type="password" autoComplete="new-password" />}
                     />
                 </Inputs>
                 <Btns>
-                    <ColorBtn type='submit' isLoading={isLoading} text={t('btn_edit')} />
+                    <Button color="teal" type='submit' isLoading={isLoading} text={t('btn_edit')} />
                 </Btns>
             </Form>
-        </HorizontalLayout>
+        </HorizonLayout>
     )
 }
 
@@ -291,10 +291,10 @@ const MenuCoupon = (props) => {
     }
 
     return (
-        <HorizontalLayout label={t('user_user_menu_coupon')}>
-            <Input value={value || ""} onChange={e => setValue(e.target.value)} placeholder={t('user_user_menu_coupon_placeholder')}/>
-            <ColorBtn isLoading={isLoading} label={t('btn_use')} onClick={fetchAPI} />
-        </HorizontalLayout>
+        <HorizonLayout label={t('user_user_menu_coupon')}>
+            <TextField value={value || ""} onChange={e => setValue(e.target.value)} placeholder={t('user_user_menu_coupon_placeholder')}/>
+            <Button color="teal" isLoading={isLoading} label={t('btn_use')} onClick={fetchAPI} />
+        </HorizonLayout>
     )
 }
 
@@ -336,9 +336,9 @@ const MenuMarking = (props) => {
 
 
     return (
-        <HorizontalLayout label={t('user_user_menu_marking')}>
+        <HorizonLayout label={t('user_user_menu_marking')}>
             <Checkbox value={value || false} onChange={onChange} label={<>{t('user_user_menu_marking_label')} <Link to={t('auth_input_marking_link')}>{t('user_user_menu_marking_label_2')}</Link></>} />
-        </HorizontalLayout>
+        </HorizonLayout>
     )
 }
 
@@ -379,9 +379,9 @@ const MenuDestroy = (props) => {
     }
 
     return (
-        <HorizontalLayout label={t('user_user_menu_destroy')}>
-            <Btn isLoading={isLoading} label={t('user_user_menu_destroy')} onClick={fetchAPI} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
-        </HorizontalLayout>
+        <HorizonLayout label={t('user_user_menu_destroy')}>
+            <Button isLoading={isLoading} label={t('user_user_menu_destroy')} onClick={fetchAPI} color='error' />
+        </HorizonLayout>
     )
 }
 
@@ -390,9 +390,9 @@ function Roles(props) {
     const { t } = useTranslation('translation')
 
     return (
-        <HorizontalLayout label={t('user_user_menu_roles')}>
-            <Input value={user.roles || ''} readOnly/>
-        </HorizontalLayout>
+        <HorizonLayout label={t('user_user_menu_roles')}>
+            <TextField value={user.roles || ''} readOnly/>
+        </HorizonLayout>
     )
 }
 
@@ -401,7 +401,7 @@ export default function User(props) {
 
     return (
         <>
-            <HorizontalLayouts>
+            <HorizonLayouts>
                 <MenuProfile />
                 <MenuName />
                 <MenuEmail />
@@ -410,7 +410,7 @@ export default function User(props) {
                 {user?.roles?.length !== 0 && <Roles />}
                 <MenuMarking />
                 <MenuDestroy />
-            </HorizontalLayouts>
+            </HorizonLayouts>
         </>
     )
 }

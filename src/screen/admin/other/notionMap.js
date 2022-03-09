@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import { HorizontalLayout, Btn, ColorBtn, MiniClickableBlock, Search, Input } from 'opize-components'
+import { HorizonLayout, Button, Table, Search, TextField } from 'opize-components'
 
 const Divver = styled.div`
     display: flex;
@@ -100,13 +100,13 @@ const CreateLink = (props) => {
     }
 
     return (
-        <HorizontalLayout label={'노션 맵'}>
-            <Input value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 링크' />
-            <Input value={props.newUrl || ""} onChange={e => props.setNewUrl(e.target.value)} placeholder='새 링크' />
-            <Input value={props.projectCode || ""} onChange={e => props.setProjectCode(e.target.value)} placeholder='프로젝트 코드' />
-            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
-            <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
-        </HorizontalLayout>
+        <HorizonLayout label={'노션 맵'}>
+            <TextField value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 링크' />
+            <TextField value={props.newUrl || ""} onChange={e => props.setNewUrl(e.target.value)} placeholder='새 링크' />
+            <TextField value={props.projectCode || ""} onChange={e => props.setProjectCode(e.target.value)} placeholder='프로젝트 코드' />
+            <Button isLoading={isLoading} label='추가' onClick={onSubmit} />
+            <Button color='error' isLoading={isLoading} label='삭제' onClick={deleteRedirect} />
+        </HorizonLayout>
     )
 }
 
@@ -154,24 +154,41 @@ export default function Create(props) {
         <Divver>
             <CreateLink setProjectCode={setProjectCode} projectCode={projectCode} newUrl={newUrl} setNewUrl={setNewUrl} updateUrl={updateUrl} notionId={notionId} setNotionId={setNotionId} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            {
-                urls.filter(e => {
+            <Table 
+                column={['newUrl', 'project', 'notionId', 'button']}
+                items={urls.filter(e => {
                     if (searchText === "") return true
                     if (e.newUrl.toUpperCase().includes(searchText.toUpperCase())) return true
                     if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
                     if (e.projectCode.toUpperCase().includes(searchText.toUpperCase())) return true
                     return false
-                }).map((e, i) => <MiniClickableBlock key={i}
-                    title={e.newUrl}
-                    subTitle={e.count}
-                    info={`${e.projectCode} | ${e.notionId}`}
-                    onClick={() => {
-                        setNewUrl(e.newUrl)
-                        setNotionId(e.notionId)
-                        setProjectCode(e.projectCode)
-                    }}
-                />)
-            }
+                }).map((e, i) => ({
+                    newUrl: e.newUrl,
+                    project: e.projectCode,
+                    notionId: e.notionId,
+                    button: {
+                        type: 'button',
+                        label: '선택',
+                        onClick: () => {
+                            setNewUrl(e.newUrl)
+                            setNotionId(e.notionId)
+                            setProjectCode(e.projectCode)
+                        }
+                    }
+                }))}
+            />
         </Divver>
     )
 }
+
+// <MiniClickableBlock 
+//     key={i}
+//     title={e.newUrl}
+//     subTitle={e.count}
+//     info={`${e.projectCode} | ${e.notionId}`}
+//     onClick={() => {
+//         setNewUrl(e.newUrl)
+//         setNotionId(e.notionId)
+//         setProjectCode(e.projectCode)
+//     }}
+// />

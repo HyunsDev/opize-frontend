@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { CodeBlock, HorizontalLayout, ColorBtn, FormInput } from 'opize-components'
+import { CodeBlock, HorizonLayout, Button, TextField } from 'opize-components'
 
 
 const Divver = styled.div`
@@ -140,69 +140,69 @@ export default function Create(props) {
                     { text: '편집', to: `/admin/project/edit?projectCode=${originalProject.code}` },
                 ]}
             >{JSON.stringify(originalProject, null, 4)}</CodeBlock>
-            <HorizontalLayout label={'프로젝트 편집'} marginTop={16}>
+            <HorizonLayout label={'프로젝트 편집'} marginTop={16}>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="name" 
                             control={control}
                             rules={{required: 'name을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
+                            render={({field}) => <TextField {...field} label={'name'} ref={null} message={errors.name} error={errors.name} type="text" autoComplete="off"/>}
                         />
                         <Controller
                             name="url" 
                             control={control}
                             rules={{required: 'url을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'url'} ref={null} error={errors.url} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'url'} ref={null} message={errors.url} error={errors.url} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="icon" 
                             control={control}
                             rules={{required: 'icon을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'icon'} ref={null} error={errors.icon} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'icon'} ref={null} message={errors.icon}error={errors.icon} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="desc" 
                             control={control}
                             rules={{required: 'desc을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'desc'} ref={null} error={errors.desc} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'desc'} ref={null} message={errors.desc} error={errors.desc} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="ruleUrl" 
                             control={control}
                             rules={{required: 'ruleUrl을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'ruleUrl'} ref={null} error={errors.ruleUrl} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'ruleUrl'} ref={null} message={errors.ruleUrl} error={errors.ruleUrl} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="leaderDeveloperId" 
                             control={control}
                             rules={{required: 'leaderDeveloperId를 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'leaderDeveloperId'} ref={null} error={errors.leaderDeveloperId} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'leaderDeveloperId'} ref={null} message={errors.leaderDeveloperId} error={errors.leaderDeveloperId} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="apiKey" 
                             control={control}
                             rules={{required: 'apiKey를 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'apiKey'} ref={null} error={errors.apiKey} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'apiKey'} ref={null} message={errors.apiKey} error={errors.apiKey} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="jwtKey" 
                             control={control}
                             rules={{required: 'jwtKey를 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'jwtKey'} ref={null} error={errors.jwtKey} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'jwtKey'} ref={null} message={errors.jwtKey} error={errors.jwtKey} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="apiServer" 
                             control={control}
                             rules={{required: 'apiServer를 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'apiServer'} ref={null} error={errors.apiServer} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'apiServer'} ref={null} message={errors.apiServer} error={errors.apiServer} type="text" autoComplete="off" />}
                         />
                     </Inputs>
                     <Btns>
-                        <ColorBtn type='submit' isLoading={isLoading} label={'프로젝트 편집'} />
+                        <Button color='teal' type='submit' isLoading={isLoading} label={'프로젝트 편집'} />
                     </Btns>
                 </Form>
-            </HorizontalLayout>
+            </HorizonLayout>
         </Divver>
     )
 }

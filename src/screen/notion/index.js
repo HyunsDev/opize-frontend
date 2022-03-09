@@ -176,9 +176,9 @@ const Notion = function (props) {
                                 shallow,
                                 locale,
                                 ...props
-                              }) => (
-                                <StyledLink to={href} {...props} />
-                              ),
+                              }) => {
+                                return <StyledLink to={href} {...props} />
+                              },
                         }}
                     />}
                 </NotionRendererDiv>

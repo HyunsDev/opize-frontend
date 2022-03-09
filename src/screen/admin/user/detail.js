@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import OpizeLogo from '../../../assets/opize.png'
 
-import { CodeBlock, MiniCodeBlock, VerticalLayout } from 'opize-components'
+import { CodeBlock, VerticalLayout } from 'opize-components'
 
 const Divver = styled.div`
     margin-top: 16px;
@@ -47,7 +47,7 @@ export default function Create(props) {
         <Divver>
             <CodeBlock
                 title={originalData?.user?.name}
-                icon={originalData?.user?.profileImage |- OpizeLogo}
+                icon={originalData?.user?.profileImage || OpizeLogo}
                 subtitle={originalData?.user?.email}
                 desc={originalData?.user?._id}
                 links={[
@@ -59,29 +59,36 @@ export default function Create(props) {
 
             <VerticalLayout label="Payment (결제 수단)">
                 <Blocks>
-                    { originalData?.payment?.map((e, i) => (<MiniCodeBlock title={'payment'} subtitle={e.cardNumber} info={e._id} key={i}>{JSON.stringify(e, null, 4)}</MiniCodeBlock>)) }
+                    { originalData?.payment?.map((e, i) => (<CodeBlock size='mini' title={'payment'} subtitle={e.cardNumber} desc={e._id} key={i}>{JSON.stringify(e, null, 4)}</CodeBlock>)) }
                 </Blocks>
             </VerticalLayout>
 
             <VerticalLayout label="subscribe (구독)">
                 <Blocks>
-                    { originalData?.subscribe?.map((e, i) => (<MiniCodeBlock title={'subscribe'} subtitle={e.productId} info={e._id} key={i}>{JSON.stringify(e, null, 4)}</MiniCodeBlock>)) }
+                    { originalData?.subscribe?.map((e, i) => (<CodeBlock
+                        size='mini'
+                        title={'subscribe'}
+                        subtitle={e.productId}
+                        desc={e._id}
+                        key={i}
+                        >{JSON.stringify(e, null, 4)}</CodeBlock>)) }
                 </Blocks>
             </VerticalLayout>
 
             <VerticalLayout label="paymentLog (결제 로그)">
                 <Blocks>
                     { 
-                        originalData?.paymentLog?.map((e, i) => (<MiniCodeBlock
+                        originalData?.paymentLog?.map((e, i) => (<CodeBlock
+                            size='mini'
                             title={'paymentLog'}
                             subtitle={`${e.status} | ${e.approvedAt}`}
-                            info={e._id}
+                            desc={e._id}
                             key={i}
                             links={[
-                                {text: '환불', to: `/admin/user/paymentCancel?paymentLogId=${e._id}`}
+                                {text: '결제 취소', to: `/admin/user/paymentCancel?paymentLogId=${e._id}`}
                             ]}
                             >
-                        {JSON.stringify(e, null, 4)}</MiniCodeBlock>))
+                        {JSON.stringify(e, null, 4)}</CodeBlock>))
                     }
                 </Blocks>
             </VerticalLayout>

@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { CodeBlock, HorizontalLayout, ColorBtn, FormInput } from 'opize-components'
+import { CodeBlock, HorizonLayout, Button, TextField } from 'opize-components'
 
 
 const Divver = styled.div`
@@ -130,63 +130,63 @@ export default function Create() {
                     ]}
                 >{JSON.stringify(originalProject, null, 4)}</CodeBlock>
 
-            <HorizontalLayout label={'상품 생성'} marginTop={16}>
+            <HorizonLayout label={'상품 생성'} marginTop={16}>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Inputs>
                         <Controller
                             name="name" 
                             control={control}
                             rules={{required: 'name을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'name'} ref={null} error={errors.name} type="text" autoComplete="off"/>}
+                            render={({field}) => <TextField {...field} label={'name'} ref={null} message={errors.name} error={errors.name} type="text" autoComplete="off"/>}
                         />
                         <Controller
                             name="code" 
                             control={control}
                             rules={{required: 'code를 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'code'} ref={null} error={errors.code} type="text" autoComplete="off"/>}
+                            render={({field}) => <TextField {...field} label={'code'} ref={null} message={errors.code} error={errors.code} type="text" autoComplete="off"/>}
                         />
                         <Controller
                             name="url" 
                             control={control}
                             rules={{required: 'url을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'url'} ref={null} error={errors.url} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'url'} ref={null} message={errors.url}error={errors.url} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="icon" 
                             control={control}
                             rules={{required: 'icon을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'icon'} ref={null} error={errors.icon} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'icon'} ref={null} message={errors.icon} error={errors.icon} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="desc" 
                             control={control}
                             rules={{required: 'desc을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'desc'} ref={null} error={errors.desc} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'desc'} ref={null} message={errors.desc} error={errors.desc} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="priceKRW" 
                             control={control}
                             rules={{required: 'priceKRW을 입력해주세요.'}}
-                            render={({field}) => <FormInput {...field} label={'priceKRW'} ref={null} error={errors.priceKRW} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField {...field} label={'priceKRW'} ref={null} message={errors.priceKRW} error={errors.priceKRW} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="paymentKind" 
                             control={control}
                             rules={{required: 'paymentKind을 입력해주세요.'}}
-                            render={({field}) => <FormInput placeholder="billing, normal" {...field} label={'paymentKind'} ref={null} error={errors.paymentKind} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField placeholder="billing, normal" {...field} label={'paymentKind'} ref={null} error={errors.paymentKind} type="text" autoComplete="off" />}
                         />
                         <Controller
                             name="billingInterval" 
                             control={control}
                             rules={{required: 'billingInterval을 입력해주세요.'}}
-                            render={({field}) => <FormInput placeholder="1d, 1M, 1y" {...field} label={'billingInterval'} ref={null} error={errors.billingInterval} type="text" autoComplete="off" />}
+                            render={({field}) => <TextField placeholder="1d, 1M, 1y" {...field} label={'billingInterval'} ref={null} error={errors.billingInterval} type="text" autoComplete="off" />}
                         />
                     </Inputs>
                     <Btns>
-                        <ColorBtn type='submit' isLoading={isLoading} label={'상품'} />
+                        <Button color='teal' type='submit' isLoading={isLoading} label={'상품'} />
                     </Btns>
                 </Form>
-            </HorizontalLayout>
+            </HorizonLayout>
         </Divver>
     )
 }

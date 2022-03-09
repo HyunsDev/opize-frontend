@@ -7,12 +7,13 @@ import dayjs from "dayjs";
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import instance from '../../src/instance';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import OpizeLogo from '../../assets/opize.png'
 
-import { Card, HorizontalLayout, VerticalLayout, SubscribeBlock } from 'opize-components'
+import { Card, HorizonLayout, VerticalLayout, SubscribeBlock } from 'opize-components'
 import { Pause, Play } from 'phosphor-react';
 
 
-const HorizontalLayouts = styled.div`
+const HorizonLayouts = styled.div`
     display: flex;
     gap: 30px;
     margin-top: 32px;
@@ -171,13 +172,13 @@ export default function User(props) {
 
     return (
         <>
-            <HorizontalLayouts>
-                <HorizontalLayout label={t('user_payment_card')}>
+            <HorizonLayouts>
+                <HorizonLayout label={t('user_payment_card')}>
                     <div />
                     <Items>
-                        <Card {...card} onClick={addCard} cardInfo={user.email}/>
+                        <Card {...card} cardLogo={OpizeLogo} onClick={addCard} cardInfo={user.email}/>
                     </Items>
-                </HorizontalLayout>
+                </HorizonLayout>
                 <VerticalLayout label={t('user_payment_subscribe')}>
                     <Items>
                         {
@@ -185,7 +186,7 @@ export default function User(props) {
                         }
                     </Items>
                 </VerticalLayout>
-            </HorizontalLayouts>
+            </HorizonLayouts>
         </>
     )
 }

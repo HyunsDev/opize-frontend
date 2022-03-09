@@ -5,7 +5,7 @@ import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-import { MiniBtnsBlock, HorizontalLayout, Input, Btn, ColorBtn, InputFile, Search } from 'opize-components'
+import { HorizonLayout, TextField, Button, InputFile, Search, Table } from 'opize-components'
 
 const Divver = styled.div`
     display: flex;
@@ -93,13 +93,13 @@ const CreateLink = (props) => {
     };
 
     return (
-        <HorizontalLayout label={'파일'} marginTop={16}>
+        <HorizonLayout label={'파일'} marginTop={16}>
             {/* <Input value={props.uploadFile || ""} onChange={e => props.setUploadFile(e.target.value)} placeholder='파일' /> */}
-            <InputFile label="파일" setUploadFile={props.setUploadFile} uploadFile={props.uploadFile}/>
-            <Input value={props.path || ""} onChange={e => props.setPath(e.target.value)} placeholder='파일 이름' />
-            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
-            <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
-        </HorizontalLayout>
+            <InputFile label="파일" onChange={props.setUploadFile} value={props.uploadFile}/>
+            <TextField value={props.path || ""} onChange={e => props.setPath(e.target.value)} placeholder='파일 이름' />
+            <Button isLoading={isLoading} label='추가' onClick={onSubmit} />
+            <Button color='error' isLoading={isLoading} label='삭제' onClick={deleteRedirect}/>
+        </HorizonLayout>
     )
 }
 
@@ -160,21 +160,48 @@ export default function Create(props) {
         <Divver>
             <CreateLink path={path} setPath={setPath} updateUrl={updateUrl} uploadFile={uploadFile} setUploadFile={setUploadFile} />
             <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            {
-                urls.filter(e => {
+            <Table 
+                column={['path', 'size', 'last_modified', 'copy', 'select', 'open']}
+                items={urls.filter(e => {
                     if (searchText === "") return true
                     if (e.Key.toUpperCase().includes(searchText.toUpperCase())) return true
                     return false
-                }).map((e, i) => <MiniBtnsBlock key={i}
-                    title={e.Key}
-                    subtitle={`${humanFileSize(e.Size)} | ${new Date(e.LastModified).toLocaleString()}`}
-                    btns={[
-                        { onClick: () => copyLink(e.Key), label: '복사' },
-                        { onClick: () => setPath(e.Key), label: '선택' },
-                        { onClick: () => () => window.open(`${process.env.REACT_APP_STATIC_SERVER}/${e.Key}`), label: '열기' },
-                    ]}
-                />)
-            }
+                }).slice(0,20).map((e) => ({
+                    path: e.Key.split('/')[e.Key.split('/').length-1] || e.Key,
+                    size: humanFileSize(e.Size),
+                    last_modified: new Date(e.LastModified).toLocaleString(),
+                    copy: {
+                        type: 'button',
+                        label: '복사',
+                        onClick: () => copyLink(e.Key)
+                    },
+                    select: {
+                        type: 'button',
+                        label: '선택',
+                        onClick: () => {
+                            setPath(e.Key)
+                            window.scrollTo(0,0)
+                        }
+                    },
+                    open: {
+                        type: 'button',
+                        label: '열기',
+                        onClick: () => window.open(`${process.env.REACT_APP_STATIC_SERVER}/${e.Key}`)
+                    },
+                }))}
+            />
         </Divver>
     )
 }
+
+
+// <MiniBtnsBlock 
+//     key={i}
+//     title={e.Key}
+//     subtitle={`${humanFileSize(e.Size)} | ${new Date(e.LastModified).toLocaleString()}`}
+//     btns={[
+//         { onClick: () => copyLink(e.Key), label: '복사' },
+//         { onClick: () => setPath(e.Key), label: '선택' },
+//         { onClick: () => () => window.open(`${process.env.REACT_APP_STATIC_SERVER}/${e.Key}`), label: '열기' },
+//     ]}
+// />

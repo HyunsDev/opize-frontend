@@ -20,7 +20,7 @@ export default function Router() {
   return (
     <>
         <HeaderWrapper app="admin" />
-        <Page width={720}>
+        <Page width={800}>
             <H1>Admin</H1>
             <HorizonLNB exact={false} selected={location.pathname} menu={[
                 {id: "/admin", label: '대시보드', onClick: () => navigate("/admin")},

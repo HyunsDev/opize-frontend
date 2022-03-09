@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import { HorizontalLayout, Btn, ColorBtn, Input, MiniClickableBlock, Search } from 'opize-components'
+import { MiniClickableBlock } from '../../../components/miniClickableBlock';
+import { HorizonLayout, Button, TextField, Search } from 'opize-components'
 
 const Divver = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 8px;
 `
 
 const CreateLink = (props) => {
@@ -90,13 +90,13 @@ const CreateLink = (props) => {
     };
 
     return (
-        <HorizontalLayout label={'배너'} marginTop={16}>
-            <Input value={props.code || ""} onChange={e => props.setCode(e.target.value)} placeholder='코드' />
-            <Input value={props.to || ""} onChange={e => props.setTo(e.target.value)} placeholder='이동할 링크' />
-            <Input value={props.bannerUrl || ""} onChange={e => props.setBannerUrl(e.target.value)} placeholder='이미지 주소' />
-            <ColorBtn isLoading={isLoading} label='추가' onClick={onSubmit} />
-            <Btn isLoading={isLoading} label='삭제' onClick={deleteRedirect} backgroundColor="var(--red1)" backgroundColorHover="var(--red2)" color="var(--red9)" />
-        </HorizontalLayout>
+        <HorizonLayout label={'배너'} marginTop={16}>
+            <TextField value={props.code || ""} onChange={e => props.setCode(e.target.value)} placeholder='코드' />
+            <TextField value={props.to || ""} onChange={e => props.setTo(e.target.value)} placeholder='이동할 링크' />
+            <TextField value={props.bannerUrl || ""} onChange={e => props.setBannerUrl(e.target.value)} placeholder='이미지 주소' />
+            <Button isLoading={isLoading} label='추가' onClick={onSubmit} />
+            <Button color='error' isLoading={isLoading} label='삭제' onClick={deleteRedirect} />
+        </HorizonLayout>
     )
 }
 
@@ -157,7 +157,8 @@ export default function Create(props) {
                     if (e.bannerUrl.toUpperCase().includes(searchText.toUpperCase())) return true
                     if (e.to.toUpperCase().includes(searchText.toUpperCase())) return true
                     return false
-                }).map((e, i) => <MiniClickableBlock key={i}
+                }).map((e, i) => <MiniClickableBlock 
+                    key={i}
                     title={e.code}
                     subtitle={e.to}
                     onClick={() => {
