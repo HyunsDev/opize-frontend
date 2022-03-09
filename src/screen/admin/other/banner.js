@@ -11,7 +11,6 @@ const Divver = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 8px;
 `
 
 const CreateLink = (props) => {

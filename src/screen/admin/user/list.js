@@ -45,7 +45,7 @@ export default function List(props) {
                         if (e.id.toUpperCase().includes(searchText.toUpperCase())) return true
                         if (e.email.toUpperCase().includes(searchText.toUpperCase())) return true
                         return false
-                    }).map(e => (
+                    }).slice(0,30).map(e => (
                         <CodeBlock
                             size='mini'
                             icon={e.profileImage}

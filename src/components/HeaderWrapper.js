@@ -34,7 +34,7 @@ export function HeaderWrapper(props){
         } else {
             if (user?.roles?.includes('admin')) {
                 setMenus([
-                    { label: '개발자', to: '/admin' },
+                    { label: '운영자', to: '/admin' },
                     { label: t('developer'), to: '/developer' },
                     { label: t('info'), to: '/' },
                 ])

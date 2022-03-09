@@ -166,7 +166,7 @@ export default function Create(props) {
                     if (searchText === "") return true
                     if (e.Key.toUpperCase().includes(searchText.toUpperCase())) return true
                     return false
-                }).map((e) => ({
+                }).slice(0,20).map((e) => ({
                     path: e.Key.split('/')[e.Key.split('/').length-1] || e.Key,
                     size: humanFileSize(e.Size),
                     last_modified: new Date(e.LastModified).toLocaleString(),
