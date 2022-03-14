@@ -102,7 +102,6 @@ export default function Login (props) {
                 });
                 setLoading(false)
                 localStorage.setItem('token', res.data.token)
-                updateUser()
                 navigate('/verify')
             } catch (err) {
                 setLoading(false)
