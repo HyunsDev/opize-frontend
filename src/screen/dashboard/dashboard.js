@@ -167,16 +167,6 @@ export default function Dashboard(props) {
         document.title = `${t("dashboard")} - Opize`
     }, [t])
 
-    // 서브 도메인 인증
-    useEffect(() => {
-        if (searchParams.get('projectGet') && user.isVerified) {
-            const project = dashboard.projects[searchParams.get('projectGet')]
-            if (project) {
-                window.location.href=`${project.url}/verify?token=${localStorage.getItem('token')}`
-            }   
-        }
-    }, [user, searchParams, dashboard.projects])
-
     return (
         <Page>
             <H1>{t("greet", {name: user.name})}</H1>

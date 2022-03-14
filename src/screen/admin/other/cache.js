@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import instance from '../../../src/instance';
 import { toast } from 'react-toastify';
 
-import { HorizonLayout, Button, Table, Search, TextField } from 'opize-components'
+import { VerticalLayout, Table, Search } from 'opize-components'
 
 const Divver = styled.div`
     display: flex;
@@ -13,68 +13,36 @@ const Divver = styled.div`
     margin-top: 8px;
 `
 
-const CreateLink = (props) => {
-    const [isLoading, setLoading] = useState(false);
-    const { t } = useTranslation('translation')
-
-    const deleteRedirect = async (data) => {
-        if (!isLoading) {
-            try {
-                setLoading(true)
-                await instance.delete(`/notion/cache/${props.notionId}`);
-                setLoading(false)
-                props.setNotionId('')
-                toast.info('링크를 삭제 했습니다.')
-                props.updateUrl()
-            } catch (err) {
-                setLoading(false)
-                if (err.response) {
-                    if (err.response.data.code === "user_not_found") {
-                        toast.error(t('err_user_not_found'))
-                    } else if (err.response.data.code === "token_expired") {
-                        toast.error(t('err_token_expired'))
-                    } else if (err.response.data.code === "invalid_token") {
-                        toast.error(t('err_invalid_token'))
-                    } else if (err.response.data.code === "wrong_password") {
-                        toast.error(t('err_wrong_password'))
-                    } else {
-                        toast.error(err.message)
-                        console.error(err.response)
-                    }
-                } else {
-                    toast.error(err.message)
-                    console.error(err)
-                }
-            }
-        }
-    };
-
-    const getNotionId = (e) => {
-        return e.split('/')[e.split('/').length - 1].split('-')[e.split('/')[e.split('/').length - 1].split('-').length - 1].split("?")[0]
-    }
-
-    const notionIdChange = (e) => {
-        if (e.target.value.includes('http')) {
-            props.setNotionId(getNotionId(e.target.value))
-        } else {
-            props.setNotionId(e.target.value)
-        }
-    }
-
-    return (
-        <HorizonLayout label={'노션 캐시'}>
-            <TextField value={props.notionId || ""} onChange={notionIdChange} placeholder='노션 ID' />
-            <Button color='teal' isLoading={isLoading} label='캐시 삭제' onClick={deleteRedirect} />
-        </HorizonLayout>
-    )
-}
-
 export default function Create(props) {
-    const [ notionId, setNotionId ] = useState("")
     const [ urls, setUrls ] = useState([])
     const [ searchText, setSearchText ] = useState('')
 
     const { t } = useTranslation('translation')
+
+    const removeCache = async (notionId) => {
+        try {
+            await instance.delete(`/notion/cache/${notionId}`);
+        } catch (err) {
+            if (err.response) {
+                if (err.response.data.code === "user_not_found") {
+                    toast.error(t('err_user_not_found'))
+                } else if (err.response.data.code === "token_expired") {
+                    toast.error(t('err_token_expired'))
+                } else if (err.response.data.code === "invalid_token") {
+                    toast.error(t('err_invalid_token'))
+                } else if (err.response.data.code === "wrong_password") {
+                    toast.error(t('err_wrong_password'))
+                } else {
+                    toast.error(err.message)
+                    console.error(err.response)
+                }
+            } else {
+                toast.error(err.message)
+                console.error(err)
+            }
+        }
+        
+    };
 
     const updateUrl = useCallback(async () => {
         try {
@@ -109,25 +77,28 @@ export default function Create(props) {
 
     return (
         <Divver>
-            <CreateLink updateUrl={updateUrl} notionId={notionId} setNotionId={setNotionId} />
-            <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
-            <Table 
-                column={['notionId', 'cachedAt', 'select']}
-                items={urls.filter(e => {
-                    if (searchText === "") return true
-                    if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
-                    return false
-                }).map((e, i) => ({
-                    notionId: e.notionId,
-                    cachedAt: new Date(e.cachedAt).toLocaleString(),
-                    select: {
-                        type: 'button',
-                        label: '선택',
-                        onClick: () => setNotionId(e.notionId)
-                    }
-                }))}
-            />
-
+            <VerticalLayout label='노션 캐시'>
+                <Search value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+                <Table 
+                    column={['notionId', 'cachedAt', 'select']}
+                    items={urls.filter(e => {
+                        if (searchText === "") return true
+                        if (e.notionId.toUpperCase().includes(searchText.toUpperCase())) return true
+                        return false
+                    }).map((e, i) => ({
+                        notionId: e.notionId,
+                        cachedAt: new Date(e.cachedAt).toLocaleString(),
+                        select: {
+                            type: 'button',
+                            label: '삭제',
+                            onClick: () => {
+                                removeCache(e.notionId)
+                                updateUrl()
+                            }
+                        }
+                    }))}
+                />
+            </VerticalLayout>
         </Divver>
     )
 }

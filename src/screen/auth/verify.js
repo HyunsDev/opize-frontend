@@ -94,6 +94,7 @@ export default function EmailVerify(props) {
             return
         }
         if (user.isVerified) {
+            toast.info('이메일을 인증했어요!')
             navigate("/dashboard")
         }
     }, [updateUser, navigate, user])
@@ -103,6 +104,7 @@ export default function EmailVerify(props) {
         (async () => {
             try {
                 await instance.get('/user');
+                toast.info('이메일을 인증했어요!')
                 navigate('/dashboard')
             } catch (err) { }
         })()
@@ -119,6 +121,7 @@ export default function EmailVerify(props) {
                         email,
                         code
                     })
+                    toast.info('이메일을 인증했어요!')
                     navigate("/dashboard")
                 } catch (err) {
                     if (err.response) {
@@ -146,7 +149,7 @@ export default function EmailVerify(props) {
             </Link>
             <H1>{t('auth_verify_title')}</H1>
             <Desc>{t("auth_verify_subtitle", {email: email || '이메일'})}.</Desc>
-            <Button color='teal' label={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} />
+            {/* <Button color='teal' label={t('auth_verify_btn_text')} isLoading={isLoading} onClick={emailRetry} /> */}
         </Divver>
     )
 }

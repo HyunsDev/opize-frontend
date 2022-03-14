@@ -220,7 +220,7 @@ const MenuPassword = (props) => {
                             value: 8,
                             message: t('auth_input_password_pattern')
                             }}}
-                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_current_password')} ref={null} error={errors.currentPassword} message={errors.currentPassword} type="password" autoComplete="current-password" />}
+                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_current_password')} ref={null} error={errors?.currentPassword?.message} message={errors?.currentPassword?.message} type="password" autoComplete="current-password" />}
                     />
                     <Controller
                         name="newPassword" 
@@ -229,17 +229,17 @@ const MenuPassword = (props) => {
                             value: 8,
                             message: t('auth_input_password_pattern')
                             }}}
-                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_new_password')} ref={null} error={errors.newPassword} message={errors.newPassword} type="password" autoComplete="new-password" />}
+                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_new_password')} ref={null} error={errors?.newPassword?.message} message={errors?.newPassword?.message} type="password" autoComplete="new-password" />}
                     />
                     <Controller
                         name="newPasswordRetry" 
                         control={control}
                         rules={{required: t('auth_input_password_retry_required'), validate: (value) =>  value === watch('newPassword') || t('auth_input_password_retry_validate') }}
-                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_new_password_retry')} ref={null} error={errors.newPasswordRetry} message={errors.newPasswordRetry} type="password" autoComplete="new-password" />}
+                        render={({field}) => <TextField {...field} label={t('user_user_menu_password_new_password_retry')} ref={null} error={errors?.newPasswordRetry?.message} message={errors?.newPasswordRetry?.message} type="password" autoComplete="new-password" />}
                     />
                 </Inputs>
                 <Btns>
-                    <Button color="teal" type='submit' isLoading={isLoading} text={t('btn_edit')} />
+                    <Button color="teal" type='submit' isLoading={isLoading} label={t('btn_edit')} />
                 </Btns>
             </Form>
         </HorizonLayout>
@@ -355,7 +355,7 @@ const MenuDestroy = (props) => {
             setLoading(true)
             await instance.delete(`${process.env.REACT_APP_API_SERVER}/user`)
             localStorage.removeItem('token')
-            navigate('/')
+            window.location.href = '/'
         } catch (err) {
             setLoading(false)
             if (err.response) {
