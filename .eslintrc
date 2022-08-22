@@ -1,73 +1,74 @@
 {
-  "root": true,
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "prettier",
-    "airbnb",
-    "airbnb/hooks",
-    "plugin:prettier/recommended",
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "overrides": [],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
-  "rules": {
-    "react/jsx-filename-extension": [
-      "warn",
-      {
-        "extensions": [
-          ".tsx", ".ts"
-        ]
-      }
+    "root": true,
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "prettier",
+        "airbnb",
+        "airbnb/hooks",
+        "plugin:prettier/recommended",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "react/jsx-props-no-spreading": "off",
-    "react/function-component-definition": [
-      2,
-      {
-        "namedComponents": [
-          "function-declaration",
-          "arrow-function"
+    "overrides": [],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "react/jsx-filename-extension": [
+            "warn",
+            {
+                "extensions": [
+                    ".tsx",
+                    ".ts"
+                ]
+            }
         ],
-        "unnamedComponents": "arrow-function"
-      }
-    ],
-    "import/prefer-default-export": "off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
-      }
-    ],
-    "react/require-default-props": "off",
-    "react/jsx-no-useless-fragment": "off",
-    "react/destructuring-assignment": "off"
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
+        "react/jsx-props-no-spreading": "off",
+        "react/function-component-definition": [
+            2,
+            {
+                "namedComponents": [
+                    "function-declaration",
+                    "arrow-function"
+                ],
+                "unnamedComponents": "arrow-function"
+            }
+        ],
+        "import/prefer-default-export": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "react/require-default-props": "off",
+        "react/jsx-no-useless-fragment": "off",
+        "react/destructuring-assignment": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        }
     }
-  }
 }
