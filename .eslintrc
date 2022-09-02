@@ -57,7 +57,8 @@
         ],
         "react/require-default-props": "off",
         "react/jsx-no-useless-fragment": "off",
-        "react/destructuring-assignment": "off"
+        "react/destructuring-assignment": "off",
+        "react/display-name": "off"
     },
     "settings": {
         "import/resolver": {
