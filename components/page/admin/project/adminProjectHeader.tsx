@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ActionMenu, ActionMenuActionType, cv, Header } from 'opize-design-system';
-import LogoImg from '../../../assets/opize_IconText.png';
-import SkeletonIcon from '../../../assets/opize_circle.png';
+import LogoImg from '../../../../assets/opize_IconText.png';
+import SkeletonIcon from '../../../../assets/opize_circle.png';
 
-import { client } from '../../../utils/opizeClient';
+import { client } from '../../../../utils/opizeClient';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -18,9 +18,23 @@ const TitleLogoA = styled.a`
     color: ${cv.text3};
 `;
 
-export function AdminHeader({ menu }: { menu: string }) {
-    const { isLoading, data: user } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
+export interface AdminProjectHeaderProps {
+    projectCode: string;
+    menu: string;
+}
+
+export function AdminProjectHeader({ menu, projectCode }: AdminProjectHeaderProps) {
     const router = useRouter();
+    const { isLoading: userLoading, data: user } = useQuery(
+        ['user', 'self'],
+        () => client.user.get({ userId: 'me' }),
+        {}
+    );
+    const { isLoading: projectLoading, data: project } = useQuery(['admin', 'project', projectCode], () =>
+        client.project.get({
+            projectCode,
+        })
+    );
 
     const action: ActionMenuActionType[][] = [
         [
@@ -72,13 +86,13 @@ export function AdminHeader({ menu }: { menu: string }) {
             <Header.SubMenu
                 selected={menu}
                 menu={{
-                    admin: {
-                        text: '대시보드',
-                        onClick: () => router.push('/admin'),
-                    },
-                    project: {
+                    overview: {
                         text: '프로젝트',
-                        onClick: () => router.push('/admin/project'),
+                        onClick: () => router.push(`/admin/project/${projectCode}`),
+                    },
+                    setting: {
+                        text: '설정',
+                        onClick: () => router.push(`/admin/project/${projectCode}/setting`),
                     },
                 }}
             />

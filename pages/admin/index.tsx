@@ -23,7 +23,7 @@ import { toast } from 'react-toastify';
 import { AdminHeader } from '../../components/page/admin/AdminHeader';
 
 export default function App() {
-    const { isLoading, data: user, refetch } = useQuery(['user'], () => client.user.get({}), {});
+    const { isLoading, data: user, refetch } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
 
     if (!isLoading && !user?.roles?.includes('admin')) {

@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     });
 
     return (
-        <OpizeWrapper initLink={Link}>
+        <OpizeWrapper>
             <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
                 <QueryClientProvider client={queryClient}>
                     <Component {...pageProps} />

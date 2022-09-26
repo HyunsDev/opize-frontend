@@ -23,6 +23,7 @@ const ActionBtn = styled.div`
 const DashboardItemDivver = styled.div`
     position: relative;
     border-radius: 4px;
+    width: 100%;
 `;
 
 const Tags = styled.div`
@@ -50,6 +51,7 @@ const StyledDashboardItem = styled.a`
     border-radius: 4px;
     text-decoration: none;
     transition: 200ms;
+    border: solid 1px ${cv.border4};
 
     &:hover {
         /* transform: translateY(-4px); */
@@ -64,6 +66,7 @@ const ImageDiv = styled.div`
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     overflow: hidden;
+    user-select: none;
 `;
 
 const Icon = styled.div`

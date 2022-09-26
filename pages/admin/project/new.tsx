@@ -25,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import { CaretLeft, CaretRight } from 'phosphor-react';
 import Link from 'next/link';
 import { Back } from '../../../components/share/back';
+import { AdminFooter } from '../../../components/page/admin/adminFooter';
 
 const StyledForm = styled.form`
     display: flex;
@@ -49,7 +50,7 @@ type FormData = {
 };
 
 export default function App() {
-    const { isLoading, data: user, refetch } = useQuery(['user'], () => client.user.get({}), {});
+    const { isLoading, data: user, refetch } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
     const { start, end } = useTopLoading();
     const modal = useModal();
@@ -105,7 +106,9 @@ export default function App() {
                                 {...register('code', {
                                     required: 'code를 입력해주세요.',
                                     validate: (value) =>
-                                        /[^a-z_]/.test(value) ? '영어 소문자와 "_"만 사용할 수 있어요.' : true,
+                                        /[^a-z_1-9]/.test(value)
+                                            ? '영어 소문자와 "_", 숫자 만 사용할 수 있어요.'
+                                            : true,
                                 })}
                                 required
                                 label="프로젝트 코드 (code)"
@@ -162,7 +165,7 @@ export default function App() {
                                     required: 'userId를 입력해주세요.',
                                 })}
                                 required
-                                label="대표 User 아이디 (userId)"
+                                label="프로젝트 리더 User 아이디 (userId)"
                                 error={errors.userId?.message}
                             />
                             <TextArea
@@ -182,6 +185,7 @@ export default function App() {
                     </PageLayout.Pane>
                 </PageLayout>
             </StyledForm>
+            <AdminFooter />
         </>
     );
 }

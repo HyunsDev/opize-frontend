@@ -21,7 +21,7 @@ import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 
 function DashboardHeader({}: {}) {
-    const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({}), {});
+    const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
 
     const action: ActionMenuActionType[][] = [
@@ -84,7 +84,7 @@ function DashboardHeader({}: {}) {
 }
 
 export default function App() {
-    const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({}), {});
+    const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
 
     return (
         <>

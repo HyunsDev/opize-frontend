@@ -8,9 +8,10 @@ import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
 import { Code } from 'phosphor-react';
+import { AdminFooter } from '../../../components/page/admin/adminFooter';
 
 export default function App() {
-    const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get(), {});
+    const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
     const { isLoading: projectsLoading, data: projects } = useQuery(
         ['projects'],
         async () => (await client.project.list()).projects,
@@ -41,7 +42,12 @@ export default function App() {
                     {projectsLoading
                         ? '로딩'
                         : projects?.map((project) => (
-                              <Link href={`/admin/project/view/${project.code}`} passHref key={project.code}>
+                              <Link
+                                  href={`/admin/project/[projectCode]`}
+                                  as={`/admin/project/${project.code}`}
+                                  passHref
+                                  key={project.code}
+                              >
                                   <DashboardItem
                                       backgroundImage={project.bannerUrl}
                                       icon={project.iconUrl}
@@ -64,6 +70,7 @@ export default function App() {
                           ))}
                 </DashboardItems>
             </PageLayout>
+            <AdminFooter />
         </>
     );
 }
