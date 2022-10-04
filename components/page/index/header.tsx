@@ -78,6 +78,12 @@ const ButtonDiv = styled.div`
 
 export function IndexHeader() {
     const [isTop, setIsTop] = useState(true);
+    const [isLogin, setIsLogin] = useState<boolean>();
+
+    useEffect(() => {
+        console.log(!!localStorage.getItem('OpizeToken'));
+        setIsLogin(!!localStorage.getItem('OpizeToken'));
+    }, []);
 
     useEffect(() => {
         const listener = () => {
@@ -107,16 +113,30 @@ export function IndexHeader() {
                     <NavLink href="/">함께하기</NavLink>
                 </Nav>
                 <ButtonDiv>
-                    <Link href={'/auth/login'} passHref>
-                        <Button variant="text" as="a">
-                            로그인
-                        </Button>
-                    </Link>
-                    <Link href={'/auth/signup'} passHref>
-                        <Button variant="contained" as="a">
-                            회원가입
-                        </Button>
-                    </Link>
+                    {isLogin === undefined ? (
+                        <></>
+                    ) : isLogin ? (
+                        <>
+                            <Link href={'/dashboard'} passHref>
+                                <Button variant="contained" as="a">
+                                    대시보드
+                                </Button>
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link href={'/auth/login'} passHref>
+                                <Button variant="text" as="a">
+                                    로그인
+                                </Button>
+                            </Link>
+                            <Link href={'/auth/signup'} passHref>
+                                <Button variant="contained" as="a">
+                                    회원가입
+                                </Button>
+                            </Link>{' '}
+                        </>
+                    )}
                 </ButtonDiv>
             </Header>
         </HeaderOuter>

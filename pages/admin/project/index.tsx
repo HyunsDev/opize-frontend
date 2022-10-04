@@ -1,5 +1,5 @@
 import { cv, PageHead, PageLayout, Button, useModal, useCodeModal } from 'opize-design-system';
-import { DashboardItem, DashboardItems } from '../../../components/dashboard/items';
+import { DashboardItem, DashboardItems } from '../../../components/page/dashboard/items';
 
 import { client } from '../../../utils/opizeClient';
 import { useQueries, useQuery } from 'react-query';

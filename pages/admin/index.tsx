@@ -13,7 +13,7 @@ import {
 import styled from 'styled-components';
 import LogoImg from '../../assets/opize_IconText.png';
 import SkeletonIcon from '../../assets/opize_circle.png';
-import { DashboardItem, DashboardItems } from '../../components/dashboard/items';
+import { DashboardItem, DashboardItems } from '../../components/page/dashboard/items';
 
 import { client } from '../../utils/opizeClient';
 import { useEffect } from 'react';

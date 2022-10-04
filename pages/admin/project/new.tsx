@@ -12,7 +12,7 @@ import {
     Divider,
     useTopLoading,
 } from 'opize-design-system';
-import { DashboardItems } from '../../../components/dashboard/items';
+import { DashboardItems } from '../../../components/page/dashboard/items';
 import styled from 'styled-components';
 
 import { client } from '../../../utils/opizeClient';

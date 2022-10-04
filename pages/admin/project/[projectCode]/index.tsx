@@ -14,7 +14,7 @@ import {
     useCodeModal,
     StatusBadge,
 } from 'opize-design-system';
-import { DashboardItem, DashboardItems } from '../../../../components/dashboard/items';
+import { DashboardItem, DashboardItems } from '../../../../components/page/dashboard/items';
 import styled from 'styled-components';
 
 import { client } from '../../../../utils/opizeClient';

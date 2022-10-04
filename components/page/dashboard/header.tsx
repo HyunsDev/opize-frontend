@@ -11,11 +11,11 @@ import {
     useTopLoading,
 } from 'opize-design-system';
 import styled from 'styled-components';
-import LogoImg from '../../assets/opize_IconText.png';
-import SkeletonIcon from '../../assets/opize_circle.png';
-import { DashboardItem, DashboardItems } from '../../components/dashboard/items';
+import LogoImg from '../../../assets/opize_IconText.png';
+import SkeletonIcon from '../../../assets/opize_circle.png';
+import { DashboardItem, DashboardItems } from './items';
 
-import { client } from '../../utils/opizeClient';
+import { client } from '../../../utils/opizeClient';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';

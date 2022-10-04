@@ -15,7 +15,7 @@ import {
     Link as A,
     useDialog,
 } from 'opize-design-system';
-import { DashboardItem } from '../../../../../components/dashboard/items';
+import { DashboardItem } from '../../../../../components/page/dashboard/items';
 
 import { client } from '../../../../../utils/opizeClient';
 import { APIResponseError, ProjectObject } from 'opize-client';
