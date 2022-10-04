@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ActionMenu, Footer, useColorTheme } from 'opize-design-system';
-import { Sun, Moon, Atom } from 'phosphor-react';
+import { Atom, Moon, Sun } from 'phosphor-react';
 import styled from 'styled-components';
 import LogoText from '../../../assets/opize_IconText.png';
 
@@ -9,7 +9,7 @@ const StyledLogo = styled.div`
     height: 60px;
 `;
 
-export function AdminFooter() {
+export function IndexFooter() {
     const { setColorTheme, nowColorTheme, colorTheme } = useColorTheme();
 
     return (

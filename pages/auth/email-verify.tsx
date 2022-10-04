@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Checkbox, cv, Flex, Header, TextField, useTopLoading, Link as LinkA } from 'opize-design-system';
 import styled from 'styled-components';
-import { LoginPageLayout } from '../../components/loginPageLayout';
+import { LoginPageLayout } from '../../components/page/auth/loginPageLayout';
 
 import LogoImg from '../../assets/opize 로고텍스트.png';
 import { useState } from 'react';

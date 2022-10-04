@@ -10,7 +10,7 @@ export default function App() {
 
     return (
         <>
-            <DashboardHeader now="dashboard" />
+            <DashboardHeader now="roadMap" />
             <PageLayout backgroundColor={cv.bg_page1}>
                 <DashboardItems></DashboardItems>
             </PageLayout>

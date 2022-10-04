@@ -15,10 +15,6 @@ import { client } from '../utils/opizeClient';
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
-    useEffect(() => {
-        client.updateAuth(localStorage.getItem('opizeToken') as string);
-    });
-
     return (
         <OpizeWrapper>
             <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>

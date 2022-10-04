@@ -13,6 +13,7 @@ import {
     Switch,
     cv,
     Link as A,
+    useDialog,
 } from 'opize-design-system';
 import { DashboardItem } from '../../../../../components/dashboard/items';
 
@@ -26,6 +27,7 @@ import { AdminProjectHeader } from '../../../../../components/page/admin/project
 import { ChangeEvent, useEffect, useState } from 'react';
 import { AdminFooter } from '../../../../../components/page/admin/adminFooter';
 import Link from 'next/link';
+import { ArrowClockwise, ArrowsClockwise, Warning } from 'phosphor-react';
 
 const URL_REGEX = /http[s]?:\/\//;
 
@@ -56,11 +58,79 @@ function StatusBox({ project, refetch }: StatusBoxProps) {
     };
 
     return (
-        <Box title="API 상태">
+        <Box title="OAuth 인증 활성화">
             <Text color={cv.text3}>
-                Opize 인증을 비활성화 한 경우, 새로운 OAuth 인증이 차단됩니다. 이미 OAuth 인증을 받은 경우는 무시됩니다.
+                Opize 인증을 비활성화 한 경우, 새로운 OAuth 인증이 차단됩니다. 이미 OAuth 인증을 받은 사용자에는 영향을
+                미치지 않습니다.
             </Text>
             <Switch text="OAuth 인증 활성화" checked={project?.isOAuthAble} onChange={onChange} />
+        </Box>
+    );
+}
+
+interface OAuthOverviewProps {
+    project?: ProjectObject;
+    refetch: () => void;
+}
+function OAuthOverview({ project, refetch }: OAuthOverviewProps) {
+    const [tokenText, setTokenText] = useState('secret_**************************');
+    const dialog = useDialog();
+
+    const regenerateToken = async () => {
+        if (!project) return;
+        const apiRequest = async () => {
+            try {
+                const res = await client.project.oauth.post({
+                    projectCode: project?.code,
+                });
+                setTokenText(res.token);
+                toast.info('새로운 토큰이 발급되었어요. 이 토큰은 이 화면에서만 확인할 수 있어요.');
+                refetch();
+            } catch (error) {
+                if (error instanceof APIResponseError) {
+                    toast.warn(`🤖 ${error.message || '문제가 발생했어요.'}`);
+                } else {
+                    toast.error('서버에 연결할 수 없어요.');
+                }
+            }
+        };
+
+        dialog({
+            title: '정말로 토큰을 재발급 하실 건가요?',
+            content: '토큰을 재발급하면 이전에 사용하던 토큰은 더 이상 사용할 수 없어요.',
+            icon: <Warning size={32} />,
+            buttons: [
+                {
+                    children: '취소',
+                    variant: 'outlined',
+                    onClick: () => null,
+                },
+                {
+                    children: '재발급',
+                    variant: 'contained',
+                    color: 'red',
+                    onClick: () => apiRequest(),
+                },
+            ],
+        });
+    };
+
+    return (
+        <Box title="OAuth 정보">
+            <Flex.Row gap="16px">
+                <Text>프로젝트 코드</Text>
+                <TextField value={project?.code} readOnly width="300px" onChange={() => null} />
+            </Flex.Row>
+
+            <TextField
+                value={tokenText}
+                label="Project Secret Token"
+                rightAddon={{
+                    type: 'button',
+                    onClick: regenerateToken,
+                    label: '재발급',
+                }}
+            />
         </Box>
     );
 }
@@ -210,6 +280,7 @@ export default function App() {
                     <Flex.Column gap="20px">
                         <Text size="24px">OAuth</Text>
                         <StatusBox project={project} refetch={projectRefetch} />
+                        <OAuthOverview project={project} refetch={projectRefetch} />
                         <RedirectUrlsBox project={project} refetch={projectRefetch} />
                     </Flex.Column>
                 </PageLayout.Content>
