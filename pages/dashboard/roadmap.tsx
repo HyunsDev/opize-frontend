@@ -1,5 +1,4 @@
-import { cv, H2, PageLayout } from 'opize-design-system';
-import { DashboardItems } from '../../components/page/dashboard/items';
+import { cv, H2, PageLayout, useColorTheme } from 'opize-design-system';
 import { GetServerSideProps } from 'next';
 
 import { client } from '../../utils/opizeClient';
@@ -22,6 +21,7 @@ const NotionRendererDiv = styled.div`
 
 export default function App({ recordMap }: { recordMap: any }) {
     const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
+    const { nowColorTheme } = useColorTheme();
 
     return (
         <>
@@ -29,7 +29,7 @@ export default function App({ recordMap }: { recordMap: any }) {
             <PageLayout backgroundColor={cv.bg_page2}>
                 <NotionRendererDiv>
                     <H2>로드맵</H2>
-                    <NotionRenderer recordMap={recordMap} />
+                    <NotionRenderer recordMap={recordMap} darkMode={nowColorTheme === 'dark'} />
                 </NotionRendererDiv>
             </PageLayout>
             <DashboardFooter />
@@ -37,9 +37,11 @@ export default function App({ recordMap }: { recordMap: any }) {
     );
 }
 
+// TODO: Notion Record Map 불러오는 방식 최적화
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    let recordMap: any;
     const notion = new NotionAPI();
-    const recordMap = await notion.getPage(process.env.NEXT_PUBLIC_NOTION_ROADMAP_PAGE_ID as string);
+    recordMap = await notion.getPage(process.env.NEXT_PUBLIC_NOTION_ROADMAP_PAGE_ID as string);
 
     return {
         props: { recordMap },
