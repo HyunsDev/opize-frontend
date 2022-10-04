@@ -25,15 +25,8 @@ export function AdminHeader({ menu }: { menu: string }) {
     const action: ActionMenuActionType[][] = [
         [
             {
-                label: '대시보드',
-                onClick: () => router.push('/admin'),
-            },
-        ],
-        [
-            {
-                label: '프로젝트',
-                color: 'red',
-                onClick: () => router.push('/admin/project'),
+                label: '대시보드로 돌아가기',
+                onClick: () => router.push('/dashboard'),
             },
         ],
     ];

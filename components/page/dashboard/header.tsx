@@ -22,6 +22,12 @@ import { useRouter } from 'next/router';
 
 type Path = 'dashboard' | 'roadMap';
 
+const A = styled.a`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 export function DashboardHeader({ now }: { now: Path }) {
     const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
@@ -57,9 +63,9 @@ export function DashboardHeader({ now }: { now: Path }) {
             <Header.Nav>
                 <Header.Nav.Left>
                     <Link href={'/app'}>
-                        <a>
+                        <A>
                             <Image src={LogoImg} alt="" height={28} width={97} />
-                        </a>
+                        </A>
                     </Link>
                 </Header.Nav.Left>
                 <Header.Nav.Right>

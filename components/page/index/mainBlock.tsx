@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Button, cv, PageLayout, Span } from 'opize-design-system';
 import styled, { keyframes } from 'styled-components';
 import { IndexOpizeToken } from './opizeToken';
@@ -130,6 +130,11 @@ const Caret = styled.div`
 
 export function IndexMainBlock() {
     const signupBtnRef = useRef<HTMLAnchorElement>(null);
+    const [isLogin, setIsLogin] = useState<boolean>();
+
+    useEffect(() => {
+        setIsLogin(!!localStorage.getItem('OpizeToken'));
+    }, []);
 
     return (
         <Layout>
@@ -142,12 +147,24 @@ export function IndexMainBlock() {
                 프로젝트
             </Title>
             <Buttons>
-                <Link href={'/auth/login'} passHref>
-                    <Button1>로그인</Button1>
-                </Link>
-                <Link href={'/auth/login'} passHref>
-                    <Button2 ref={signupBtnRef}>회원가입</Button2>
-                </Link>
+                {isLogin === undefined ? (
+                    <></>
+                ) : isLogin ? (
+                    <>
+                        <Link href={'/dashboard'} passHref>
+                            <Button2 ref={signupBtnRef}>대시보드</Button2>
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link href={'/auth/login'} passHref>
+                            <Button1>로그인</Button1>
+                        </Link>
+                        <Link href={'/auth/login'} passHref>
+                            <Button2 ref={signupBtnRef}>회원가입</Button2>
+                        </Link>
+                    </>
+                )}
             </Buttons>
             <Label>
                 사소한 불편함을 해결하기 위한

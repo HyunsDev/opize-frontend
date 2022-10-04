@@ -81,7 +81,6 @@ export function IndexHeader() {
     const [isLogin, setIsLogin] = useState<boolean>();
 
     useEffect(() => {
-        console.log(!!localStorage.getItem('OpizeToken'));
         setIsLogin(!!localStorage.getItem('OpizeToken'));
     }, []);
 

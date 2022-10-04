@@ -18,11 +18,13 @@
     "josa": "^3.0.1",
     "next": "12.2.5",
     "next-transpile-modules": "^9.0.0",
+    "notion-client": "^6.13.11",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.34.2",
     "react-i18next": "^11.18.4",
+    "react-notion-x": "^6.13.13",
     "react-query": "^3.39.2",
     "react-toastify": "^9.0.8",
     "styled-components": "^5.3.5"
