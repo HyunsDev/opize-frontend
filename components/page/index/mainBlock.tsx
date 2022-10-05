@@ -23,7 +23,7 @@ const Title = styled.h1`
     font-size: 108px;
     line-height: 1.1;
 
-    background: linear-gradient(180deg, #174e4a -20.36%, #39938b 100%);
+    background: linear-gradient(180deg, #0f312f 0%, #3fada4 40%, #3fada4 60%, #0f312f 100%);
 
     color: transparent;
     background-clip: text;

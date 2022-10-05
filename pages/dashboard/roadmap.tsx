@@ -7,7 +7,6 @@ import { DashboardHeader } from '../../components/page/dashboard/header';
 import { DashboardFooter } from '../../components/page/dashboard/footer';
 import styled from 'styled-components';
 
-import { NotionAPI } from 'notion-client';
 import { NotionRenderer } from 'react-notion-x';
 
 import 'react-notion-x/src/styles.css';
@@ -19,8 +18,13 @@ const NotionRendererDiv = styled.div`
     }
 `;
 
-export default function App({ recordMap }: { recordMap: any }) {
+export default function App() {
     const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
+    const { isLoading: notionLoading, data: recordMap } = useQuery(
+        ['dashboard', 'notion', 'page', '@roadmap'],
+        () => client.dashboard.notion.page.get({ page: '@roadmap' }),
+        {}
+    );
     const { nowColorTheme } = useColorTheme();
 
     return (
@@ -29,21 +33,12 @@ export default function App({ recordMap }: { recordMap: any }) {
             <PageLayout backgroundColor={cv.bg_page2}>
                 <NotionRendererDiv>
                     <H2>로드맵</H2>
-                    <NotionRenderer recordMap={recordMap} darkMode={nowColorTheme === 'dark'} />
+                    {!notionLoading && recordMap && (
+                        <NotionRenderer recordMap={recordMap.recordMap} darkMode={nowColorTheme === 'dark'} />
+                    )}
                 </NotionRendererDiv>
             </PageLayout>
             <DashboardFooter />
         </>
     );
 }
-
-// TODO: Notion Record Map 불러오는 방식 최적화
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    let recordMap: any;
-    const notion = new NotionAPI();
-    recordMap = await notion.getPage(process.env.NEXT_PUBLIC_NOTION_ROADMAP_PAGE_ID as string);
-
-    return {
-        props: { recordMap },
-    };
-};
