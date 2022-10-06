@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 
-type Path = 'dashboard' | 'roadMap';
+type Path = 'dashboard' | 'roadMap' | 'settings';
 
 const A = styled.a`
     display: flex;
@@ -87,13 +87,13 @@ export function DashboardHeader({ now }: { now: Path }) {
                         text: '대시보드',
                         onClick: () => router.push('/dashboard'),
                     },
-                    info: {
-                        text: '내 정보',
-                        onClick: () => null,
-                    },
                     roadMap: {
                         text: '로드맵',
                         onClick: () => router.push('/dashboard/roadmap'),
+                    },
+                    settings: {
+                        text: '설정',
+                        onClick: () => router.push('/dashboard/settings'),
                     },
                 }}
             />
