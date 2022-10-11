@@ -28,6 +28,11 @@ const A = styled.a`
     justify-content: center;
 `;
 
+const logout = () => {
+    localStorage.removeItem('opizeToken');
+    window.location.href = '/'
+}
+
 export function DashboardHeader({ now }: { now: Path }) {
     const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
@@ -43,7 +48,7 @@ export function DashboardHeader({ now }: { now: Path }) {
             {
                 label: '로그아웃',
                 color: 'red',
-                onClick: () => {},
+                onClick: () => logout(),
             },
         ],
     ];

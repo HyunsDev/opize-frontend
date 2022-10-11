@@ -13,6 +13,7 @@ import {
     useTopLoading,
     useCodeModal,
     StatusBadge,
+    Span,
 } from 'opize-design-system';
 import { DashboardItem, DashboardItems } from '../../../../components/page/dashboard/items';
 import styled from 'styled-components';
@@ -34,6 +35,7 @@ import { AdminFooter } from '../../../../components/page/admin/adminFooter';
 const ProjectDiv = styled.div`
     width: 30%;
     min-width: 350px;
+    min-height: 320px;
 `;
 
 const ProjectInfos = styled.div`
@@ -106,6 +108,21 @@ function ProjectOverview({ project }: ProjectOverviewProps) {
                                     tags={[]}
                                     title={project.name}
                                     href={project.url}
+                                    footer={{
+                                        left: (
+                                            <Text size="12px" color={cv.text3}>
+                                                by{' '}
+                                                <Span color={cv.text2} weight="semibold">
+                                                    Opize
+                                                </Span>
+                                            </Text>
+                                        ),
+                                        right: (
+                                            <Text size="12px" color={cv.text3}>
+                                                {project.url?.replace('https://', '')}
+                                            </Text>
+                                        ),
+                                    }}
                                 />
                             </ProjectDiv>
                             <ProjectInfos>

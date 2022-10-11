@@ -1,4 +1,4 @@
-import { cv, PageHead, PageLayout, Button, useModal, useCodeModal } from 'opize-design-system';
+import { cv, PageHead, PageLayout, Button, useModal, useCodeModal, Text, Span } from 'opize-design-system';
 import { DashboardItem, DashboardItems } from '../../../components/page/dashboard/items';
 
 import { client } from '../../../utils/opizeClient';
@@ -38,7 +38,7 @@ export default function App() {
                 </Link>
             </PageHead>
             <PageLayout backgroundColor={cv.bg_page1}>
-                <DashboardItems>
+                <DashboardItems style={{ marginTop: '32px' }}>
                     {projectsLoading
                         ? '로딩'
                         : projects?.map((project) => (
@@ -65,6 +65,21 @@ export default function App() {
                                               },
                                           ],
                                       ]}
+                                      footer={{
+                                          left: (
+                                              <Text size="12px" color={cv.text3}>
+                                                  by{' '}
+                                                  <Span color={cv.text2} weight="semibold">
+                                                      Opize
+                                                  </Span>
+                                              </Text>
+                                          ),
+                                          right: (
+                                              <Text size="12px" color={cv.text3}>
+                                                  {project.url?.replace('https://', '')}
+                                              </Text>
+                                          ),
+                                      }}
                                   />
                               </Link>
                           ))}
