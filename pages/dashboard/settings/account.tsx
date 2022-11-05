@@ -76,7 +76,7 @@ function MarketingBox({ user, refetch }: { user?: UserObject; refetch: () => voi
                 title="마케팅 수신 동의"
                 footer={
                     <>
-                        <Text>가끔씩 이메일로 흥미롭고 유용한 수식을 보내드릴게요</Text>
+                        <Text>가끔씩 이메일로 흥미롭고 유용한 소식을 보내드릴게요</Text>
                         <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
                             적용
                         </Button>

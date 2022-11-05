@@ -19,6 +19,7 @@ import { client } from '../../../utils/opizeClient';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
+import { useUser } from '../../../hooks/useUser';
 
 type Path = 'dashboard' | 'roadMap' | 'settings';
 
@@ -30,11 +31,11 @@ const A = styled.a`
 
 const logout = () => {
     localStorage.removeItem('opizeToken');
-    window.location.href = '/'
-}
+    window.location.href = '/';
+};
 
 export function DashboardHeader({ now }: { now: Path }) {
-    const { isLoading, data: user, refetch } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
+    const { user } = useUser();
     const router = useRouter();
 
     const action: ActionMenuActionType[][] = [
@@ -67,7 +68,7 @@ export function DashboardHeader({ now }: { now: Path }) {
             <Header.Notice />
             <Header.Nav>
                 <Header.Nav.Left>
-                    <Link href={'/app'}>
+                    <Link href={'/dashboard'} passHref>
                         <A>
                             <Image src={LogoImg} alt="" height={28} width={97} />
                         </A>

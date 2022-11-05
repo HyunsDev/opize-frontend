@@ -7,9 +7,13 @@ import styled from 'styled-components';
 export const DashboardItems = styled.div`
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20%, auto));
+    grid-template-columns: repeat(auto-fill, 280px);
     grid-auto-rows: minmax(320px, auto);
     gap: 20px;
+
+    @media (max-width: 620px) {
+        grid-template-columns: 1fr;
+    }
 `;
 
 const ActionBtn = styled.div`
