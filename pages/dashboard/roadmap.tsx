@@ -30,7 +30,7 @@ export default function App() {
     return (
         <>
             <DashboardHeader now="roadMap" />
-            <PageLayout backgroundColor={cv.bg_page2}>
+            <PageLayout backgroundColor={cv.bg_page2} minHeight="calc(100vh - 129px - 334px)" marginTop="32px">
                 <NotionRendererDiv>
                     <H2>로드맵</H2>
                     {!notionLoading && recordMap && (

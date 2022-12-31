@@ -160,7 +160,7 @@ export function IndexMainBlock() {
                         <Link href={'/auth/login'} passHref>
                             <Button1>로그인</Button1>
                         </Link>
-                        <Link href={'/auth/login'} passHref>
+                        <Link href={'/auth/signup'} passHref>
                             <Button2 ref={signupBtnRef}>회원가입</Button2>
                         </Link>
                     </>
@@ -169,7 +169,7 @@ export function IndexMainBlock() {
             <Label>
                 사소한 불편함을 해결하기 위한
                 <br />
-                고등학생 개발자의 프로젝트
+                학생 개발자의 프로젝트
             </Label>
 
             <Caret>

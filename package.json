@@ -19,6 +19,8 @@
     "next": "12.2.5",
     "next-transpile-modules": "^9.0.0",
     "notion-client": "^6.13.11",
+    "opize-client": "/Users/hyuns/Documents/GitHub/opize-client/opize-client-v0.3.0.tgz",
+    "opize-design-system": "^0.16.4",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",

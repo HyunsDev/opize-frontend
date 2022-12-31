@@ -130,7 +130,6 @@ export default function App() {
                                 required
                                 label="프로젝트 링크 (url)"
                                 error={errors.url?.message}
-                                leftAddon="https://"
                             />
                             <TextField
                                 {...register('iconUrl', {

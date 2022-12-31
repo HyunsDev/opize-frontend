@@ -17,14 +17,15 @@ export function DashboardFooter() {
             <Footer.Navigation>
                 <Footer.Navigation.Item>
                     <Footer.Navigation.Item.Title>소개</Footer.Navigation.Item.Title>
-                    <Footer.Navigation.Item.Link to="/">소개</Footer.Navigation.Item.Link>
-                    <Footer.Navigation.Item.Link to="/">도움말</Footer.Navigation.Item.Link>
+                    <Footer.Navigation.Item.Link to="/info">소개</Footer.Navigation.Item.Link>
+                    <Footer.Navigation.Item.Link to="/help">도움말</Footer.Navigation.Item.Link>
                 </Footer.Navigation.Item>
 
                 <Footer.Navigation.Item>
                     <Footer.Navigation.Item.Title>블로그</Footer.Navigation.Item.Title>
-                    <Footer.Navigation.Item.Link to="/">Opize 블로그</Footer.Navigation.Item.Link>
-                    <Footer.Navigation.Item.Link to="/">개발자 블로그</Footer.Navigation.Item.Link>
+                    <Footer.Navigation.Item.Link to="https://velog.io/@phw3071">
+                        개발자 블로그
+                    </Footer.Navigation.Item.Link>
                 </Footer.Navigation.Item>
 
                 <Footer.Navigation.Item>
@@ -35,12 +36,11 @@ export function DashboardFooter() {
 
                 <Footer.Navigation.Item>
                     <Footer.Navigation.Item.Title>개발</Footer.Navigation.Item.Title>
-                    <Footer.Navigation.Item.Link to="/">개발자</Footer.Navigation.Item.Link>
-                    <Footer.Navigation.Item.Link to="/">API</Footer.Navigation.Item.Link>
+                    <Footer.Navigation.Item.Link to="/developer">개발자</Footer.Navigation.Item.Link>
                     <Footer.Navigation.Item.Link to="https://design.hyuns.dev">
                         디자인 시스템
                     </Footer.Navigation.Item.Link>
-                    <Footer.Navigation.Item.Link to="/">브랜드 리소스</Footer.Navigation.Item.Link>
+                    <Footer.Navigation.Item.Link to="/brand-resource">브랜드 리소스</Footer.Navigation.Item.Link>
                 </Footer.Navigation.Item>
             </Footer.Navigation>
             <Footer.Menu>

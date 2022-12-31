@@ -37,7 +37,7 @@ export default function App() {
     return (
         <>
             <DashboardHeader now="dashboard" />
-            <PageLayout backgroundColor={cv.bg_page1}>
+            <PageLayout backgroundColor={cv.bg_page1} minHeight="calc(100vh - 129px - 138px - 334px)">
                 <Flex.Column gap="20px" style={{ marginTop: '24px' }}>
                     <H2>Opize 프로젝트</H2>
                     <DashboardItems>

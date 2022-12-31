@@ -73,6 +73,11 @@ export function AdminHeader({ menu }: { menu: string }) {
                         text: '프로젝트',
                         onClick: () => router.push('/admin/project'),
                     },
+
+                    notion: {
+                        text: '노션',
+                        onClick: () => router.push('/admin/notion'),
+                    },
                 }}
             />
         </Header>

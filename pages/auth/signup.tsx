@@ -62,7 +62,7 @@ export default function Login() {
                 <H2>Opize에 회원가입합니다!</H2>
                 <Flex.Column gap="8px;" style={{ marginTop: '32px' }}>
                     <GoogleLoginButton onClick={() => googleLogin()}>Google으로 계속하기</GoogleLoginButton>
-                    <KakaoLoginButton onClick={() => null}>카카오 로그인</KakaoLoginButton>
+                    {/* <KakaoLoginButton onClick={() => null}>카카오 로그인</KakaoLoginButton> */}
                 </Flex.Column>
                 <Divider margin="16px" style={{ borderColor: cv.border4 }} />
                 <Link href={'/auth/login'}>

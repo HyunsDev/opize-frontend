@@ -12,6 +12,7 @@ const HeaderOuter = styled.div<{ showBorder: boolean }>`
     justify-content: center;
     align-items: center;
     position: fixed;
+    top: 0px;
     z-index: 1;
     background-color: ${cv.bg_page2};
     transition: 200ms;
@@ -54,7 +55,7 @@ const Nav = styled.div`
     }
 `;
 
-const NavLink = styled.a`
+const NavLink = styled.a<{ isSelected: boolean }>`
     font-size: 14px;
     color: ${cv.text3};
     padding: 6px 14px;
@@ -66,6 +67,8 @@ const NavLink = styled.a`
         background-color: ${cv.bg_element3};
         color: ${cv.text1};
     }
+
+    ${(props) => props.isSelected && `color: ${cv.text1}`}
 `;
 
 const ButtonDiv = styled.div`
@@ -76,7 +79,7 @@ const ButtonDiv = styled.div`
     justify-content: flex-end;
 `;
 
-export function IndexHeader() {
+export function IndexHeader({ now }: { now?: 'main' | 'developer' | 'project' | 'together' }) {
     const [isTop, setIsTop] = useState(true);
     const [isLogin, setIsLogin] = useState<boolean>();
 
@@ -107,9 +110,15 @@ export function IndexHeader() {
                 </LogoDiv>
 
                 <Nav>
-                    <NavLink href="/">개발자 소개</NavLink>
-                    <NavLink href="/">프로젝트</NavLink>
-                    <NavLink href="/">함께하기</NavLink>
+                    <NavLink href="/@developer" isSelected={now === 'developer'}>
+                        개발자 소개
+                    </NavLink>
+                    <NavLink href="/@project" isSelected={now === 'project'}>
+                        프로젝트
+                    </NavLink>
+                    <NavLink href="/@together" isSelected={now === 'together'}>
+                        함께하기
+                    </NavLink>
                 </Nav>
                 <ButtonDiv>
                     {isLogin === undefined ? (

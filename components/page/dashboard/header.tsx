@@ -42,7 +42,7 @@ export function DashboardHeader({ now }: { now: Path }) {
         [
             {
                 label: '내 정보',
-                onClick: () => {},
+                onClick: () => router.push('/dashboard/settings'),
             },
         ],
         [
