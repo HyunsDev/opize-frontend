@@ -16,7 +16,7 @@ import {
     TextField,
 } from 'opize-design-system';
 import { DashboardHeader } from '../../../components/page/dashboard/header';
-import { DashboardFooter } from '../../../components/page/dashboard/footer';
+import { OpizeFooter } from '../../../components/share/footer';
 import { SettingSidebar } from '../../../components/page/dashboard/settings/sidebar';
 import { useQuery } from 'react-query';
 import { client } from '../../../utils/opizeClient';
@@ -111,7 +111,7 @@ export default function App() {
                     </Flex.Column>
                 </PageLayout.Content>
             </PageLayout>
-            <DashboardFooter />
+            <OpizeFooter />
         </>
     );
 }

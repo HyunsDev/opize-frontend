@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { IndexFooter } from '../components/page/index/footer';
 import { IndexHeader } from '../components/page/index/header';
 import { NotionPage } from '../components/page/notion/notionPage';
+import { OpizeFooter } from '../components/share/footer';
 
 export default function App() {
     const router = useRouter();
@@ -11,7 +11,7 @@ export default function App() {
         <>
             <IndexHeader now="main" />
             <NotionPage pageId={(pageId as string) || ''} />
-            <IndexFooter />
+            <OpizeFooter />
         </>
     );
 }

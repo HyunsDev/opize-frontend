@@ -10,7 +10,6 @@ const Div = styled.div`
     font-size: 28px;
     text-align: center;
     font-weight: ${cv.fontWeightSemiBold};
-    background: linear-gradient(180deg, rgba(243, 243, 243, 0) 21.31%, #efefef 100%);
 `;
 
 export function IndexBottomText({ children }: { children: React.ReactNode }) {
