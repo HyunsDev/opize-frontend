@@ -6,8 +6,8 @@ import { IndexHeader } from '../components/page/index/header';
 import { IndexMainBlock } from '../components/page/index/mainBlock';
 import Head from 'next/head';
 import { IndexBottomText } from '../components/page/index/bottomText';
-import { IndexNotionPage } from '../components/page/index/indexNotion';
 import { OpizeFooter } from '../components/share/footer';
+import { NotionPage } from '../components/page/notion/notionPage';
 
 function Home() {
     return (
@@ -26,7 +26,7 @@ function Home() {
                 <br />
                 😎
             </IndexBottomText>
-            <IndexNotionPage pageId="67a1b07f17d749d1b31ab5c94fe5940c" />
+            <NotionPage pageId="@main" />
             <OpizeFooter />
         </>
     );

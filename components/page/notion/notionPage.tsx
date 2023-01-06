@@ -35,7 +35,7 @@ const CenterPageOuter = styled.div`
 
 const CenterPage = styled.div``;
 
-export function NotionPage({ pageId }: { pageId: string }) {
+export function NotionPage({ pageId, isFullPage = true }: { pageId: string; isFullPage?: boolean }) {
     const {
         isLoading: notionLoading,
         data: recordMap,
@@ -58,7 +58,7 @@ export function NotionPage({ pageId }: { pageId: string }) {
                         <NotionRenderer
                             recordMap={recordMap.recordMap}
                             darkMode={nowColorTheme === 'dark'}
-                            fullPage
+                            fullPage={isFullPage}
                             components={{
                                 Code,
                                 Collection,
