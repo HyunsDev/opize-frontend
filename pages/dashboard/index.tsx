@@ -4,7 +4,7 @@ import { DashboardItem, DashboardItems } from '../../components/page/dashboard/i
 import { client } from '../../utils/opizeClient';
 import { useQuery } from 'react-query';
 import { DashboardHeader } from '../../components/page/dashboard/header';
-import { DashboardFooter } from '../../components/page/dashboard/footer';
+import { OpizeFooter } from '../../components/share/footer';
 
 import styled from 'styled-components';
 
@@ -74,7 +74,7 @@ export default function App() {
             <PageLayout padding="32px 0px" gap="0px">
                 <NextProject />
             </PageLayout>
-            <DashboardFooter />
+            <OpizeFooter />
         </>
     );
 }

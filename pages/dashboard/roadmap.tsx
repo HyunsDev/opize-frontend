@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { client } from '../../utils/opizeClient';
 import { useQuery } from 'react-query';
 import { DashboardHeader } from '../../components/page/dashboard/header';
-import { DashboardFooter } from '../../components/page/dashboard/footer';
+import { OpizeFooter } from '../../components/share/footer';
 import styled from 'styled-components';
 
 import { NotionRenderer } from 'react-notion-x';
@@ -38,7 +38,7 @@ export default function App() {
                     )}
                 </NotionRendererDiv>
             </PageLayout>
-            <DashboardFooter />
+            <OpizeFooter />
         </>
     );
 }
