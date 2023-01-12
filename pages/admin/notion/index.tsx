@@ -24,11 +24,18 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
-import { Code } from 'phosphor-react';
+import { ArrowClockwise, Code, PencilSimple, X } from 'phosphor-react';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { APIResponseError } from 'opize-client';
+import { getDashboardNotionPagesResponse } from 'opize-client/dist/apis/endpoints/dashboard/notion/page';
+
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 type CreateCacheModalFormData = {
     pageCode: string;
@@ -89,71 +96,16 @@ function UpdateCacheModal({ page, code, refetch }: { code: string; page: string;
     );
 }
 
-function CreateCacheModal({ refetch }: { refetch: () => void }) {
-    const [page, setPage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const modal = useModal();
-
-    const create = async (page: string) => {
-        setIsLoading(true);
-        try {
-            const res = await client.dashboard.notion.page.get({ page: page });
-            toast.info('페이지가 성공적으로 캐싱되었어요.');
-            refetch();
-            modal.close();
-        } catch (err) {
-            console.error(err);
-            if (err instanceof APIResponseError) {
-                toast.error(`문제가 생겼어요. ${err.body.message}`);
-            } else {
-                toast.error(`서버에 연결할 수 없어요`);
-            }
-        }
-        setIsLoading(false);
-    };
-
-    const onChange = (value: string) => {
-        value = value.replace('https://www.notion.so/hyunsdev/', '');
-        setPage(value);
-    };
-
-    return (
-        <Flex.Column gap="8px">
-            <H3>노션 캐시 생성</H3>
-            <Flex.Column gap="8px">
-                <TextField label="아이디" value={page} onChange={(e) => onChange(e.target.value)} />
-                <Button onClick={() => create(page)} isLoading={isLoading}>
-                    생성
-                </Button>
-            </Flex.Column>
-        </Flex.Column>
-    );
-}
-
-export default function App() {
-    const modal = useModal();
+function PageRow({ page }: { page: any }) {
     const dialog = useDialog();
-    const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
-    const {
-        isLoading: notionsIsLoading,
-        data: pages,
-        refetch,
-    } = useQuery(
+    const modal = useModal();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { refetch } = useQuery<getDashboardNotionPagesResponse['recordMaps']>(
         ['admin', 'notion', 'pages'],
         async () => (await client.dashboard.notion.page.list({})).recordMaps,
         {}
     );
-
-    const router = useRouter();
-    if (!userLoading && !user?.roles?.includes('admin')) {
-        toast.warn('접근 권한이 없어요.');
-        router.push('/dashboard');
-        return;
-    }
-
-    const newCache = () => {
-        modal.open(<CreateCacheModal refetch={refetch} />);
-    };
 
     const editCache = (page: string, code: string) => {
         modal.open(<UpdateCacheModal refetch={refetch} page={page} code={code} />);
@@ -180,6 +132,106 @@ export default function App() {
         });
     };
 
+    const updateCache = async (pageId: string) => {
+        setIsLoading(true);
+        await client.dashboard.notion.page.patch({ page: pageId, reCaching: true });
+        refetch();
+        setIsLoading(false);
+    };
+
+    return (
+        <ItemsTable.Row key={page.id}>
+            <ItemsTable.Row.Text text={page.pageId} subText={dayjs().to(page.cachedAt)} />
+            <ItemsTable.Row.Text text={page.code || ''} />
+            <ItemsTable.Row.Component flex={1}>
+                <Button
+                    onClick={() => updateCache(page.pageId)}
+                    isLoading={isLoading}
+                    icon={<ArrowClockwise />}
+                    variant={'text'}
+                />
+                <Button onClick={() => editCache(page.pageId, page.code)} icon={<PencilSimple />} variant={'text'} />
+                <Button onClick={() => removeCache(page.pageId)} icon={<X />} variant={'text'} color="red" />
+            </ItemsTable.Row.Component>
+        </ItemsTable.Row>
+    );
+}
+
+function CreateCacheModal({ refetch }: { refetch: () => void }) {
+    const [page, setPage] = useState('');
+    const [pageCode, setPageCode] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const modal = useModal();
+
+    const create = async (page: string, pageCode: string) => {
+        setIsLoading(true);
+        try {
+            await client.dashboard.notion.page.get({ page: page });
+            toast.info('페이지가 성공적으로 캐싱되었어요.');
+            if (pageCode) {
+                await client.dashboard.notion.page.patch({
+                    page: page,
+                    pageCode: pageCode,
+                });
+                toast.info('페이지 코드가 추가되었어요.');
+            }
+
+            refetch();
+            modal.close();
+        } catch (err) {
+            console.error(err);
+            if (err instanceof APIResponseError) {
+                toast.error(`문제가 생겼어요. ${err.body.message}`);
+            } else {
+                toast.error(`서버에 연결할 수 없어요`);
+            }
+        }
+        setIsLoading(false);
+    };
+
+    const onChange = (value: string) => {
+        value = value.replace('https://www.notion.so/hyunsdev/', '');
+        setPage(value);
+    };
+
+    return (
+        <Flex.Column gap="8px">
+            <H3>노션 캐시 생성</H3>
+            <Flex.Column gap="8px">
+                <TextField label="아이디" value={page} onChange={(e) => onChange(e.target.value)} />
+                <TextField label="페이지 코드" value={pageCode} onChange={(e) => setPageCode(e.target.value)} />
+                <Button onClick={() => create(page, pageCode)} isLoading={isLoading}>
+                    생성
+                </Button>
+            </Flex.Column>
+        </Flex.Column>
+    );
+}
+
+export default function App() {
+    const modal = useModal();
+    const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
+    const {
+        isLoading: notionsIsLoading,
+        data: pages,
+        refetch,
+    } = useQuery<getDashboardNotionPagesResponse['recordMaps']>(
+        ['admin', 'notion', 'pages'],
+        async () => (await client.dashboard.notion.page.list({})).recordMaps,
+        {}
+    );
+
+    const router = useRouter();
+    if (!userLoading && !user?.roles?.includes('admin')) {
+        toast.warn('접근 권한이 없어요.');
+        router.push('/dashboard');
+        return;
+    }
+
+    const newCache = () => {
+        modal.open(<CreateCacheModal refetch={refetch} />);
+    };
+
     return (
         <>
             <AdminHeader menu="notion" />
@@ -191,25 +243,7 @@ export default function App() {
             <PageLayout>
                 <ItemsTable>
                     {pages?.map((page) => (
-                        <ItemsTable.Row key={page.id}>
-                            <ItemsTable.Row.Text text={page.pageId} subText={page.cachedAt} />
-                            <ItemsTable.Row.Text text={page.code || ''} />
-                            <ItemsTable.Row.Buttons
-                                buttons={[
-                                    [
-                                        {
-                                            label: '수정',
-                                            onClick: () => editCache(page.pageId, page.code),
-                                        },
-                                        {
-                                            label: '삭제',
-                                            color: 'red',
-                                            onClick: () => removeCache(page.pageId),
-                                        },
-                                    ],
-                                ]}
-                            />
-                        </ItemsTable.Row>
+                        <PageRow page={page} key={page.id} />
                     ))}
                 </ItemsTable>
             </PageLayout>
