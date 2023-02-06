@@ -8100,10 +8100,10 @@ open@^8.0.9, open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-opize-client@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/opize-client/-/opize-client-0.4.0.tgz#14c1074fcccd45a19e2e0f30151828aba66b0907"
-  integrity sha512-N+9t5Gzt/+5nEZuPeOL51jANqZ0H6Hds/re4EPB4PZWq+uLlRCKHkHN1gHbVYzhsXDYZLbbnEu+hOvBTu8Tqtg==
+opize-client@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/opize-client/-/opize-client-0.5.0.tgz#369925b76971c8ace622e5749764c9a1e695df02"
+  integrity sha512-o+8ja2R7DYssoqvEydK4lVmwdDThRARFHhjTmNk4sPbgEc3JfaLIymE5HrIEEhnhwaSTWQWom+1UrEswYxpBKw==
   dependencies:
     axios "^0.27.2"
     dayjs "^1.11.5"

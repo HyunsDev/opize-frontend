@@ -14,6 +14,8 @@ import {
     Switch,
     Text,
     TextField,
+    Link as A,
+    useDialog,
 } from 'opize-design-system';
 import { DashboardHeader } from '../../../components/page/dashboard/header';
 import { OpizeFooter } from '../../../components/share/footer';
@@ -90,6 +92,62 @@ function MarketingBox({ user, refetch }: { user?: UserObject; refetch: () => voi
     );
 }
 
+function DeleteAccount() {
+    const dialog = useDialog();
+
+    const deleteAccount = async () => {
+        try {
+            const res = await client.user.delete({
+                userId: 'me',
+            });
+            console.log(res);
+            localStorage.removeItem('opizeToken');
+            toast.info('계정이 삭제되었어요.');
+            location.href = '/';
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const openDialog = () => {
+        dialog({
+            title: '정말로 계정을 삭제하시겠어요?',
+            content: '삭제한 계정은 되돌릴 수 없으며, Opize와 연결된 다른 서비스에서 중대한 오류가 발생할 수 있어요!',
+            buttons: [
+                {
+                    children: '취소',
+                    onClick: () => {},
+                },
+                {
+                    children: '삭제',
+                    onClick: () => deleteAccount(),
+                    color: 'red',
+                    variant: 'contained',
+                },
+            ],
+        });
+    };
+
+    return (
+        <Box
+            title="계정 삭제"
+            footer={
+                <>
+                    <A>자세히 알아보기</A>
+                    <Button variant="contained" color="red" onClick={openDialog}>
+                        계정 삭제
+                    </Button>
+                </>
+            }
+        >
+            <Text>
+                계정을 삭제한 경우 이용중인 Opize 프로젝트에서 중대한 오류가 발생할 수 있으니, 계정을 삭제하기 이전에 각
+                프로젝트에서 계정을 삭제해주세요.
+            </Text>
+        </Box>
+    );
+}
+
 export default function App() {
     const { data: user, refetch: refetchUser } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
 
@@ -108,6 +166,8 @@ export default function App() {
                     <Flex.Column gap="16px">
                         <H2>계정</H2>
                         <MarketingBox user={user} refetch={refetchUser} />
+
+                        <DeleteAccount />
                     </Flex.Column>
                 </PageLayout.Content>
             </PageLayout>

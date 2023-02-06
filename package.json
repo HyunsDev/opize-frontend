@@ -19,7 +19,7 @@
     "next": "12.2.5",
     "next-transpile-modules": "^9.0.0",
     "notion-client": "^6.13.11",
-    "opize-client": "^0.4.0",
+    "opize-client": "^0.5.0",
     "opize-design-system": "^0.18.7",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
