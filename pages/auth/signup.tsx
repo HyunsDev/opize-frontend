@@ -1,6 +1,5 @@
 import {
     Flex,
-    H1,
     PageLayout,
     TextField,
     Button,
@@ -11,6 +10,9 @@ import {
     H2,
     Link as A,
     Divider,
+    CenterLayout,
+    Span,
+    Text,
 } from 'opize-design-system';
 import styled from 'styled-components';
 import Image from 'next/image';
@@ -26,12 +28,52 @@ import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { IndexHeader } from '../../components/page/index/header';
 import { GoogleLoginButton } from '../../components/page/auth/googleLoginButton';
 import { AuthPageLayout } from '../../components/page/auth/authPageLayout';
-
-import opizeLogoTextImg from '../../assets/opize_IconText.png';
+import OpizeLogo from '../../assets/opize_circle.png';
 import { KakaoLoginButton } from '../../components/page/auth/kakaoLoginButton';
+
+const Box = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: solid 1px ${cv.border3};
+    width: 500px;
+`;
+
+const BoxHeader = styled.div`
+    padding: 16px 32px;
+    border-bottom: solid 1px ${cv.border3};
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+`;
+
+const BoxContent = styled.div`
+    padding: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+`;
+
+const Titles = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const H1 = styled.h1`
+    font-size: 20px;
+    margin-top: 8px;
+`;
 
 export default function Login() {
     const router = useRouter();
+    const redirectUrl = router.query.redirectUrl as string;
     const { start: loadingStart, end: loadingEnd } = useTopLoading();
 
     const googleLogin = useGoogleLogin({
@@ -43,7 +85,7 @@ export default function Login() {
                 });
                 loadingEnd();
                 localStorage.setItem('opizeToken', res.data.token);
-                window.location.href = '/dashboard';
+                window.location.href = (redirectUrl && redirectUrl.startsWith('/') && redirectUrl) || '/dashboard';
             } catch (err) {
                 console.error(err);
                 toast.error('서버에 문제가 발생했어요.');
@@ -56,19 +98,32 @@ export default function Login() {
             <Head>
                 <title>회원가입 | Opize</title>
             </Head>
-            <IndexHeader />
 
-            <AuthPageLayout>
-                <H2>Opize에 회원가입합니다!</H2>
-                <Flex.Column gap="8px;" style={{ marginTop: '32px' }}>
-                    <GoogleLoginButton onClick={() => googleLogin()}>Google으로 계속하기</GoogleLoginButton>
-                    {/* <KakaoLoginButton onClick={() => null}>카카오 로그인</KakaoLoginButton> */}
-                </Flex.Column>
-                <Divider margin="16px" style={{ borderColor: cv.border4 }} />
-                <Link href={'/auth/login'}>
-                    <A>로그인</A>
-                </Link>
-            </AuthPageLayout>
+            <CenterLayout minHeight="100vh" width="500px">
+                <Box>
+                    <BoxHeader>
+                        <Image src={OpizeLogo} height={24} width={24} alt="Opize 로고" />
+                        <Text size="16px">
+                            <Span weight="semibold">Opize</Span> 회원가입
+                        </Text>
+                    </BoxHeader>
+                    <BoxContent>
+                        <Titles>
+                            <H1>Opize에 회원가입합니다.</H1>
+                            <Text>회원가입 수단을 선택하세요.</Text>
+                        </Titles>
+
+                        <Flex.Column gap="8px;">
+                            <GoogleLoginButton onClick={() => googleLogin()}>Google으로 계속하기</GoogleLoginButton>
+                            {/* <KakaoLoginButton onClick={() => null}>카카오 로그인</KakaoLoginButton> */}
+                            <Divider margin="16px" style={{ borderColor: cv.border4 }} />
+                            <Link href={'/auth/login'}>
+                                <A>로그인</A>
+                            </Link>
+                        </Flex.Column>
+                    </BoxContent>
+                </Box>
+            </CenterLayout>
         </>
     );
 }

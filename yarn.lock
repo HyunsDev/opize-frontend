@@ -8100,19 +8100,19 @@ open@^8.0.9, open@^8.4.0:
     is-docker "^2.1.1"
     is-wsl "^2.2.0"
 
-opize-client@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/opize-client/-/opize-client-0.4.0.tgz#14c1074fcccd45a19e2e0f30151828aba66b0907"
-  integrity sha512-N+9t5Gzt/+5nEZuPeOL51jANqZ0H6Hds/re4EPB4PZWq+uLlRCKHkHN1gHbVYzhsXDYZLbbnEu+hOvBTu8Tqtg==
+opize-client@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/opize-client/-/opize-client-0.5.0.tgz#369925b76971c8ace622e5749764c9a1e695df02"
+  integrity sha512-o+8ja2R7DYssoqvEydK4lVmwdDThRARFHhjTmNk4sPbgEc3JfaLIymE5HrIEEhnhwaSTWQWom+1UrEswYxpBKw==
   dependencies:
     axios "^0.27.2"
     dayjs "^1.11.5"
     dotenv "^16.0.1"
 
-opize-design-system@^0.16.4:
-  version "0.16.4"
-  resolved "https://registry.yarnpkg.com/opize-design-system/-/opize-design-system-0.16.4.tgz#e682f30cc9d0f491bd029ce746f5679213f1b121"
-  integrity sha512-17mHbcIGOWAjoKBI5/pn2FWC78St3aWX2ZG+54ZfKzkZdiLOOyhfMEa07r41+Un9DTUVwl0ZjZSeOCGlUL+xEA==
+opize-design-system@^0.18.7:
+  version "0.18.7"
+  resolved "https://registry.yarnpkg.com/opize-design-system/-/opize-design-system-0.18.7.tgz#05ca97880a9e61cb5de26aea7dca3acd6850697b"
+  integrity sha512-QtNHPL3X2Ca7CJHoUwsx/pPuNQ7zFJVvqZRCG0gwa//+7CtLc4H15x6MFvcrR4kIjruMsxy8ONp+SI9HJYJVrA==
   dependencies:
     "@testing-library/jest-dom" "^5.14.1"
     "@testing-library/react" "^13.0.0"
