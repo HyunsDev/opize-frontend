@@ -2,7 +2,7 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { APIResponseError, ProjectObject } from 'opize-client';
-import { cv, PageLayout, Spinner, Text } from 'opize-design-system';
+import { Avatar, CenterLayout, cv, Divider, Flex, PageLayout, Span, Spinner, Text } from 'opize-design-system';
 import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import { client } from '../../../../utils/opizeClient';
@@ -10,25 +10,123 @@ import { josa } from 'josa';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useUser } from '../../../../hooks/useUser';
+import OpizeLogo from '../../../../assets/opize_circle.png';
+import { User, UserCircle } from 'phosphor-react';
+import Link from 'next/link';
 
-const Center = styled.div`
+const Box = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: solid 1px ${cv.border3};
+    width: 500px;
+`;
+
+const BoxHeader = styled.div`
+    padding: 16px 32px;
+    border-bottom: solid 1px ${cv.border3};
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+`;
+
+const BoxContent = styled.div`
+    padding: 32px 0px 32px 0px;
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    margin-top: 400px;
+    gap: 32px;
 `;
 
 const Img = styled.img`
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
 `;
 
 const H1 = styled.h1`
-    font-size: 28px;
+    font-size: 20px;
     margin-top: 8px;
 `;
+
+const Titles = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const StyledUserBlock = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 16px 32px;
+    cursor: pointer;
+    width: 100%;
+
+    transition: 150ms;
+    &:hover {
+        background-color: ${cv.bg_element3};
+    }
+`;
+const UserBlockNames = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+function UserBlock({
+    email,
+    image,
+    name,
+    onClick,
+}: {
+    image: string;
+    name: string;
+    email: string;
+    onClick: () => void;
+}) {
+    return (
+        <StyledUserBlock onClick={onClick}>
+            <Flex.Row gap="8px">
+                <Image src={image} width={32} height={32} alt="유저 프로필" />
+                <UserBlockNames>
+                    <Text size="14px" lineHeight="1.6" weight="semibold">
+                        {name}
+                    </Text>
+                    <Text size="12px" lineHeight="1">
+                        {email}
+                    </Text>
+                </UserBlockNames>
+            </Flex.Row>
+        </StyledUserBlock>
+    );
+}
+
+function OtherUserBlock({ moveLink }: { moveLink: string }) {
+    const move = () => {
+        localStorage.removeItem('opizeToken');
+        location.href = moveLink;
+    };
+
+    return (
+        <StyledUserBlock onClick={move}>
+            <Flex.Row gap="8px">
+                <UserCircle size={32} color={cv.text2} />
+                <UserBlockNames>
+                    <Text size="14px" lineHeight="1.6" weight="semibold">
+                        다른 계정으로 로그인
+                    </Text>
+                    <Text size="12px" lineHeight="1">
+                        기존 계정은 로그아웃됩니다.
+                    </Text>
+                </UserBlockNames>
+            </Flex.Row>
+        </StyledUserBlock>
+    );
+}
 
 interface AppProps {
     projectCode: string;
@@ -41,16 +139,15 @@ interface AppProps {
 export default function App({ projectCode, project, error }: AppProps) {
     const router = useRouter();
     const redirectUrl = router.query.redirectUrl;
+    const { user } = useUser();
 
     const [isError, setIsError] = useState(false);
     const [message, setMessage] = useState({
-        title: `${josa(`${project?.name}#{으로}`)} 이동합니다.`,
+        title: `${josa(`${project?.name}#{으로}`)} 이동합니다`,
         subtitle: '잠시만 기다려주세요',
     });
 
     useEffect(() => {
-        if (!project) return;
-
         if (!redirectUrl) {
             setIsError(true);
             setMessage({
@@ -59,53 +156,69 @@ export default function App({ projectCode, project, error }: AppProps) {
             });
             return;
         }
-
-        (async () => {
-            try {
-                const res = await client.oAuth.verify({
-                    projectCode: project.code,
-                    redirectUrl: redirectUrl as string,
-                });
-
-                window.location.href = `${redirectUrl}?token=${res.token}`;
-            } catch (error) {
-                setIsError(true);
-                if (error instanceof APIResponseError) {
-                    setMessage({
-                        title: '문제가 발생했어요',
-                        subtitle: error.message,
-                    });
-                } else {
-                    setMessage({
-                        title: '문제가 발생했어요',
-                        subtitle: '서버에 문제가 발생했어요.',
-                    });
-                }
-            }
-        })();
     }, [project, redirectUrl]);
+
+    const emailLogin = async () => {
+        if (!project) return;
+
+        try {
+            const res = await client.oAuth.verify({
+                projectCode: project.code,
+                redirectUrl: redirectUrl as string,
+            });
+            window.location.href = `${redirectUrl}?token=${res.token}`;
+        } catch (error) {
+            setIsError(true);
+            if (error instanceof APIResponseError) {
+                setMessage({
+                    title: '문제가 발생했어요',
+                    subtitle: error.message,
+                });
+            } else {
+                setMessage({
+                    title: '문제가 발생했어요',
+                    subtitle: '서버에 문제가 발생했어요.',
+                });
+            }
+        }
+    };
 
     if (error) {
         return (
-            <PageLayout width="400px">
-                <Center>
-                    <H1>{error.title}</H1>
-                    <Text color={cv.text3}>{error.subtitle}</Text>
-                </Center>
-            </PageLayout>
+            <CenterLayout minHeight="100vh">
+                <H1>{error.title}</H1>
+                <Text color={cv.text3}>{error.subtitle}</Text>
+            </CenterLayout>
         );
     }
 
     return (
-        <PageLayout width="400px">
-            <Center>
-                <Img src={project?.iconUrl} alt="" />
-                <H1>{message.title}</H1>
-                <Text color={cv.text3}>{message.subtitle}</Text>
-                <br />
-                {!isError && <Spinner />}
-            </Center>
-        </PageLayout>
+        <CenterLayout minHeight="100vh" width="500px">
+            <Box>
+                <BoxHeader>
+                    <Image src={OpizeLogo} height={24} width={24} alt="Opize 로고" />
+                    <Text size="16px">
+                        <Span weight="semibold">Opize 계정</Span>으로 로그인
+                    </Text>
+                </BoxHeader>
+                <BoxContent>
+                    <Titles>
+                        <Img src={project?.iconUrl} alt="" />
+                        <H1>{message.title}</H1>
+                        <Text>로그인할 계정을 선택하세요</Text>
+                    </Titles>
+
+                    <Flex.Column>
+                        {user && (
+                            <UserBlock email={user.email} image={user.imageUrl} name={user.name} onClick={emailLogin} />
+                        )}
+                        <OtherUserBlock
+                            moveLink={`/auth/login?redirectUrl=/oauth/verify/${projectCode}?redirectUrl=${redirectUrl}`}
+                        />
+                    </Flex.Column>
+                </BoxContent>
+            </Box>
+        </CenterLayout>
     );
 }
 
