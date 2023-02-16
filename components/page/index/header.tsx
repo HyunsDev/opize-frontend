@@ -79,7 +79,7 @@ const ButtonDiv = styled.div`
     justify-content: flex-end;
 `;
 
-export function IndexHeader({ now }: { now?: 'main' | 'developer' | 'project' | 'together' }) {
+export function IndexHeader({ now }: { now?: 'main' | 'developer' | 'project' | 'together' | 'roadmap' }) {
     const [isTop, setIsTop] = useState(true);
     const [isLogin, setIsLogin] = useState<boolean>();
 
@@ -115,6 +115,9 @@ export function IndexHeader({ now }: { now?: 'main' | 'developer' | 'project' | 
                     </NavLink>
                     <NavLink href="/@project" isSelected={now === 'project'}>
                         프로젝트
+                    </NavLink>
+                    <NavLink href="/@roadmap" isSelected={now === 'roadmap'}>
+                        로드맵
                     </NavLink>
                     <NavLink href="/@together" isSelected={now === 'together'}>
                         함께하기

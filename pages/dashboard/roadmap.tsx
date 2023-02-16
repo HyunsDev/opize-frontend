@@ -14,7 +14,6 @@ import 'react-notion-x/src/styles.css';
 const NotionRendererDiv = styled.div`
     main {
         padding: 0px;
-        width: 100%;
     }
 `;
 
@@ -32,7 +31,6 @@ export default function App() {
             <DashboardHeader now="roadMap" />
             <PageLayout backgroundColor={cv.bg_page2} minHeight="calc(100vh - 129px - 334px)" marginTop="32px">
                 <NotionRendererDiv>
-                    <H2>로드맵</H2>
                     {!notionLoading && recordMap && (
                         <NotionRenderer recordMap={recordMap.recordMap} darkMode={nowColorTheme === 'dark'} />
                     )}
