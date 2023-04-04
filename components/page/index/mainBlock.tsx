@@ -19,10 +19,9 @@ const Layout = styled.div`
 
 const Title = styled.h1`
     text-align: center;
-    font-weight: ${cv.fontWeightSemiBold};
+    font-weight: black;
     font-size: 108px;
     line-height: 1.1;
-
     background: linear-gradient(180deg, #0f312f 0%, #3fada4 40%, #3fada4 60%, #0f312f 100%);
 
     color: transparent;
