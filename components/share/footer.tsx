@@ -77,7 +77,7 @@ export function OpizeFooter() {
                     </ActionMenu>
                 </Footer.Menu.Item>
                 <Footer.Menu.Item>
-                    © 2022 Opize Corp. <br />
+                    © 2023 Opize Corp. <br />
                     오피즈 | 박현우
                 </Footer.Menu.Item>
             </Footer.Menu>

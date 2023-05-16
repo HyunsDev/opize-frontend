@@ -23,7 +23,7 @@ const Box = styled.div`
     gap: 8px;
     border-radius: 8px;
     border: solid 1px ${cv.border3};
-    width: 500px;
+    width: 420px;
 `;
 
 const BoxHeader = styled.div`
@@ -193,7 +193,7 @@ export default function App({ projectCode, project, error }: AppProps) {
     }
 
     return (
-        <CenterLayout minHeight="100vh" width="500px">
+        <CenterLayout minHeight="100vh" width="420px">
             <Box>
                 <BoxHeader>
                     <Image src={OpizeLogo} height={24} width={24} alt="Opize 로고" />
