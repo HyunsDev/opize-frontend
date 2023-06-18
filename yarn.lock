@@ -4826,6 +4826,15 @@ end-of-stream@^1.1.0:
   dependencies:
     once "^1.4.0"
 
+endpoint-client@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/endpoint-client/-/endpoint-client-0.1.1.tgz#49d828f9c079006cf39e79c92b5e26f82cb39d32"
+  integrity sha512-/Cgbj2XOtuMBGLj3y5goqgOVEj9Pp+o0oI4N9PIK17Am+yuuWt8y4IO4Z/lHKiApU1XRRsSglkiqy3GZ3GzTog==
+  dependencies:
+    axios "^0.27.2"
+    dayjs "^1.11.5"
+    dotenv "^16.0.1"
+
 enhanced-resolve@^5.10.0:
   version "5.12.0"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-5.12.0.tgz#300e1c90228f5b570c4d35babf263f6da7155634"
@@ -9232,6 +9241,16 @@ react-modal@^3.14.3:
     prop-types "^15.7.2"
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
+
+react-notion-cacher-client@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-notion-cacher-client/-/react-notion-cacher-client-1.0.1.tgz#6d3dde789f6bf4fec948f046e916f92f22bcca02"
+  integrity sha512-C2SvbmOBvWDBl6jO8EZg8n69QrFm8Hv27BAaa+givX4H1iM2rsfqgd2B0kY+eq2xE6Yg06o+hD/XJlx62XtiOQ==
+  dependencies:
+    axios "^0.27.2"
+    dayjs "^1.11.5"
+    dotenv "^16.0.1"
+    endpoint-client "^0.1.1"
 
 react-notion-x@^6.13.13:
   version "6.13.13"

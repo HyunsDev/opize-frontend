@@ -10,7 +10,8 @@ import { Equation } from 'react-notion-x/build/third-party/equation';
 import { Modal } from 'react-notion-x/build/third-party/modal';
 
 import 'react-notion-x/src/styles.css';
-import { client } from '../../../utils/opizeClient';
+import axios from 'axios';
+import { notionCacher } from '../../../lib/react-notion-cacher';
 
 const NotionRendererDiv = styled.div`
     position: relative;
@@ -35,12 +36,37 @@ const CenterPageOuter = styled.div`
 
 const CenterPage = styled.div``;
 
-export function NotionPage({ pageId, isFullPage = true }: { pageId: string; isFullPage?: boolean }) {
+export function NotionPage({
+    pageId,
+    isFullPage = true,
+    minHeight,
+}: {
+    pageId?: string;
+    isFullPage?: boolean;
+    minHeight?: string;
+}) {
     const {
         isLoading: notionLoading,
         data: recordMap,
         error,
-    } = useQuery(['notion', 'page', pageId], () => client.dashboard.notion.page.get({ page: pageId }), { retry: 1 });
+    } = useQuery(
+        ['notion', 'page', pageId],
+        async () => {
+            if (pageId?.length !== 32) {
+                const res = await notionCacher.page.get({
+                    pageCode: pageId,
+                    domain: 'opize',
+                });
+                return res;
+            } else {
+                const res = await notionCacher.page.get({
+                    pageId: pageId,
+                });
+                return res;
+            }
+        },
+        { retry: 1 }
+    );
     const { nowColorTheme } = useColorTheme();
 
     let page: React.ReactNode;
@@ -83,14 +109,14 @@ export function NotionPage({ pageId, isFullPage = true }: { pageId: string; isFu
     try {
         return (
             <>
-                <PageLayout backgroundColor={cv.bg_page2} marginTop="32px">
+                <PageLayout backgroundColor={cv.bg_page2} marginTop="32px" minHeight={minHeight}>
                     {page}
                 </PageLayout>
             </>
         );
     } catch (err) {
         return (
-            <PageLayout backgroundColor={cv.bg_page2} marginTop="32px">
+            <PageLayout backgroundColor={cv.bg_page2} marginTop="32px" minHeight={minHeight}>
                 <CenterPageOuter>
                     <CenterPage>문제가 발생했어요</CenterPage>
                 </CenterPageOuter>
