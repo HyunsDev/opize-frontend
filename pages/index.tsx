@@ -26,7 +26,7 @@ function Home() {
                 <br />
                 😎
             </IndexBottomText>
-            <NotionPage pageId="@main" isFullPage={false} />
+            <NotionPage pageId="main" isFullPage={false} />
             <OpizeFooter />
         </>
     );
