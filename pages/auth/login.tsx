@@ -1,35 +1,14 @@
-import {
-    Flex,
-    PageLayout,
-    TextField,
-    Button,
-    cv,
-    Link as LinkA,
-    Header,
-    useTopLoading,
-    H2,
-    Link as A,
-    Divider,
-    CenterLayout,
-    Span,
-    Text,
-} from 'opize-design-system';
+import { Flex, cv, useTopLoading, A, Divider, CenterLayout, Span, Text } from 'opize-design-system';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
 import Head from 'next/head';
-import { useState } from 'react';
-import axios, { AxiosError } from 'axios';
 import { opizeApi } from '../../apis';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-import { IndexHeader } from '../../components/page/index/header';
+import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from '../../components/page/auth/googleLoginButton';
-import { AuthPageLayout } from '../../components/page/auth/authPageLayout';
 import OpizeLogo from '../../assets/opize_circle.png';
-import { KakaoLoginButton } from '../../components/page/auth/kakaoLoginButton';
 
 const Box = styled.div`
     display: flex;
@@ -38,13 +17,13 @@ const Box = styled.div`
     justify-content: center;
     gap: 8px;
     border-radius: 8px;
-    border: solid 1px ${cv.border3};
-    width: 500px;
+    border: solid 1px ${cv.border};
+    width: 420px;
 `;
 
 const BoxHeader = styled.div`
     padding: 16px 32px;
-    border-bottom: solid 1px ${cv.border3};
+    border-bottom: solid 1px ${cv.border};
     width: 100%;
     display: flex;
     align-items: center;
@@ -74,7 +53,7 @@ const H1 = styled.h1`
 export default function Login() {
     const router = useRouter();
     const redirectUrl = router.query.redirectUrl as string;
-    const { start: loadingStart, end: loadingEnd } = useTopLoading();
+    const { start: loadingStart, finish: loadingEnd } = useTopLoading();
 
     const googleLogin = useGoogleLogin({
         onSuccess: async (data) => {
@@ -99,7 +78,7 @@ export default function Login() {
                 <title>로그인 | Opize</title>
             </Head>
 
-            <CenterLayout minHeight="100vh" width="500px">
+            <CenterLayout minHeight="100vh" width="420px">
                 <Box>
                     <BoxHeader>
                         <Image src={OpizeLogo} height={24} width={24} alt="Opize 로고" />
@@ -116,7 +95,7 @@ export default function Login() {
                         <Flex.Column gap="8px;">
                             <GoogleLoginButton onClick={() => googleLogin()}>Google으로 계속하기</GoogleLoginButton>
                             {/* <KakaoLoginButton onClick={() => null}>카카오 로그인</KakaoLoginButton> */}
-                            <Divider margin="16px" style={{ borderColor: cv.border4 }} />
+                            <Divider margin="16px" style={{ borderColor: cv.border }} />
                             <Link href={'/auth/signup'}>
                                 <A>회원가입</A>
                             </Link>

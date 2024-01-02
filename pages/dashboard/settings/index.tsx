@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { ActionList, Box, Button, cv, Flex, H2, PageHead, PageLayout, Text, TextField } from 'opize-design-system';
+import { Box, Button, cv, Flex, H2, PageHead, PageLayout, Text, Input } from 'opize-design-system';
 import { DashboardHeader } from '../../../components/page/dashboard/header';
 import { OpizeFooter } from '../../../components/share/footer';
 import { SettingSidebar } from '../../../components/page/dashboard/settings/sidebar';
@@ -11,7 +10,6 @@ import { client } from '../../../utils/opizeClient';
 import { APIResponseError, UserObject } from 'opize-client';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { sleep } from '../../../utils/sleep';
 import styled from 'styled-components';
 
 type NameBoxForm = {
@@ -60,15 +58,15 @@ function NameBox({ user, refetch }: { user?: UserObject; refetch: () => void }) 
                 title="이름"
                 footer={
                     <>
-                        <Text>최대 50자까지 정할 수 있어요</Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <Text size="14px">최대 50자까지 정할 수 있어요</Text>
+                        <Button width="60px" type="submit" size="small" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
                 }
             >
                 <Text>Opize와 Opize 프로젝트에서 표시되는 이름입니다</Text>
-                <TextField
+                <Input
                     {...register('name', {
                         required: '이름을 입력해주세요.',
                         maxLength: 50,
@@ -89,7 +87,7 @@ const ProfileImg = styled.img`
     width: 96px;
     height: 96px;
     border-radius: 99999px;
-    border: solid 1px ${cv.border3};
+    border: solid 1px ${cv.border};
 `;
 function ProfileImageBox({ user, refetch }: { user?: UserObject; refetch: () => void }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -135,8 +133,8 @@ function ProfileImageBox({ user, refetch }: { user?: UserObject; refetch: () => 
                 title="프로필 사진"
                 footer={
                     <>
-                        <Text>아직 URL 방식으로만 등록할 수 있어요.</Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <Text size="14px">아직 URL 방식으로만 등록할 수 있어요.</Text>
+                        <Button width="60px" type="submit" size="small" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
@@ -144,12 +142,13 @@ function ProfileImageBox({ user, refetch }: { user?: UserObject; refetch: () => 
             >
                 <Text>Opize와 Opize 프로젝트에서 표시되는 사진입니다.</Text>
                 <Flex.Between>
-                    <TextField
+                    <Input
                         {...register('imageUrl', {
                             required: '프로필 이미지 URL을 입력해주세요.',
                         })}
                         error={errors.imageUrl?.message}
                         width="500px"
+                        size="small"
                         required
                     />
                     <ProfileImg src={watch('imageUrl')} alt="프로필 사진 미리보기" />
@@ -169,7 +168,7 @@ export default function App() {
             </Head>
             <DashboardHeader now="settings" />
             <PageHead title="설정"></PageHead>
-            <PageLayout panPosition="start" marginTop="20px" gap="20px">
+            <PageLayout gap="20px">
                 <PageLayout.Pane>
                     <SettingSidebar now="index" />
                 </PageLayout.Pane>

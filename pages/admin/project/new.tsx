@@ -4,7 +4,7 @@ import {
     PageLayout,
     Button,
     useModal,
-    TextField,
+    Input,
     Select,
     TextArea,
     Text,
@@ -22,7 +22,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import { useForm } from 'react-hook-form';
-import { CaretLeft, CaretRight } from 'phosphor-react';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { Back } from '../../../components/share/back';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
@@ -52,7 +52,7 @@ type FormData = {
 export default function App() {
     const { isLoading, data: user, refetch } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
-    const { start, end } = useTopLoading();
+    const { start, finish } = useTopLoading();
     const modal = useModal();
 
     const {
@@ -74,10 +74,10 @@ export default function App() {
             await client.project.post(data);
             toast.info(`${data.code} 프로젝트를 생성했어요.`);
             router.push('/admin/project');
-            end();
+            finish();
         } catch (err: unknown) {
             console.error(err);
-            end();
+            finish();
             if (err instanceof APIResponseError) {
                 toast.warn(`🤖 ${err.message || '문제가 발생했어요.'}`);
             } else {
@@ -91,18 +91,18 @@ export default function App() {
             <AdminHeader menu="project" />
 
             <StyledForm onSubmit={handleSubmit(submit)}>
-                <PageLayout width="900px" marginTop="32px" gap="20px">
-                    <PageLayout.Header>
+                <PageLayout width="900px" gap="20px">
+                    {/* <PageLayout.Header>
                         <Link href={'/admin/project'} passHref>
                             <Back>돌아가기</Back>
                         </Link>
 
                         <Title>프로젝트 생성</Title>
-                        <Text color={cv.text3}>새로운 프로젝트를 생성합니다.</Text>
-                    </PageLayout.Header>
+                        <Text color={cv.gray500}>새로운 프로젝트를 생성합니다.</Text>
+                    </PageLayout.Header> */}
                     <PageLayout.Content>
                         <Flex.Column gap="20px">
-                            <TextField
+                            <Input
                                 {...register('code', {
                                     required: 'code를 입력해주세요.',
                                     validate: (value) =>
@@ -115,7 +115,7 @@ export default function App() {
                                 placeholder='영어 소문자와 "_" 만 사용할 수 있어요.'
                                 error={errors.code?.message}
                             />
-                            <TextField
+                            <Input
                                 {...register('name', {
                                     required: 'name를 입력해주세요.',
                                 })}
@@ -123,7 +123,7 @@ export default function App() {
                                 label="프로젝트 이름 (name)"
                                 error={errors.name?.message}
                             />
-                            <TextField
+                            <Input
                                 {...register('url', {
                                     required: 'url를 입력해주세요.',
                                 })}
@@ -131,7 +131,7 @@ export default function App() {
                                 label="프로젝트 링크 (url)"
                                 error={errors.url?.message}
                             />
-                            <TextField
+                            <Input
                                 {...register('iconUrl', {
                                     required: 'iconUrl를 입력해주세요.',
                                 })}
@@ -139,7 +139,7 @@ export default function App() {
                                 label="프로젝트 아이콘 (iconUrl)"
                                 error={errors.iconUrl?.message}
                             />
-                            <TextField
+                            <Input
                                 {...register('bannerUrl', {
                                     required: 'bannerUrl를 입력해주세요.',
                                 })}
@@ -147,7 +147,7 @@ export default function App() {
                                 label="프로젝트 배너 bannerUrl)"
                                 error={errors.bannerUrl?.message}
                             />
-                            <TextField
+                            <Input
                                 {...register('ruleUrl', {
                                     required: '이용약관의 주소를 입력해주세요.',
                                 })}
@@ -156,10 +156,10 @@ export default function App() {
                                 error={errors.ruleUrl?.message}
                             />
                             <Select {...register('status')} label="프로젝트 공개 상태 (status)">
-                                <Select.Option value={'SHOW'}>SHOW</Select.Option>
-                                <Select.Option value={'HIDDEN'}>HIDDEN</Select.Option>
+                                <option value={'SHOW'}>SHOW</option>
+                                <option value={'HIDDEN'}>HIDDEN</option>
                             </Select>
-                            <TextField
+                            <Input
                                 {...register('userId', {
                                     required: 'userId를 입력해주세요.',
                                 })}
@@ -178,7 +178,7 @@ export default function App() {
                         </Flex.Column>
                     </PageLayout.Content>
                     <PageLayout.Pane>
-                        <Button type="submit" width="100%" variant="contained" disabled={!isValid}>
+                        <Button type="submit" width="100%" primary disabled={!isValid}>
                             프로젝트 생성
                         </Button>
                     </PageLayout.Pane>

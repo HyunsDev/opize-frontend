@@ -1,5 +1,5 @@
 import { cv } from 'opize-design-system';
-import { CaretLeft } from 'phosphor-react';
+import { CaretLeft } from '@phosphor-icons/react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +7,7 @@ const StyledBack = styled.a`
     display: flex;
     align-items: center;
     gap: 4px;
-    color: ${cv.text3};
+    color: ${cv.gray500};
     font-size: 12px;
     cursor: pointer;
     transition: 200ms;
@@ -16,7 +16,7 @@ const StyledBack = styled.a`
     width: fit-content;
 
     &:hover {
-        color: ${cv.text2};
+        color: ${cv.gray500};
     }
 `;
 

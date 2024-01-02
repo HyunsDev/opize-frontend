@@ -1,23 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-    ActionMenu,
-    ActionMenuActionType,
-    Button,
-    cv,
-    Header,
-    PageLayout,
-    Spacer,
-    useTopLoading,
-} from 'opize-design-system';
+import { Header, Menu, MenuOption } from 'opize-design-system';
 import styled from 'styled-components';
 import LogoImg from '../../../assets/opize_IconText.png';
 import SkeletonIcon from '../../../assets/opize_circle.png';
-import { DashboardItem, DashboardItems } from './items';
 
-import { client } from '../../../utils/opizeClient';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { useUser } from '../../../hooks/useUser';
 
@@ -38,34 +25,31 @@ export function DashboardHeader({ now }: { now: Path }) {
     const { user } = useUser();
     const router = useRouter();
 
-    const action: ActionMenuActionType[][] = [
-        [
-            {
-                label: '내 정보',
-                onClick: () => router.push('/dashboard/settings'),
-            },
-        ],
-        [
-            {
-                label: '로그아웃',
-                color: 'red',
-                onClick: () => logout(),
-            },
-        ],
-    ];
+    let action = <></>;
 
     if (user?.roles?.includes('admin')) {
-        action.unshift([
-            {
-                label: '관리자',
-                onClick: () => router.push('/admin'),
-            },
-        ]);
+        action = (
+            <>
+                <MenuOption onClick={() => router.push('/dashboard/settings')}>내 정보</MenuOption>
+                <MenuOption onClick={() => logout()} color="red">
+                    로그아웃
+                </MenuOption>
+                <MenuOption onClick={() => router.push('/admin')}>관리자</MenuOption>
+            </>
+        );
+    } else {
+        action = (
+            <>
+                <MenuOption onClick={() => router.push('/dashboard/settings')}>내 정보</MenuOption>
+                <MenuOption onClick={() => logout()} color="red">
+                    로그아웃
+                </MenuOption>
+            </>
+        );
     }
 
     return (
         <Header>
-            <Header.Notice />
             <Header.Nav>
                 <Header.Nav.Left>
                     <Link href={'/dashboard'} passHref>
@@ -75,33 +59,33 @@ export function DashboardHeader({ now }: { now: Path }) {
                     </Link>
                 </Header.Nav.Left>
                 <Header.Nav.Right>
-                    <ActionMenu
-                        variant="text"
-                        borderRadius={999}
-                        width="fit-content"
-                        actions={action}
-                        icon={
+                    <Menu>
+                        <Menu.Trigger variant="tertiary" iconOnly shape="round">
                             <Image src={user?.imageUrl || SkeletonIcon} alt="유저 프로필 사진" width={32} height={32} />
-                        }
-                    ></ActionMenu>
+                        </Menu.Trigger>
+                        <Menu.Content>{action}</Menu.Content>
+                    </Menu>
                 </Header.Nav.Right>
             </Header.Nav>
-            <Header.SubMenu
+            <Header.Menu
                 selected={now}
-                menu={{
-                    dashboard: {
-                        text: '대시보드',
+                tabs={[
+                    {
+                        title: '대시보드',
+                        value: 'dashboard',
                         onClick: () => router.push('/dashboard'),
                     },
-                    roadMap: {
-                        text: '로드맵',
+                    {
+                        title: '로드맵',
+                        value: 'roadMap',
                         onClick: () => router.push('/dashboard/roadmap'),
                     },
-                    settings: {
-                        text: '설정',
+                    {
+                        title: '설정',
+                        value: 'settings',
                         onClick: () => router.push('/dashboard/settings'),
                     },
-                }}
+                ]}
             />
         </Header>
     );

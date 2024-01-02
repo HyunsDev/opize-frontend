@@ -1,4 +1,4 @@
-import { cv, PageHead, PageLayout, Button, useModal, useCodeModal, Text, Span } from 'opize-design-system';
+import { cv, PageHead, PageLayout, Button, useModal, useCodeModal, Text, Span, Menu } from 'opize-design-system';
 import { DashboardItem, DashboardItems } from '../../../components/page/dashboard/items';
 
 import { client } from '../../../utils/opizeClient';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
-import { Code } from 'phosphor-react';
+import { Code } from '@phosphor-icons/react';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
 
 export default function App() {
@@ -32,12 +32,12 @@ export default function App() {
             <AdminHeader menu="project" />
             <PageHead title="프로젝트">
                 <Link href={'/admin/project/new'} passHref>
-                    <Button variant="contained" size="large" as={'a'}>
+                    <Button variant="primary" size="medium" as={'a'}>
                         새 프로젝트
                     </Button>
                 </Link>
             </PageHead>
-            <PageLayout backgroundColor={cv.bg_page1}>
+            <PageLayout backgroundColor={cv.background2}>
                 <DashboardItems style={{ marginTop: '32px' }}>
                     {projectsLoading
                         ? '로딩'
@@ -54,28 +54,29 @@ export default function App() {
                                       subTitle={project.desc}
                                       tags={[]}
                                       title={project.name}
-                                      actions={[
-                                          [
-                                              {
-                                                  label: 'raw 보기',
-                                                  icon: <Code />,
-                                                  onClick: () => {
-                                                      codeModal(`${project.code}`, project, 800);
-                                                  },
-                                              },
-                                          ],
-                                      ]}
+                                      actions={
+                                          <Menu.Option
+                                              prefix={<Code />}
+                                              onClick={() => {
+                                                  codeModal.open(project, {
+                                                      title: `${project.code}`,
+                                                  });
+                                              }}
+                                          >
+                                              raw 보기
+                                          </Menu.Option>
+                                      }
                                       footer={{
                                           left: (
-                                              <Text size="12px" color={cv.text3}>
+                                              <Text size="12px" color={cv.gray500}>
                                                   by{' '}
-                                                  <Span color={cv.text2} weight="semibold">
+                                                  <Span color={cv.gray500} weight="semibold">
                                                       Opize
                                                   </Span>
                                               </Text>
                                           ),
                                           right: (
-                                              <Text size="12px" color={cv.text3}>
+                                              <Text size="12px" color={cv.gray500}>
                                                   {project.url?.replace('https://', '')}
                                               </Text>
                                           ),

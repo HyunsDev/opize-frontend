@@ -1,22 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import {
-    ActionList,
-    Box,
-    Button,
-    cv,
-    Flex,
-    H2,
-    PageHead,
-    PageLayout,
-    Switch,
-    Text,
-    TextField,
-    Link as A,
-    useDialog,
-} from 'opize-design-system';
+import { Box, Button, Flex, H2, PageLayout, Switch, Text, A, useModal, PageHead, Modal } from 'opize-design-system';
 import { DashboardHeader } from '../../../components/page/dashboard/header';
 import { OpizeFooter } from '../../../components/share/footer';
 import { SettingSidebar } from '../../../components/page/dashboard/settings/sidebar';
@@ -25,8 +10,6 @@ import { client } from '../../../utils/opizeClient';
 import { APIResponseError, UserObject } from 'opize-client';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { sleep } from '../../../utils/sleep';
-import styled from 'styled-components';
 
 type MarketingBoxForm = {
     marketingAccept: boolean;
@@ -78,14 +61,14 @@ function MarketingBox({ user, refetch }: { user?: UserObject; refetch: () => voi
                 title="마케팅 수신 동의"
                 footer={
                     <>
-                        <Text>가끔씩 이메일로 흥미롭고 유용한 소식을 보내드릴게요</Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <div />
+                        <Button width="60px" type="submit" size="small" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
                 }
             >
-                <Text>Opize의 개발자가 보내는 유용한 소식들을 받아보세요. 언제든 취소할 수 있어요.</Text>
+                <Text size="14px">Opize의 개발자가 보내는 유용한 소식들을 받아보세요. 언제든 취소할 수 있어요.</Text>
                 <Switch {...register('marketingAccept')} />
             </Box>
         </form>
@@ -93,7 +76,7 @@ function MarketingBox({ user, refetch }: { user?: UserObject; refetch: () => voi
 }
 
 function DeleteAccount() {
-    const dialog = useDialog();
+    const modal = useModal();
 
     const deleteAccount = async () => {
         try {
@@ -110,22 +93,20 @@ function DeleteAccount() {
     };
 
     const openDialog = () => {
-        dialog({
-            title: '정말로 계정을 삭제하시겠어요?',
-            content: '삭제한 계정은 되돌릴 수 없으며, Opize와 연결된 다른 서비스에서 중대한 오류가 발생할 수 있어요!',
-            buttons: [
-                {
-                    children: '취소',
-                    onClick: () => {},
-                },
-                {
-                    children: '삭제',
-                    onClick: () => deleteAccount(),
-                    color: 'red',
-                    variant: 'contained',
-                },
-            ],
-        });
+        modal.open(
+            <Modal>
+                <Modal.Header>정말로 계정을 삭제하시겠어요?</Modal.Header>
+                <Modal.Content>
+                    삭제한 계정은 되돌릴 수 없으며, Opize와 연결된 다른 서비스에서 중대한 오류가 발생할 수 있어요!
+                </Modal.Content>
+                <Modal.Footer>
+                    <Button onClick={() => modal.close()}>취소</Button>
+                    <Button color="red" variant="contained" onClick={() => deleteAccount()}>
+                        삭제
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
     };
 
     return (
@@ -133,14 +114,19 @@ function DeleteAccount() {
             title="계정 삭제"
             footer={
                 <>
-                    <A>자세히 알아보기</A>
-                    <Button variant="contained" color="red" onClick={openDialog}>
+                    <div />
+                    <Button variant="tertiary" color="red" onClick={openDialog}>
                         계정 삭제
                     </Button>
                 </>
             }
         >
-            <Text>
+            <Text
+                size="14px"
+                style={{
+                    lineHeight: '1.6',
+                }}
+            >
                 계정을 삭제한 경우 이용중인 Opize 프로젝트에서 중대한 오류가 발생할 수 있으니, 계정을 삭제하기 이전에 각
                 프로젝트에서 계정을 삭제해주세요.
             </Text>
@@ -158,7 +144,7 @@ export default function App() {
             </Head>
             <DashboardHeader now="settings" />
             <PageHead title="설정"></PageHead>
-            <PageLayout panPosition="start" marginTop="20px" gap="20px">
+            <PageLayout gap="20px">
                 <PageLayout.Pane>
                     <SettingSidebar now="account" />
                 </PageLayout.Pane>
@@ -166,7 +152,6 @@ export default function App() {
                     <Flex.Column gap="16px">
                         <H2>계정</H2>
                         <MarketingBox user={user} refetch={refetchUser} />
-
                         <DeleteAccount />
                     </Flex.Column>
                 </PageLayout.Content>

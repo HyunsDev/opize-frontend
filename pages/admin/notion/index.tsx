@@ -9,7 +9,7 @@ import {
     Span,
     ItemsTable,
     Flex,
-    TextField,
+    Input,
     Checkbox,
     H3,
     H2,
@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
-import { ArrowClockwise, Code, PencilSimple, X } from 'phosphor-react';
+import { ArrowClockwise, Code, PencilSimple, X } from '@phosphor-icons/react';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -81,7 +81,7 @@ function UpdateCacheModal({ page, code, refetch }: { code: string; page: string;
                 <H3>노션 캐시 업데이트</H3>
                 <Text>{page}</Text>
                 <Flex.Column gap="8px">
-                    <TextField
+                    <Input
                         label="pageCode"
                         {...register('pageCode', { required: '필수 항목입니다.' })}
                         error={errors.pageCode?.message}
@@ -198,8 +198,8 @@ function CreateCacheModal({ refetch }: { refetch: () => void }) {
         <Flex.Column gap="8px">
             <H3>노션 캐시 생성</H3>
             <Flex.Column gap="8px">
-                <TextField label="아이디" value={page} onChange={(e) => onChange(e.target.value)} />
-                <TextField label="페이지 코드" value={pageCode} onChange={(e) => setPageCode(e.target.value)} />
+                <Input label="아이디" value={page} onChange={(e) => onChange(e.target.value)} />
+                <Input label="페이지 코드" value={pageCode} onChange={(e) => setPageCode(e.target.value)} />
                 <Button onClick={() => create(page, pageCode)} isLoading={isLoading}>
                     생성
                 </Button>
@@ -236,7 +236,7 @@ export default function App() {
         <>
             <AdminHeader menu="notion" />
             <PageHead title="Notion">
-                <Button size="large" variant="contained" onClick={newCache}>
+                <Button size="large" primary onClick={newCache}>
                     새로운 캐시
                 </Button>
             </PageHead>

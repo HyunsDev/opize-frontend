@@ -2,7 +2,7 @@ import {
     PageHead,
     PageLayout,
     Button,
-    TextField,
+    Input,
     TextArea,
     Text,
     Flex,
@@ -88,7 +88,7 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                 footer={
                     <>
                         <Text></Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <Button width="60px" type="submit" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
@@ -109,7 +109,7 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                     )}
 
                     <Flex.Column gap="8px" style={{ flex: '1' }}>
-                        <TextField
+                        <Input
                             label="프로젝트 이름 (name)"
                             {...register('name', {
                                 required: '프로젝트 이름은 필수에요.',
@@ -123,14 +123,14 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                             })}
                             required
                         />
-                        <TextField
+                        <Input
                             label="아이콘 URL (iconUrl)"
                             {...register('iconUrl', {
                                 required: '아이콘은 필수에요.',
                             })}
                             required
                         />
-                        <TextField
+                        <Input
                             label="배너 URL (bannerUrl)"
                             {...register('bannerUrl', {
                                 required: '배너는 필수에요.',
@@ -200,13 +200,13 @@ function ProjectRoles({ project, refetch }: ProjectRolesProps) {
                 footer={
                     <>
                         <Text></Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <Button width="60px" type="submit" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
                 }
             >
-                <TextField
+                <Input
                     {...register('ruleUrl', {
                         required: '이용약관은 필수에요.',
                     })}

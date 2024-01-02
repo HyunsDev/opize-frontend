@@ -1,32 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import {
-    ActionList,
-    Box,
-    Button,
-    cv,
-    Flex,
-    H2,
-    ItemsTable,
-    PageHead,
-    PageLayout,
-    Switch,
-    Text,
-    TextField,
-    Link as A,
-} from 'opize-design-system';
+import { Flex, H2, ItemsTable, PageHead, PageLayout, Text, A } from 'opize-design-system';
 import { DashboardHeader } from '../../../components/page/dashboard/header';
 import { OpizeFooter } from '../../../components/share/footer';
 import { SettingSidebar } from '../../../components/page/dashboard/settings/sidebar';
 import { useQuery } from 'react-query';
 import { client } from '../../../utils/opizeClient';
-import { APIResponseError, UserObject } from 'opize-client';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { sleep } from '../../../utils/sleep';
-import styled from 'styled-components';
 
 export default function App() {
     const { data: user, refetch: refetchUser } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
@@ -43,7 +22,7 @@ export default function App() {
             </Head>
             <DashboardHeader now="settings" />
             <PageHead title="설정"></PageHead>
-            <PageLayout panPosition="start" marginTop="20px" gap="20px">
+            <PageLayout gap="20px">
                 <PageLayout.Pane>
                     <SettingSidebar now="project" />
                 </PageLayout.Pane>

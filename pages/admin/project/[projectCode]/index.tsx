@@ -4,7 +4,7 @@ import {
     PageLayout,
     Button,
     useModal,
-    TextField,
+    Input,
     Select,
     TextArea,
     Text,
@@ -25,7 +25,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../../components/page/admin/AdminHeader';
 import { useForm } from 'react-hook-form';
-import { CaretLeft, CaretRight, Code } from 'phosphor-react';
+import { CaretLeft, CaretRight, Code } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { Back } from '../../../../components/share/back';
 import { AdminProjectHeader } from '../../../../components/page/admin/project/adminProjectHeader';
@@ -52,7 +52,7 @@ const ProjectInfos = styled.div`
     flex: 1;
     padding: 16px 20px;
     font-weight: 500;
-    color: ${cv.text2};
+    color: ${cv.gray500};
 `;
 
 const StyledProjectInfo = styled.div`
@@ -68,7 +68,7 @@ interface ProjectInfoProps {
 function ProjectInfo({ label, children }: ProjectInfoProps) {
     return (
         <StyledProjectInfo>
-            <Text size="12px" color={cv.text3} weight="semibold">
+            <Text size="12px" color={cv.gray500} weight="semibold">
                 {label}
             </Text>
             {children}
@@ -110,15 +110,15 @@ function ProjectOverview({ project }: ProjectOverviewProps) {
                                     href={project.url}
                                     footer={{
                                         left: (
-                                            <Text size="12px" color={cv.text3}>
+                                            <Text size="12px" color={cv.gray500}>
                                                 by{' '}
-                                                <Span color={cv.text2} weight="semibold">
+                                                <Span color={cv.gray500} weight="semibold">
                                                     Opize
                                                 </Span>
                                             </Text>
                                         ),
                                         right: (
-                                            <Text size="12px" color={cv.text3}>
+                                            <Text size="12px" color={cv.gray500}>
                                                 {project.url?.replace('https://', '')}
                                             </Text>
                                         ),
@@ -142,7 +142,10 @@ function ProjectOverview({ project }: ProjectOverviewProps) {
                                 <ProjectInfo label="DESCRIPTION">{project.desc}</ProjectInfo>
 
                                 <LowInfoButton>
-                                    <Button variant="text" onClick={() => codeModal(project?.code || '', project, 600)}>
+                                    <Button
+                                        variant="tertiary"
+                                        onClick={() => codeModal(project?.code || '', project, 600)}
+                                    >
                                         RAW info
                                     </Button>
                                 </LowInfoButton>
@@ -191,7 +194,7 @@ export default function App() {
         <>
             <AdminProjectHeader projectCode={projectCode} menu="overview" />
             <PageHead title={project?.code}>
-                <Button as="a" href={project?.url} variant="contained" size="large">
+                <Button as="a" href={project?.url} primary size="large">
                     Visit
                 </Button>
             </PageHead>

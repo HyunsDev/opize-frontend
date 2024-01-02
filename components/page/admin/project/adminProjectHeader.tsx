@@ -15,7 +15,7 @@ const TitleLogoA = styled.a`
     gap: 8px;
     text-decoration: none;
     font-size: 14px;
-    color: ${cv.text3};
+    color: ${cv.gray500};
 `;
 
 export interface AdminProjectHeaderProps {
@@ -73,7 +73,7 @@ export function AdminProjectHeader({ menu, projectCode }: AdminProjectHeaderProp
                         API
                     </Header.Nav.Button>
                     <ActionMenu
-                        variant="text"
+                        variant="tertiary"
                         borderRadius={999}
                         width="fit-content"
                         actions={action}

@@ -109,14 +109,14 @@ export function NotionPage({
     try {
         return (
             <>
-                <PageLayout backgroundColor={cv.bg_page2} marginTop="32px" minHeight={minHeight}>
-                    {page}
+                <PageLayout backgroundColor={cv.background} minHeight={minHeight}>
+                    <CenterPageOuter>{page}</CenterPageOuter>
                 </PageLayout>
             </>
         );
     } catch (err) {
         return (
-            <PageLayout backgroundColor={cv.bg_page2} marginTop="32px" minHeight={minHeight}>
+            <PageLayout backgroundColor={cv.background} minHeight={minHeight}>
                 <CenterPageOuter>
                     <CenterPage>문제가 발생했어요</CenterPage>
                 </CenterPageOuter>

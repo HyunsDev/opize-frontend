@@ -1,18 +1,18 @@
 import Link from 'next/link';
-import { ActionList } from 'opize-design-system';
+import { PaneList, PaneListItem } from 'opize-design-system';
 
 type Now = 'index' | 'account' | 'project' | 'billing' | 'subscribe';
 export function SettingSidebar({ now }: { now: Now }) {
     return (
-        <ActionList isSticky>
+        <PaneList>
             <Link passHref href="/dashboard/settings">
-                <ActionList.Item selected={now === 'index'}>프로필</ActionList.Item>
+                <PaneList.Item selected={now === 'index'}>프로필</PaneList.Item>
             </Link>
             <Link passHref href="/dashboard/settings/account">
-                <ActionList.Item selected={now === 'account'}>계정</ActionList.Item>
+                <PaneList.Item selected={now === 'account'}>계정</PaneList.Item>
             </Link>
             <Link passHref href="/dashboard/settings/project">
-                <ActionList.Item selected={now === 'project'}>프로젝트</ActionList.Item>
+                <PaneList.Item selected={now === 'project'}>프로젝트</PaneList.Item>
             </Link>
 
             {/* <Link passHref href="/dashboard/settings/subscribe">
@@ -22,6 +22,6 @@ export function SettingSidebar({ now }: { now: Now }) {
             <Link passHref href="/dashboard/settings/billing">
                 <ActionList.Item selected={now === 'billing'}>결제</ActionList.Item>
             </Link> */}
-        </ActionList>
+        </PaneList>
     );
 }
