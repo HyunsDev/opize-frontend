@@ -10,7 +10,7 @@ module.exports = {
     images: {
         domains: ['lh3.googleusercontent.com', 's3.hyuns.dev', 'static.hyuns.dev', 'media.discordapp.net'],
     },
-    swcMinify: true,
+    swcMinify: false,
     compiler: {
         styledComponents: true,
     },
