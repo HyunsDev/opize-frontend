@@ -9,12 +9,13 @@ import {
     Span,
     ItemsTable,
     Flex,
-    TextField,
+    Input,
     Checkbox,
     H3,
     H2,
     H1,
-    useDialog,
+    Modal,
+    BoxLayout,
 } from 'opize-design-system';
 import { DashboardItem, DashboardItems } from '../../../components/page/dashboard/items';
 
@@ -24,7 +25,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
-import { ArrowClockwise, Code, PencilSimple, X } from 'phosphor-react';
+import { ArrowClockwise, Code, PencilSimple, X } from '@phosphor-icons/react';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -81,7 +82,7 @@ function UpdateCacheModal({ page, code, refetch }: { code: string; page: string;
                 <H3>노션 캐시 업데이트</H3>
                 <Text>{page}</Text>
                 <Flex.Column gap="8px">
-                    <TextField
+                    <Input
                         label="pageCode"
                         {...register('pageCode', { required: '필수 항목입니다.' })}
                         error={errors.pageCode?.message}
@@ -97,7 +98,6 @@ function UpdateCacheModal({ page, code, refetch }: { code: string; page: string;
 }
 
 function PageRow({ page }: { page: any }) {
-    const dialog = useDialog();
     const modal = useModal();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -112,24 +112,24 @@ function PageRow({ page }: { page: any }) {
     };
 
     const removeCache = (page: string) => {
-        dialog({
-            title: '캐시를 삭제하시겠어요?',
-            buttons: [
-                {
-                    children: '취소',
-                    onClick: () => null,
-                },
-                {
-                    children: '삭제',
-                    variant: 'contained',
-                    color: 'red',
-                    onClick: async () => {
-                        await client.dashboard.notion.page.delete({ page });
-                        refetch();
-                    },
-                },
-            ],
-        });
+        modal.open(
+            <Modal>
+                <Modal.Header>캐시를 삭제하시겠어요?</Modal.Header>
+                <Modal.Footer>
+                    <Button>취소</Button>
+                    <Button
+                        onClick={async () => {
+                            await client.dashboard.notion.page.delete({ page });
+                            refetch();
+                        }}
+                        color="red"
+                        variant="primary"
+                    >
+                        삭제
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
     };
 
     const updateCache = async (pageId: string) => {
@@ -143,15 +143,16 @@ function PageRow({ page }: { page: any }) {
         <ItemsTable.Row key={page.id}>
             <ItemsTable.Row.Text text={page.pageId} subText={dayjs().to(page.cachedAt)} />
             <ItemsTable.Row.Text text={page.code || ''} />
-            <ItemsTable.Row.Component flex={1}>
-                <Button
-                    onClick={() => updateCache(page.pageId)}
-                    isLoading={isLoading}
-                    icon={<ArrowClockwise />}
-                    variant={'text'}
-                />
-                <Button onClick={() => editCache(page.pageId, page.code)} icon={<PencilSimple />} variant={'text'} />
-                <Button onClick={() => removeCache(page.pageId)} icon={<X />} variant={'text'} color="red" />
+            <ItemsTable.Row.Component flex={1} width="100px">
+                <Button onClick={() => updateCache(page.pageId)} isLoading={isLoading} variant={'tertiary'} iconOnly>
+                    <ArrowClockwise />
+                </Button>
+                <Button onClick={() => editCache(page.pageId, page.code)} variant={'tertiary'} iconOnly>
+                    <PencilSimple />
+                </Button>
+                <Button onClick={() => removeCache(page.pageId)} variant={'tertiary'} color="red" iconOnly>
+                    <X />
+                </Button>
             </ItemsTable.Row.Component>
         </ItemsTable.Row>
     );
@@ -198,8 +199,8 @@ function CreateCacheModal({ refetch }: { refetch: () => void }) {
         <Flex.Column gap="8px">
             <H3>노션 캐시 생성</H3>
             <Flex.Column gap="8px">
-                <TextField label="아이디" value={page} onChange={(e) => onChange(e.target.value)} />
-                <TextField label="페이지 코드" value={pageCode} onChange={(e) => setPageCode(e.target.value)} />
+                <Input label="아이디" value={page} onChange={(e) => onChange(e.target.value)} />
+                <Input label="페이지 코드" value={pageCode} onChange={(e) => setPageCode(e.target.value)} />
                 <Button onClick={() => create(page, pageCode)} isLoading={isLoading}>
                     생성
                 </Button>
@@ -236,17 +237,17 @@ export default function App() {
         <>
             <AdminHeader menu="notion" />
             <PageHead title="Notion">
-                <Button size="large" variant="contained" onClick={newCache}>
+                <Button size="medium" primary onClick={newCache}>
                     새로운 캐시
                 </Button>
             </PageHead>
-            <PageLayout>
+            <BoxLayout>
                 <ItemsTable>
                     {pages?.map((page) => (
                         <PageRow page={page} key={page.id} />
                     ))}
                 </ItemsTable>
-            </PageLayout>
+            </BoxLayout>
             <AdminFooter />
         </>
     );

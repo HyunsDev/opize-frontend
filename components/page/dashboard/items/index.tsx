@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { ActionMenu, ActionMenuActionType, cv, Flex, Span, Text } from 'opize-design-system';
-import { DotsThreeVertical } from 'phosphor-react';
+import { cv, Flex, Menu, Span, Text } from 'opize-design-system';
+import { DotsThreeVertical } from '@phosphor-icons/react';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -59,10 +59,10 @@ const StyledDashboardItem = styled.a`
     display: flex;
     position: relative;
     flex-direction: column;
-    background-color: ${cv.bg_element1};
+    background-color: ${cv.background1};
     border-radius: 8px;
     text-decoration: none;
-    border: solid 1px ${cv.border4};
+    border: solid 1px ${cv.border};
     height: 100%;
 `;
 
@@ -88,12 +88,12 @@ const Icon = styled.div`
 
 const Title = styled.h3`
     font-size: 24px;
-    color: ${cv.text1};
+    color: ${cv.text};
 `;
 
 const SubTitle = styled.p`
     font-size: 14px;
-    color: ${cv.text3};
+    color: ${cv.text};
 `;
 
 const ItemContent = styled.div`
@@ -111,7 +111,7 @@ const Footer = styled.div`
     left: 0;
     height: 40px;
     width: 100%;
-    border-top: solid 1px ${cv.border4};
+    border-top: solid 1px ${cv.border};
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -126,7 +126,7 @@ export interface DashboardItemProps {
     backgroundImage: string;
     icon: string;
     tags: DashboardItemTagProps[];
-    actions?: ActionMenuActionType[][];
+    actions?: React.ReactNode;
     footer?: {
         left?: React.ReactNode;
         right?: React.ReactNode;
@@ -164,12 +164,12 @@ export const DashboardItem = React.forwardRef<HTMLAnchorElement, DashboardItemPr
                 </StyledDashboardItem>
                 {actions && (
                     <ActionBtn>
-                        <ActionMenu
-                            variant="text"
-                            borderRadius={9999}
-                            icon={<DotsThreeVertical size={20} />}
-                            actions={actions}
-                        />
+                        <Menu>
+                            <Menu.Trigger variant="tertiary" shape="round" iconOnly>
+                                <DotsThreeVertical size={20} />
+                            </Menu.Trigger>
+                            <Menu.Content>{actions}</Menu.Content>
+                        </Menu>
                     </ActionBtn>
                 )}
             </DashboardItemDivver>

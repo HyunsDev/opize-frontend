@@ -2,32 +2,31 @@ import {
     PageHead,
     PageLayout,
     Button,
-    TextField,
+    Input,
     TextArea,
     Text,
     Flex,
     useTopLoading,
-    ActionList,
+    PaneList,
     Box,
-    Select,
     Switch,
     cv,
-    Link as A,
-    useDialog,
+    A,
+    useModal,
+    Modal,
+    ButtonGroup,
 } from 'opize-design-system';
-import { DashboardItem } from '../../../../../components/page/dashboard/items';
 
 import { client } from '../../../../../utils/opizeClient';
 import { APIResponseError, ProjectObject } from 'opize-client';
-import { setLogger, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
 import { AdminProjectHeader } from '../../../../../components/page/admin/project/adminProjectHeader';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { AdminFooter } from '../../../../../components/page/admin/adminFooter';
 import Link from 'next/link';
-import { ArrowClockwise, ArrowsClockwise, Warning } from 'phosphor-react';
+import { Warning } from '@phosphor-icons/react';
 
 const URL_REGEX = /http[s]?:\/\//;
 
@@ -59,11 +58,13 @@ function StatusBox({ project, refetch }: StatusBoxProps) {
 
     return (
         <Box title="OAuth 인증 활성화">
-            <Text color={cv.text3}>
+            <Text color={cv.gray500} size="14px">
                 Opize 인증을 비활성화 한 경우, 새로운 OAuth 인증이 차단됩니다. 이미 OAuth 인증을 받은 사용자에는 영향을
                 미치지 않습니다.
             </Text>
-            <Switch text="OAuth 인증 활성화" checked={project?.isOAuthAble} onChange={onChange} />
+            <Switch checked={project?.isOAuthAble} onChange={onChange}>
+                OAuth 인증 활성화
+            </Switch>
         </Box>
     );
 }
@@ -74,7 +75,7 @@ interface OAuthOverviewProps {
 }
 function OAuthOverview({ project, refetch }: OAuthOverviewProps) {
     const [tokenText, setTokenText] = useState('secret_**************************');
-    const dialog = useDialog();
+    const modal = useModal();
 
     const regenerateToken = async () => {
         if (!project) return;
@@ -95,42 +96,36 @@ function OAuthOverview({ project, refetch }: OAuthOverviewProps) {
             }
         };
 
-        dialog({
-            title: '정말로 토큰을 재발급 하실 건가요?',
-            content: '토큰을 재발급하면 이전에 사용하던 토큰은 더 이상 사용할 수 없어요.',
-            icon: <Warning size={32} />,
-            buttons: [
-                {
-                    children: '취소',
-                    variant: 'outlined',
-                    onClick: () => null,
-                },
-                {
-                    children: '재발급',
-                    variant: 'contained',
-                    color: 'red',
-                    onClick: () => apiRequest(),
-                },
-            ],
-        });
+        modal.open(
+            <Modal>
+                <Modal.Header>정말로 토큰을 재발급 하실 건가요?</Modal.Header>
+                <Modal.Content>토큰을 재발급하면 이전에 사용하던 토큰은 더 이상 사용할 수 없어요.</Modal.Content>
+                <Modal.Footer>
+                    <Button variant="tertiary" onClick={() => modal.close()}>
+                        취소
+                    </Button>
+                    <Button variant="contained" color="red" onClick={() => apiRequest()}>
+                        재발급
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        );
     };
 
     return (
         <Box title="OAuth 정보">
             <Flex.Row gap="16px">
                 <Text>프로젝트 코드</Text>
-                <TextField value={project?.code} readOnly width="300px" onChange={() => null} />
+                <Input value={project?.code} readOnly width="300px" onChange={() => null} />
             </Flex.Row>
 
-            <TextField
-                value={tokenText}
-                label="Project Secret Token"
-                rightAddon={{
-                    type: 'button',
-                    onClick: regenerateToken,
-                    label: '재발급',
-                }}
-            />
+            <Text color={cv.label} size="14px">
+                Project Secret Token
+            </Text>
+            <Flex.Row gap="8px">
+                <Input value={tokenText} />
+                <Button onClick={regenerateToken}>재발급</Button>
+            </Flex.Row>
         </Box>
     );
 }
@@ -207,7 +202,7 @@ function RedirectUrlsBox({ project, refetch }: RedirectUrlsBoxProps) {
                         disabled={errorMessage !== ''}
                         width="60px"
                         onClick={onSubmit}
-                        variant="contained"
+                        primary
                         isLoading={isLoading}
                     >
                         적용
@@ -222,7 +217,7 @@ function RedirectUrlsBox({ project, refetch }: RedirectUrlsBoxProps) {
                 error={errorMessage}
                 placeholder="ex. https://opize.me/oauth/opize"
             />
-            <Text color={cv.text3}>
+            <Text color={cv.gray500} size="14px">
                 Opize OAuth에서, 사용자가 OAuth를 통해 인증을 받은 후 위 링크로 이동됩니다. 프로토콜과 정확한 경로를
                 포함해야 하며, 와일드 카드(*, .)는 이용할 수 없습니다. 이후 API 요청시 위 링크중 하나를 함께 전송해야
                 합니다.
@@ -234,7 +229,6 @@ function RedirectUrlsBox({ project, refetch }: RedirectUrlsBoxProps) {
 export default function App() {
     const router = useRouter();
     const projectCode = router.query.projectCode as string;
-    const { start, end } = useTopLoading();
 
     const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
     const {
@@ -256,15 +250,15 @@ export default function App() {
         <>
             <AdminProjectHeader projectCode={projectCode} menu="setting" />
             <PageHead title={'Project Setting'}></PageHead>
-            <PageLayout panPosition="start" marginTop="20px" gap="20px">
+            <PageLayout gap="20px">
                 <PageLayout.Pane>
-                    <ActionList isSticky>
+                    <PaneList isSticky>
                         <Link
                             passHref
                             href={`/admin/project/[projectCode]/setting`}
                             as={`/admin/project/${router.query.projectCode}/setting`}
                         >
-                            <ActionList.Item>프로젝트 정보</ActionList.Item>
+                            <PaneList.Item>프로젝트 정보</PaneList.Item>
                         </Link>
 
                         <Link
@@ -272,9 +266,9 @@ export default function App() {
                             href={`/admin/project/[projectCode]/setting/oauth`}
                             as={`/admin/project/${router.query.projectCode}/setting/oauth`}
                         >
-                            <ActionList.Item selected>OAuth</ActionList.Item>
+                            <PaneList.Item selected>OAuth</PaneList.Item>
                         </Link>
-                    </ActionList>
+                    </PaneList>
                 </PageLayout.Pane>
                 <PageLayout.Content>
                     <Flex.Column gap="20px">

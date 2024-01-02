@@ -9,7 +9,7 @@ const Div = styled.div`
     justify-content: center;
     font-size: 28px;
     text-align: center;
-    font-weight: ${cv.fontWeightSemiBold};
+    font-weight: 600;
 `;
 
 export function IndexBottomText({ children }: { children: React.ReactNode }) {

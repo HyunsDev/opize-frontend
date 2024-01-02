@@ -2,14 +2,14 @@ import {
     PageHead,
     PageLayout,
     Button,
-    TextField,
+    Input,
     TextArea,
     Text,
     Flex,
     useTopLoading,
-    ActionList,
     Box,
     Select,
+    PaneList,
 } from 'opize-design-system';
 import { DashboardItem } from '../../../../../components/page/dashboard/items';
 
@@ -88,7 +88,7 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                 footer={
                     <>
                         <Text></Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <Button width="60px" type="submit" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
@@ -109,7 +109,7 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                     )}
 
                     <Flex.Column gap="8px" style={{ flex: '1' }}>
-                        <TextField
+                        <Input
                             label="프로젝트 이름 (name)"
                             {...register('name', {
                                 required: '프로젝트 이름은 필수에요.',
@@ -123,14 +123,14 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                             })}
                             required
                         />
-                        <TextField
+                        <Input
                             label="아이콘 URL (iconUrl)"
                             {...register('iconUrl', {
                                 required: '아이콘은 필수에요.',
                             })}
                             required
                         />
-                        <TextField
+                        <Input
                             label="배너 URL (bannerUrl)"
                             {...register('bannerUrl', {
                                 required: '배너는 필수에요.',
@@ -138,8 +138,8 @@ function ProjectInfo({ project, refetch }: ProjectInfoProps) {
                             required
                         />
                         <Select {...register('status')} label="공개 상태 (status)">
-                            <Select.Option value={'SHOW'}>SHOW</Select.Option>
-                            <Select.Option value={'HIDDEN'}>HIDDEN</Select.Option>
+                            <option value={'SHOW'}>SHOW</option>
+                            <option value={'HIDDEN'}>HIDDEN</option>
                         </Select>
                     </Flex.Column>
                 </Flex>
@@ -200,13 +200,13 @@ function ProjectRoles({ project, refetch }: ProjectRolesProps) {
                 footer={
                     <>
                         <Text></Text>
-                        <Button width="60px" type="submit" variant="contained" isLoading={isLoading}>
+                        <Button width="60px" type="submit" primary isLoading={isLoading}>
                             적용
                         </Button>
                     </>
                 }
             >
-                <TextField
+                <Input
                     {...register('ruleUrl', {
                         required: '이용약관은 필수에요.',
                     })}
@@ -220,7 +220,7 @@ function ProjectRoles({ project, refetch }: ProjectRolesProps) {
 export default function App() {
     const router = useRouter();
     const projectCode = router.query.projectCode as string;
-    const { start, end } = useTopLoading();
+    const { start, finish } = useTopLoading();
 
     const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
     const {
@@ -243,15 +243,15 @@ export default function App() {
         <>
             <AdminProjectHeader projectCode={projectCode} menu="setting" />
             <PageHead title={'Project Setting'}></PageHead>
-            <PageLayout panPosition="start" marginTop="20px" gap="20px">
+            <PageLayout gap="20px">
                 <PageLayout.Pane>
-                    <ActionList isSticky>
+                    <PaneList isSticky>
                         <Link
                             passHref
                             href={`/admin/project/[projectCode]/setting`}
                             as={`/admin/project/${router.query.projectCode}/setting`}
                         >
-                            <ActionList.Item selected>프로젝트 정보</ActionList.Item>
+                            <PaneList.Item selected>프로젝트 정보</PaneList.Item>
                         </Link>
 
                         <Link
@@ -259,9 +259,9 @@ export default function App() {
                             href={`/admin/project/[projectCode]/setting/oauth`}
                             as={`/admin/project/${router.query.projectCode}/setting/oauth`}
                         >
-                            <ActionList.Item>OAuth</ActionList.Item>
+                            <PaneList.Item>OAuth</PaneList.Item>
                         </Link>
-                    </ActionList>
+                    </PaneList>
                 </PageLayout.Pane>
                 <PageLayout.Content>
                     <Flex.Column gap="20px">

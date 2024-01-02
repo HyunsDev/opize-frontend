@@ -14,9 +14,9 @@ const HeaderOuter = styled.div<{ showBorder: boolean }>`
     position: fixed;
     top: 0px;
     z-index: 1;
-    background-color: ${cv.bg_page2};
+    background-color: ${cv.background};
     transition: 200ms;
-    border-bottom: solid 1px ${(props) => (props.showBorder ? cv.border4 : cv.bg_page2)};
+    border-bottom: solid 1px ${(props) => (props.showBorder ? cv.border : cv.background)};
 `;
 
 const Header = styled.header`
@@ -33,7 +33,6 @@ const Header = styled.header`
 `;
 
 const LogoDiv = styled.div`
-    flex: 1;
     display: flex;
     align-items: center;
 `;
@@ -49,6 +48,7 @@ const Nav = styled.div`
     justify-content: center;
     gap: 8px;
     flex: 1;
+    width: 100%;
 
     @media (max-width: 767px) {
         display: none;
@@ -57,25 +57,24 @@ const Nav = styled.div`
 
 const NavLink = styled.a<{ isSelected: boolean }>`
     font-size: 14px;
-    color: ${cv.text3};
+    color: ${cv.gray300};
     padding: 6px 14px;
     transition: 150ms;
     text-decoration: none;
     border-radius: 4px;
 
     &:hover {
-        background-color: ${cv.bg_element3};
-        color: ${cv.text1};
+        background-color: ${cv.gray100};
+        color: ${cv.text};
     }
 
-    ${(props) => props.isSelected && `color: ${cv.text1}`}
+    ${(props) => props.isSelected && `color: ${cv.text}`}
 `;
 
 const ButtonDiv = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 1;
     justify-content: flex-end;
 `;
 
@@ -129,7 +128,7 @@ export function IndexHeader({ now }: { now?: 'main' | 'developer' | 'project' | 
                     ) : isLogin ? (
                         <>
                             <Link href={'/dashboard'} passHref>
-                                <Button variant="contained" as="a">
+                                <Button variant="primary" as="a">
                                     대시보드
                                 </Button>
                             </Link>
@@ -137,12 +136,12 @@ export function IndexHeader({ now }: { now?: 'main' | 'developer' | 'project' | 
                     ) : (
                         <>
                             <Link href={'/auth/login'} passHref>
-                                <Button variant="text" as="a">
+                                <Button variant="tertiary" as="a" size="small">
                                     로그인
                                 </Button>
                             </Link>
                             <Link href={'/auth/signup'} passHref>
-                                <Button variant="contained" as="a">
+                                <Button variant="primary" as="a" size="small">
                                     회원가입
                                 </Button>
                             </Link>{' '}

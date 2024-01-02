@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useUser } from '../../../../hooks/useUser';
 import OpizeLogo from '../../../../assets/opize_circle.png';
-import { User, UserCircle } from 'phosphor-react';
+import { User, UserCircle } from '@phosphor-icons/react';
 import Link from 'next/link';
 
 const Box = styled.div`
@@ -22,13 +22,13 @@ const Box = styled.div`
     justify-content: center;
     gap: 8px;
     border-radius: 8px;
-    border: solid 1px ${cv.border3};
+    border: solid 1px ${cv.border};
     width: 420px;
 `;
 
 const BoxHeader = styled.div`
     padding: 16px 32px;
-    border-bottom: solid 1px ${cv.border3};
+    border-bottom: solid 1px ${cv.border};
     width: 100%;
     display: flex;
     align-items: center;
@@ -69,7 +69,7 @@ const StyledUserBlock = styled.div`
 
     transition: 150ms;
     &:hover {
-        background-color: ${cv.bg_element3};
+        background-color: ${cv.gray100};
     }
 `;
 const UserBlockNames = styled.div`
@@ -93,12 +93,10 @@ function UserBlock({
             <Flex.Row gap="8px">
                 <Image src={image} width={32} height={32} alt="유저 프로필" />
                 <UserBlockNames>
-                    <Text size="14px" lineHeight="1.6" weight="semibold">
+                    <Text size="14px" weight="semibold">
                         {name}
                     </Text>
-                    <Text size="12px" lineHeight="1">
-                        {email}
-                    </Text>
+                    <Text size="12px">{email}</Text>
                 </UserBlockNames>
             </Flex.Row>
         </StyledUserBlock>
@@ -114,14 +112,12 @@ function OtherUserBlock({ moveLink }: { moveLink: string }) {
     return (
         <StyledUserBlock onClick={move}>
             <Flex.Row gap="8px">
-                <UserCircle size={32} color={cv.text2} />
+                <UserCircle size={32} color={cv.text} />
                 <UserBlockNames>
-                    <Text size="14px" lineHeight="1.6" weight="semibold">
+                    <Text size="14px" weight="semibold">
                         다른 계정으로 로그인
                     </Text>
-                    <Text size="12px" lineHeight="1">
-                        기존 계정은 로그아웃됩니다.
-                    </Text>
+                    <Text size="12px">기존 계정은 로그아웃됩니다.</Text>
                 </UserBlockNames>
             </Flex.Row>
         </StyledUserBlock>
@@ -187,7 +183,7 @@ export default function App({ projectCode, project, error }: AppProps) {
         return (
             <CenterLayout minHeight="100vh">
                 <H1>{error.title}</H1>
-                <Text color={cv.text3}>{error.subtitle}</Text>
+                <Text color={cv.text}>{error.subtitle}</Text>
             </CenterLayout>
         );
     }

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
-import { Button, cv, PageLayout, Span } from 'opize-design-system';
+import { Button, cv, PageLayout, Span, typos } from 'opize-design-system';
 import styled, { keyframes } from 'styled-components';
 import { IndexOpizeToken } from './opizeToken';
-import { CaretDown } from 'phosphor-react';
+import { CaretDown } from '@phosphor-icons/react';
 
 const Layout = styled.div`
     width: 100%;
@@ -23,6 +23,9 @@ const Title = styled.h1`
     font-size: 108px;
     line-height: 1.1;
     background: linear-gradient(180deg, #0f312f 0%, #3fada4 40%, #3fada4 60%, #0f312f 100%);
+
+    font-family: 'Pretendard';
+    font-weight: 800;
 
     color: transparent;
     background-clip: text;
@@ -62,7 +65,7 @@ const Button1 = styled.a`
     padding: 10px 32px;
     transition: 200ms;
     font-size: 14px;
-    font-weight: ${cv.fontWeightRegular};
+    font-weight: 400;
 
     &:hover {
         transform: translateY(-2px);
@@ -87,7 +90,7 @@ const Button2 = styled.a`
     border-radius: 4px;
     padding: 10px 32px;
     font-size: 14px;
-    font-weight: ${cv.fontWeightSemiBold};
+    font-weight: 600;
 
     background: linear-gradient(90deg, #16756d 0%, #16756d 30%, #119287 60%, #16756d 100%);
     background-size: 200% auto;
@@ -105,8 +108,7 @@ const Button2 = styled.a`
 `;
 
 const Label = styled.div`
-    font-size: 14px;
-    color: ${cv.text3};
+    ${typos.label}
     margin-top: 80px;
     text-align: center;
 `;
@@ -172,7 +174,7 @@ export function IndexMainBlock() {
             </Label>
 
             <Caret>
-                <CaretDown color={cv.text4} size={32} />
+                <CaretDown color={cv.gray400} size={32} />
             </Caret>
         </Layout>
     );

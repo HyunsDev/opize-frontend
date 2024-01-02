@@ -1,4 +1,4 @@
-import { cv, H2, PageLayout, useColorTheme } from 'opize-design-system';
+import { BoxLayout, cv, H2, PageLayout, useColorTheme } from 'opize-design-system';
 import { GetServerSideProps } from 'next';
 
 import { client } from '../../utils/opizeClient';
@@ -29,13 +29,13 @@ export default function App() {
     return (
         <>
             <DashboardHeader now="roadMap" />
-            <PageLayout backgroundColor={cv.bg_page2} minHeight="calc(100vh - 129px - 334px)" marginTop="32px">
+            <BoxLayout backgroundColor={cv.background} minHeight="calc(100vh - 129px - 334px)">
                 <NotionRendererDiv>
                     {!notionLoading && recordMap && (
                         <NotionRenderer recordMap={recordMap.recordMap} darkMode={nowColorTheme === 'dark'} />
                     )}
                 </NotionRendererDiv>
-            </PageLayout>
+            </BoxLayout>
             <OpizeFooter />
         </>
     );

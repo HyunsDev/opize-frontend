@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ActionMenu, ActionMenuActionType, cv, Header } from 'opize-design-system';
+import { cv, Header, Menu } from 'opize-design-system';
 import LogoImg from '../../../assets/opize_IconText.png';
 import SkeletonIcon from '../../../assets/opize_circle.png';
 
@@ -15,25 +15,15 @@ const TitleLogoA = styled.a`
     gap: 8px;
     text-decoration: none;
     font-size: 14px;
-    color: ${cv.text3};
+    color: ${cv.gray500};
 `;
 
 export function AdminHeader({ menu }: { menu: string }) {
     const { isLoading, data: user } = useQuery(['user', 'self'], () => client.user.get({ userId: 'me' }), {});
     const router = useRouter();
 
-    const action: ActionMenuActionType[][] = [
-        [
-            {
-                label: '대시보드로 돌아가기',
-                onClick: () => router.push('/dashboard'),
-            },
-        ],
-    ];
-
     return (
         <Header>
-            <Header.Notice />
             <Header.Nav>
                 <Header.Nav.Left>
                     <Link href={'/admin'} passHref>
@@ -44,41 +34,41 @@ export function AdminHeader({ menu }: { menu: string }) {
                     </Link>
                 </Header.Nav.Left>
                 <Header.Nav.Right>
-                    <Header.Nav.Button
-                        as={'a'}
-                        href={'https://www.notion.so/4f861031061541239ee1108dc5d61406'}
-                        target={'_blank'}
-                    >
+                    <Header.Nav.A href={'https://www.notion.so/4f861031061541239ee1108dc5d61406'} target={'_blank'}>
                         API
-                    </Header.Nav.Button>
-                    <ActionMenu
-                        variant="text"
-                        borderRadius={999}
-                        width="fit-content"
-                        actions={action}
-                        icon={
+                    </Header.Nav.A>
+                    <Menu>
+                        <Menu.Trigger variant="tertiary" iconOnly shape="round" width="fit-content">
                             <Image src={user?.imageUrl || SkeletonIcon} alt="유저 프로필 사진" width={32} height={32} />
-                        }
-                    ></ActionMenu>
+                        </Menu.Trigger>
+                        <Menu.Content>
+                            <Menu.Option onClick={() => router.push('/dashboard')} size="regular">
+                                대시보드로 돌아가기
+                            </Menu.Option>
+                        </Menu.Content>
+                    </Menu>
                 </Header.Nav.Right>
             </Header.Nav>
-            <Header.SubMenu
+            <Header.Menu
                 selected={menu}
-                menu={{
-                    admin: {
-                        text: '대시보드',
+                tabs={[
+                    {
+                        value: 'admin',
+                        title: '대시보드',
                         onClick: () => router.push('/admin'),
                     },
-                    project: {
-                        text: '프로젝트',
+                    {
+                        value: 'project',
+                        title: '프로젝트',
                         onClick: () => router.push('/admin/project'),
                     },
 
-                    notion: {
-                        text: '노션',
+                    {
+                        title: '노션',
+                        value: 'notion',
                         onClick: () => router.push('/admin/notion'),
                     },
-                }}
+                ]}
             />
         </Header>
     );

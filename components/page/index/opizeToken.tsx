@@ -23,7 +23,7 @@ const Text = styled.div`
     display: flex;
     align-items: center;
     color: #dae7d3;
-    font-weight: ${cv.fontWeightSemiBold};
+    font-weight: 600;
 `;
 
 export function IndexOpizeToken() {

@@ -1,22 +1,7 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import {
-    ActionMenu,
-    ActionMenuActionType,
-    Button,
-    cv,
-    Header,
-    PageLayout,
-    Spacer,
-    useTopLoading,
-} from 'opize-design-system';
-import styled from 'styled-components';
-import LogoImg from '../../assets/opize_IconText.png';
-import SkeletonIcon from '../../assets/opize_circle.png';
-import { DashboardItem, DashboardItems } from '../../components/page/dashboard/items';
+import { cv, PageLayout } from 'opize-design-system';
+import { DashboardItems } from '../../components/page/dashboard/items';
 
 import { client } from '../../utils/opizeClient';
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -34,7 +19,7 @@ export default function App() {
     return (
         <>
             <AdminHeader menu="admin" />
-            <PageLayout backgroundColor={cv.bg_page1}>
+            <PageLayout backgroundColor={cv.background}>
                 <DashboardItems></DashboardItems>
             </PageLayout>
         </>
