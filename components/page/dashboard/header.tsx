@@ -30,18 +30,24 @@ export function DashboardHeader({ now }: { now: Path }) {
     if (user?.roles?.includes('admin')) {
         action = (
             <>
-                <MenuOption onClick={() => router.push('/dashboard/settings')}>내 정보</MenuOption>
-                <MenuOption onClick={() => logout()} color="red">
+                <MenuOption onClick={() => router.push('/admin')} size="regular">
+                    관리자
+                </MenuOption>
+                <MenuOption onClick={() => router.push('/dashboard/settings')} size="regular">
+                    내 정보
+                </MenuOption>
+                <MenuOption onClick={() => logout()} color="red" size="regular">
                     로그아웃
                 </MenuOption>
-                <MenuOption onClick={() => router.push('/admin')}>관리자</MenuOption>
             </>
         );
     } else {
         action = (
             <>
-                <MenuOption onClick={() => router.push('/dashboard/settings')}>내 정보</MenuOption>
-                <MenuOption onClick={() => logout()} color="red">
+                <MenuOption onClick={() => router.push('/dashboard/settings')} size="regular">
+                    내 정보
+                </MenuOption>
+                <MenuOption onClick={() => logout()} color="red" size="regular">
                     로그아웃
                 </MenuOption>
             </>

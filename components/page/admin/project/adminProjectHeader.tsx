@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ActionMenu, ActionMenuActionType, cv, Header } from 'opize-design-system';
+import { Menu, cv, Header } from 'opize-design-system';
 import LogoImg from '../../../../assets/opize_IconText.png';
 import SkeletonIcon from '../../../../assets/opize_circle.png';
 
@@ -36,25 +36,8 @@ export function AdminProjectHeader({ menu, projectCode }: AdminProjectHeaderProp
         })
     );
 
-    const action: ActionMenuActionType[][] = [
-        [
-            {
-                label: '대시보드',
-                onClick: () => router.push('/admin'),
-            },
-        ],
-        [
-            {
-                label: '프로젝트',
-                color: 'red',
-                onClick: () => router.push('/admin/project'),
-            },
-        ],
-    ];
-
     return (
         <Header>
-            <Header.Notice />
             <Header.Nav>
                 <Header.Nav.Left>
                     <Link href={'/admin'} passHref>
@@ -65,36 +48,35 @@ export function AdminProjectHeader({ menu, projectCode }: AdminProjectHeaderProp
                     </Link>
                 </Header.Nav.Left>
                 <Header.Nav.Right>
-                    <Header.Nav.Button
-                        as={'a'}
-                        href={'https://www.notion.so/4f861031061541239ee1108dc5d61406'}
-                        target={'_blank'}
-                    >
-                        API
-                    </Header.Nav.Button>
-                    <ActionMenu
-                        variant="tertiary"
-                        borderRadius={999}
-                        width="fit-content"
-                        actions={action}
-                        icon={
+                    <Menu>
+                        <Menu.Trigger variant="tertiary" shape="round" iconOnly>
                             <Image src={user?.imageUrl || SkeletonIcon} alt="유저 프로필 사진" width={32} height={32} />
-                        }
-                    ></ActionMenu>
+                        </Menu.Trigger>
+                        <Menu.Content>
+                            <Menu.Option onClick={() => router.push('/admin')} size="regular">
+                                관리자
+                            </Menu.Option>
+                            <Menu.Option onClick={() => router.push('/dashboard')} size="regular">
+                                유저 대시보드
+                            </Menu.Option>
+                        </Menu.Content>
+                    </Menu>
                 </Header.Nav.Right>
             </Header.Nav>
-            <Header.SubMenu
+            <Header.Menu
                 selected={menu}
-                menu={{
-                    overview: {
-                        text: '프로젝트',
+                tabs={[
+                    {
+                        value: 'overview',
+                        title: '프로젝트',
                         onClick: () => router.push(`/admin/project/${projectCode}`),
                     },
-                    setting: {
-                        text: '설정',
+                    {
+                        value: 'setting',
+                        title: '설정',
                         onClick: () => router.push(`/admin/project/${projectCode}/setting`),
                     },
-                }}
+                ]}
             />
         </Header>
     );

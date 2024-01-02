@@ -16,11 +16,11 @@ export function SettingSidebar({ now }: { now: Now }) {
             </Link>
 
             {/* <Link passHref href="/dashboard/settings/subscribe">
-                <ActionList.Item selected={now === 'subscribe'}>구독</ActionList.Item>
+                <PaneList.Item selected={now === 'subscribe'}>구독</PaneList.Item>
             </Link>
 
             <Link passHref href="/dashboard/settings/billing">
-                <ActionList.Item selected={now === 'billing'}>결제</ActionList.Item>
+                <PaneList.Item selected={now === 'billing'}>결제</PaneList.Item>
             </Link> */}
         </PaneList>
     );

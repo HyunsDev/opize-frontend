@@ -12,7 +12,7 @@ import {
     Divider,
     useTopLoading,
     useCodeModal,
-    StatusBadge,
+    Badge,
     Span,
 } from 'opize-design-system';
 import { DashboardItem, DashboardItems } from '../../../../components/page/dashboard/items';
@@ -42,9 +42,9 @@ const ProjectInfos = styled.div`
     display: flex;
     position: relative;
     flex-direction: column;
-    background-color: ${cv.bg_element1};
+    background-color: ${cv.background};
     box-shadow: 0px 8px 16px rgba(26, 30, 33, 0.06);
-    border: solid 1px ${cv.border4};
+    border: solid 1px ${cv.border};
     border-radius: 4px;
     gap: 16px;
     text-decoration: none;
@@ -88,7 +88,7 @@ function ProjectOverview({ project }: ProjectOverviewProps) {
     const codeModal = useCodeModal();
 
     return (
-        <PageLayout backgroundColor={cv.bg_page1}>
+        <PageLayout backgroundColor={cv.background2}>
             <PageLayout.Content style={{ padding: '32px 0px' }}>
                 <Flex.Between>
                     <Text size={'20px'} weight={'semibold'}>
@@ -133,10 +133,9 @@ function ProjectOverview({ project }: ProjectOverviewProps) {
                                 <Flex.Row gap="48px">
                                     <ProjectInfo label="NAME">{project.name}</ProjectInfo>
                                     <ProjectInfo label="STATUS">
-                                        <StatusBadge
-                                            color={project.status === 'SHOW' ? 'green' : 'gray'}
-                                            text={project.status}
-                                        />
+                                        <Badge color={project.status === 'SHOW' ? 'green' : 'gray'}>
+                                            {project.status}
+                                        </Badge>
                                     </ProjectInfo>
                                 </Flex.Row>
                                 <ProjectInfo label="DESCRIPTION">{project.desc}</ProjectInfo>
@@ -144,7 +143,11 @@ function ProjectOverview({ project }: ProjectOverviewProps) {
                                 <LowInfoButton>
                                     <Button
                                         variant="tertiary"
-                                        onClick={() => codeModal(project?.code || '', project, 600)}
+                                        onClick={() =>
+                                            codeModal.open(project, {
+                                                title: project?.code,
+                                            })
+                                        }
                                     >
                                         RAW info
                                     </Button>
@@ -166,7 +169,7 @@ function ProjectLogs() {
 export default function App() {
     const router = useRouter();
     const projectCode = router.query.projectCode as string;
-    const { start, end } = useTopLoading();
+    const { start, finish } = useTopLoading();
     const codeModal = useCodeModal();
 
     const { isLoading: userLoading, data: user } = useQuery(['user'], () => client.user.get({ userId: 'me' }), {});
@@ -177,7 +180,7 @@ export default function App() {
                 projectCode,
             }),
         {
-            onSuccess: end,
+            onSuccess: finish,
         }
     );
 
@@ -194,7 +197,7 @@ export default function App() {
         <>
             <AdminProjectHeader projectCode={projectCode} menu="overview" />
             <PageHead title={project?.code}>
-                <Button as="a" href={project?.url} primary size="large">
+                <Button as="a" href={project?.url} primary size="medium">
                     Visit
                 </Button>
             </PageHead>

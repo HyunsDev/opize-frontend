@@ -42,7 +42,9 @@ export function AdminHeader({ menu }: { menu: string }) {
                             <Image src={user?.imageUrl || SkeletonIcon} alt="유저 프로필 사진" width={32} height={32} />
                         </Menu.Trigger>
                         <Menu.Content>
-                            <Menu.Option onClick={() => router.push('/dashboard')}>대시보드로 돌아가기</Menu.Option>
+                            <Menu.Option onClick={() => router.push('/dashboard')} size="regular">
+                                대시보드로 돌아가기
+                            </Menu.Option>
                         </Menu.Content>
                     </Menu>
                 </Header.Nav.Right>
