@@ -10,7 +10,7 @@
     "docker:build": "docker build -t opize-frontend ."
   },
   "dependencies": {
-    "@phosphor-icons/react": "^2.0.15",
+    "@phosphor-icons/react": "2.0.10",
     "@react-oauth/google": "^0.2.8",
     "@types/josa": "^3.0.2",
     "axios": "^1.1.2",
