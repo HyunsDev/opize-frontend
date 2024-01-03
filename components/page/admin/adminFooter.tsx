@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Menu, Footer, useColorTheme } from 'opize-design-system';
-import { Sun, Moon } from 'phosphor-react';
+import { Sun, Moon } from '@phosphor-icons/react';
 import styled from 'styled-components';
 import LogoText from '../../../assets/opize_IconText.png';
 

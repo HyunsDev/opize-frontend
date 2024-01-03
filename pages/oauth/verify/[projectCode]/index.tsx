@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../../../hooks/useUser';
 import OpizeLogo from '../../../../assets/opize_circle.png';
+import { useQuery } from 'react-query';
 
 const Box = styled.div`
     display: flex;
@@ -119,16 +120,16 @@ function OtherUserBlock({ moveLink }: { moveLink: string }) {
     );
 }
 
-interface AppProps {
-    projectCode: string;
-    project?: ProjectObject;
-    error?: {
-        title: string;
-        subtitle: string;
-    };
-}
-export default function App({ projectCode, project, error }: AppProps) {
+export default function App() {
     const router = useRouter();
+    const projectCode = router.query.projectCode as string;
+
+    const { data: project, error } = useQuery(
+        ['project', 'get', projectCode],
+        () => client.project.get({ projectCode }),
+        {}
+    );
+
     const redirectUrl = router.query.redirectUrl;
     const { user } = useUser();
 
@@ -146,6 +147,11 @@ export default function App({ projectCode, project, error }: AppProps) {
                 subtitle: '리다이렉트 주소가 없어요.',
             });
             return;
+        } else {
+            setMessage({
+                title: `${josa(`${project?.name}#{으로}`)} 이동합니다`,
+                subtitle: '잠시만 기다려주세요',
+            });
         }
     }, [project, redirectUrl]);
 
@@ -175,10 +181,21 @@ export default function App({ projectCode, project, error }: AppProps) {
     };
 
     if (error) {
+        if (error instanceof APIResponseError) {
+            if (error.status === 404) {
+                return (
+                    <CenterLayout minHeight="100vh">
+                        <H1>프로젝트를 찾을 수 없어요</H1>
+                        <Text color={cv.text}>{projectCode} 프로젝트를 찾을 수 없어요.</Text>
+                    </CenterLayout>
+                );
+            }
+        }
+
         return (
             <CenterLayout minHeight="100vh">
-                <H1>{error.title}</H1>
-                <Text color={cv.text}>{error.subtitle}</Text>
+                <H1>문제가 발생했어요</H1>
+                <Text color={cv.text}>알 수 없는 문제가 발생했어요.</Text>
             </CenterLayout>
         );
     }
@@ -212,45 +229,3 @@ export default function App({ projectCode, project, error }: AppProps) {
         </CenterLayout>
     );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const projectCode = context.query.projectCode as string;
-    let error: {
-        title: string;
-        subtitle: string;
-    } | null = null;
-
-    let project: ProjectObject | null = null;
-    try {
-        project = await client.project.get({
-            projectCode: projectCode,
-        });
-    } catch (err) {
-        if (err instanceof APIResponseError) {
-            if (err.status === 404) {
-                error = {
-                    title: '프로젝트를 찾을 수 없어요',
-                    subtitle: `${projectCode} 프로젝트를 찾을 수 없어요.`,
-                };
-            } else {
-                error = {
-                    title: '문제가 발생했어요.',
-                    subtitle: `알 수 없는 문제가 발생했어요.`,
-                };
-            }
-        } else {
-            error = {
-                title: '문제가 발생했어요.',
-                subtitle: '서버가 응답하지 않았어요.',
-            };
-        }
-    }
-
-    return {
-        props: {
-            projectCode,
-            project,
-            error,
-        },
-    };
-};
