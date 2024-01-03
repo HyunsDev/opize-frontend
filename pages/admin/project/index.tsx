@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
-import { Code } from '@phosphor-icons/react';
+import { Code } from 'phosphor-react';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
 
 export default function App() {
