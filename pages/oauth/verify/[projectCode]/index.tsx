@@ -3,14 +3,13 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { APIResponseError, ProjectObject } from 'opize-client';
 import { CenterLayout, cv, Flex, Span, Text } from 'opize-design-system';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { client } from '../../../../utils/opizeClient';
 import { josa } from 'josa';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useUser } from '../../../../hooks/useUser';
 import OpizeLogo from '../../../../assets/opize_circle.png';
-import { UserCircle } from '@phosphor-icons/react';
 
 const Box = styled.div`
     display: flex;
@@ -109,7 +108,6 @@ function OtherUserBlock({ moveLink }: { moveLink: string }) {
     return (
         <StyledUserBlock onClick={move}>
             <Flex.Row gap="8px">
-                <UserCircle size={32} color={cv.text} />
                 <UserBlockNames>
                     <Text size="14px" weight="semibold">
                         다른 계정으로 로그인
