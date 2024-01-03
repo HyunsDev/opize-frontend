@@ -2,18 +2,15 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { APIResponseError, ProjectObject } from 'opize-client';
-import { Avatar, CenterLayout, cv, Divider, Flex, PageLayout, Span, Spinner, Text } from 'opize-design-system';
-import { useQuery } from 'react-query';
+import { CenterLayout, cv, Flex, Span, Text } from 'opize-design-system';
 import styled from 'styled-components';
 import { client } from '../../../../utils/opizeClient';
 import { josa } from 'josa';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useUser } from '../../../../hooks/useUser';
 import OpizeLogo from '../../../../assets/opize_circle.png';
-import { User, UserCircle } from '@phosphor-icons/react';
-import Link from 'next/link';
+import { UserCircle } from '@phosphor-icons/react';
 
 const Box = styled.div`
     display: flex;
