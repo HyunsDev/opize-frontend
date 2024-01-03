@@ -2,18 +2,15 @@
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { APIResponseError, ProjectObject } from 'opize-client';
-import { Avatar, CenterLayout, cv, Divider, Flex, PageLayout, Span, Spinner, Text } from 'opize-design-system';
-import { useQuery } from 'react-query';
+import { CenterLayout, cv, Flex, Span, Text } from 'opize-design-system';
 import styled from 'styled-components';
 import { client } from '../../../../utils/opizeClient';
 import { josa } from 'josa';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useUser } from '../../../../hooks/useUser';
 import OpizeLogo from '../../../../assets/opize_circle.png';
-import { User, UserCircle } from '@phosphor-icons/react';
-import Link from 'next/link';
+import { UserCircle } from '@phosphor-icons/react';
 
 const Box = styled.div`
     display: flex;
@@ -132,11 +129,8 @@ interface AppProps {
         subtitle: string;
     };
 }
-export default function App() {
+export default function App({ projectCode, project, error }: AppProps) {
     const router = useRouter();
-    const projectCode = router.query.projectCode as string;
-    const { data: project, error } = useQuery(['project', projectCode], () => client.project.get({ projectCode }));
-
     const redirectUrl = router.query.redirectUrl;
     const { user } = useUser();
 
@@ -154,12 +148,6 @@ export default function App() {
                 subtitle: '리다이렉트 주소가 없어요.',
             });
             return;
-        } else {
-            setIsError(false);
-            setMessage({
-                title: `${josa(`${project?.name}#{으로}`)} 이동합니다`,
-                subtitle: '잠시만 기다려주세요',
-            });
         }
     }, [project, redirectUrl]);
 
@@ -189,11 +177,10 @@ export default function App() {
     };
 
     if (error) {
-        console.error(error);
         return (
             <CenterLayout minHeight="100vh">
-                <H1>문제가 발생헀어요.</H1>
-                <Text color={cv.text}>관리자에게 문의해주세요</Text>
+                <H1>{error.title}</H1>
+                <Text color={cv.text}>{error.subtitle}</Text>
             </CenterLayout>
         );
     }
@@ -228,44 +215,44 @@ export default function App() {
     );
 }
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//     const projectCode = context.query.projectCode as string;
-//     let error: {
-//         title: string;
-//         subtitle: string;
-//     } | null = null;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const projectCode = context.query.projectCode as string;
+    let error: {
+        title: string;
+        subtitle: string;
+    } | null = null;
 
-//     let project: ProjectObject | null = null;
-//     try {
-//         project = await client.project.get({
-//             projectCode: projectCode,
-//         });
-//     } catch (err) {
-//         if (err instanceof APIResponseError) {
-//             if (err.status === 404) {
-//                 error = {
-//                     title: '프로젝트를 찾을 수 없어요',
-//                     subtitle: `${projectCode} 프로젝트를 찾을 수 없어요.`,
-//                 };
-//             } else {
-//                 error = {
-//                     title: '문제가 발생했어요.',
-//                     subtitle: `알 수 없는 문제가 발생했어요.`,
-//                 };
-//             }
-//         } else {
-//             error = {
-//                 title: '문제가 발생했어요.',
-//                 subtitle: '서버가 응답하지 않았어요.',
-//             };
-//         }
-//     }
+    let project: ProjectObject | null = null;
+    try {
+        project = await client.project.get({
+            projectCode: projectCode,
+        });
+    } catch (err) {
+        if (err instanceof APIResponseError) {
+            if (err.status === 404) {
+                error = {
+                    title: '프로젝트를 찾을 수 없어요',
+                    subtitle: `${projectCode} 프로젝트를 찾을 수 없어요.`,
+                };
+            } else {
+                error = {
+                    title: '문제가 발생했어요.',
+                    subtitle: `알 수 없는 문제가 발생했어요.`,
+                };
+            }
+        } else {
+            error = {
+                title: '문제가 발생했어요.',
+                subtitle: '서버가 응답하지 않았어요.',
+            };
+        }
+    }
 
-//     return {
-//         props: {
-//             projectCode,
-//             project,
-//             error,
-//         },
-//     };
-// };
+    return {
+        props: {
+            projectCode,
+            project,
+            error,
+        },
+    };
+};
