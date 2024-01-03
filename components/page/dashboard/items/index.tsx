@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { cv, Flex, Menu, Span, Text } from 'opize-design-system';
-import { DotsThreeVertical } from 'phosphor-react';
+import { DotsThreeVertical } from '@phosphor-icons/react';
 import React from 'react';
 import styled from 'styled-components';
 

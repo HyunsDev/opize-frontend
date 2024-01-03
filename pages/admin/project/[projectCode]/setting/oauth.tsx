@@ -26,7 +26,7 @@ import { AdminProjectHeader } from '../../../../../components/page/admin/project
 import { ChangeEvent, useEffect, useState } from 'react';
 import { AdminFooter } from '../../../../../components/page/admin/adminFooter';
 import Link from 'next/link';
-import { Warning } from 'phosphor-react';
+import { Warning } from '@phosphor-icons/react';
 
 const URL_REGEX = /http[s]?:\/\//;
 

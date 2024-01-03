@@ -25,7 +25,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import Link from 'next/link';
-import { ArrowClockwise, Code, PencilSimple, X } from 'phosphor-react';
+import { ArrowClockwise, Code, PencilSimple, X } from '@phosphor-icons/react';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';

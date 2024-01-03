@@ -1,5 +1,5 @@
 import { cv } from 'opize-design-system';
-import { CaretLeft } from 'phosphor-react';
+import { CaretLeft } from '@phosphor-icons/react';
 import React from 'react';
 import styled from 'styled-components';
 

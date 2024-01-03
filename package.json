@@ -23,7 +23,6 @@
     "notion-client": "^6.13.11",
     "opize-client": "^0.5.0",
     "opize-design-system": "^1.5.1",
-    "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
     "react-google-login": "^5.2.2",
