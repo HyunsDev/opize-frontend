@@ -3,7 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Button, cv, PageLayout, Span, typos } from 'opize-design-system';
 import styled, { keyframes } from 'styled-components';
 import { IndexOpizeToken } from './opizeToken';
-import { CaretDown } from '@phosphor-icons/react';
+import { CaretDown } from 'phosphor-react';
 
 const Layout = styled.div`
     width: 100%;

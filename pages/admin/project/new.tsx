@@ -22,7 +22,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { AdminHeader } from '../../../components/page/admin/AdminHeader';
 import { useForm } from 'react-hook-form';
-import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { CaretLeft, CaretRight } from 'phosphor-react';
 import Link from 'next/link';
 import { Back } from '../../../components/share/back';
 import { AdminFooter } from '../../../components/page/admin/adminFooter';
