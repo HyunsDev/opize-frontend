@@ -14,4 +14,7 @@ module.exports = {
     compiler: {
         styledComponents: true,
     },
+    experimental: {
+        optimizePackageImports: ['@phosphor-icons/react'],
+    },
 };
